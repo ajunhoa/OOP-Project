@@ -45,15 +45,32 @@ public class Main {
                             break;
                         case 3:
                             System.out.println("Viewing available appointment slots...");
-                            // Logic to view slots would go here
+                            doctor.showAvailableSlots();
                             break;
                         case 4:
                             System.out.println("Scheduling an appointment...");
-                            // Logic to schedule appointment
+                            doctor.showAvailableSlots();
+                            System.out.println("Enter your Preferred Slot: ");
+                            String chosenSlot = scanner.next();
+                            patient.scheduleAppointment(doctor, "2021-09-01", chosenSlot);
+                            if(patient.scheduleAppointment(doctor, "2021-09-01", chosenSlot)) {
+                                System.out.println("Appointment scheduled successfully.");
+                            } else {
+                                System.out.println("Appointment could not be scheduled.");
+                            }
                             break;
                         case 5:
                             System.out.println("Rescheduling an appointment...");
-                            // Logic to reschedule appointment
+                            System.out.println("Enter your current appointment time:  ");
+                            String currentSlot = scanner.next();
+                            System.out.print("Enter your new appointment time: ");
+                            String newSlot = scanner.next();
+                            boolean rescheduled = patient.scheduleAppointment(doctor, "2021-09-01", newSlot);
+                            if (rescheduled) {
+                                System.out.println("Appointment rescheduled successfully.");
+                            } else {
+                                System.out.println("Appointment could not be rescheduled.");
+                            }
                             break;
                         case 6:
                             System.out.println("Cancelling an appointment...");

@@ -38,6 +38,11 @@ class Doctor extends User {
         appointment.setOutcome(outcome, prescription);
     }
 
+    public void showAvailableSlots() {
+        System.out.println("Available slots: 10:00 AM, 2:00 PM, 4:00 PM");
+    }
+    
+
     @Override
     public void displayMenu() {
         System.out.println("1. View Patient Medical Records");
