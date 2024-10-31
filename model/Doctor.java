@@ -1,4 +1,3 @@
-// File: src/models/Doctor.java
 package model;
 
 import java.util.ArrayList;
