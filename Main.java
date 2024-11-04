@@ -22,55 +22,9 @@ public class Main {
         // Switch based on the selected role
         switch (role) {
             case 1:
-                // Patient Menu
-                boolean exit = false;
-                while (!exit) {
-                    patient.displayMenu(); // Display the menu options for the patient
-                    System.out.print("Enter your choice: ");
-                    int choice = scanner.nextInt();
-
-                    switch (choice) {
-                        case 1:
-                            System.out.println("Medical Record:");
-                            System.out.println(patient.viewMedicalRecord());
-                            break;
-                        case 2:
-                            System.out.println("Update Contact Information");
-                            System.out.print("Enter new contact number: ");
-                            String contactNumber = scanner.next();
-                            System.out.print("Enter new email address: ");
-                            String email = scanner.next();
-                            patient.updateContactInfo(contactNumber, email);
-                            System.out.println("Contact information updated.");
-                            break;
-                        case 3:
-                            System.out.println("Viewing available appointment slots...");
-                            // Logic to view slots would go here
-                            break;
-                        case 4:
-                            System.out.println("Scheduling an appointment...");
-                            // Logic to schedule appointment
-                            break;
-                        case 5:
-                            System.out.println("Rescheduling an appointment...");
-                            // Logic to reschedule appointment
-                            break;
-                        case 6:
-                            System.out.println("Cancelling an appointment...");
-                            // Logic to cancel appointment
-                            break;
-                        case 7:
-                            System.out.println("Viewing past appointment records...");
-                            // Logic to view past records
-                            break;
-                        case 8:
-                            exit = true;
-                            System.out.println("Logging out...");
-                            break;
-                        default:
-                            System.out.println("Invalid choice, please try again.");
-                    }
-                }
+                // Patient role selected
+                PatientView patientView = new PatientView(patient);  // Create PatientView with Patient object
+                patientView.handleUserChoice();  // Call the method to handle patient menu
                 break;
             case 2:
                 // Doctor Menu (similar logic for doctor can be implemented)
