@@ -1,0 +1,8 @@
+﻿Staff ID,Name,Role,Gender,Age,Date of Birth,Blood Type,Contact Information
+D001,John Smith,Doctor,Male,45,,,
+D002,Emily Clarke,Doctor,Female,38,,,
+P001,Mark Lee,Pharmacist,Male,29,,,
+A001,Sarah Lee,Administrator,Female,40,,,
+P1001,Alice Brown,Patient,Female,,1980-05-14,A+,alice.brown@example.com
+P1002,Bob Stone,Patient,Male,,1975-11-22,B+,bob.stone@example.com
+P1003,Charlie White,Patient,Male,,1990-07-08,O-,charlie.white@example.com
