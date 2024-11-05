@@ -26,6 +26,11 @@ class Staff {
         this.contactInfo = contactInfo;
     }
 
+    // Getter for name
+    public String getName() {
+        return name;
+    }
+
     public String getRole() {
         return role;
     }
@@ -45,42 +50,35 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Welcome to the Hospital Management System");
-        System.out.println("Enter your name:");
-        String name = scanner.nextLine().trim();
+        System.out.println("Enter your staff ID:");
+        String staffId = scanner.nextLine().trim();
 
-        // Check if the name exists in the staff map (case insensitive)
-        boolean found = false;
+        // Check if the staff ID exists in the staff map
+        Staff staff = staffMap.get(staffId);
 
-        for (String staffName : staffMap.keySet()) {
-            if (staffName.equalsIgnoreCase(name)) {
-                found = true;
-                Staff staff = staffMap.get(staffName);
-                System.out.println("Welcome, " + staffName);
-                System.out.println(staff);
+        if (staff != null) {
+            System.out.println("Welcome, " + staff.getName());
+            System.out.println(staff);
 
-                // Switch based on the role
-                switch (staff.getRole()) {
-                    case "Doctor":
-                        // Doctor logic here
-                        break;
-                    case "Pharmacist":
-                        // Pharmacist logic here
-                        break;
-                    case "Administrator":
-                        // Administrator logic here
-                        break;
-                    case "Patient":
-                        // Patient logic here
-                        break;
-                    default:
-                        System.out.println("Role not recognized.");
-                }
-                break;
+            // Switch based on the role
+            switch (staff.getRole()) {
+                case "Doctor":
+                    // Doctor logic here
+                    break;
+                case "Pharmacist":
+                    // Pharmacist logic here
+                    break;
+                case "Administrator":
+                    // Administrator logic here
+                    break;
+                case "Patient":
+                    // Patient logic here
+                    break;
+                default:
+                    System.out.println("Role not recognized.");
             }
-        }
-
-        if (!found) {
-            System.out.println("Name not found in staff list.");
+        } else {
+            System.out.println("Staff ID not found in staff list.");
         }
 
         scanner.close();
@@ -118,16 +116,16 @@ public class Main {
                     String bloodType = values.length > 6 ? values[6].trim() : "";
                     String contactInfo = values.length > 7 ? values[7].trim() : "";
 
-                    // Create a Staff object and add it to the map with name as key
+                    // Create a Staff object and add it to the map with ID as key
                     Staff staff = new Staff(id, name, role, gender, age, dateOfBirth, bloodType, contactInfo);
-                    staffMap.put(name, staff); // Store with lowercase for case-insensitive lookup
+                    staffMap.put(id, staff); // Store with ID as the key for direct lookup
                 } catch (NumberFormatException e) {
                     System.out.println("Error parsing age for line: " + line);
                 }
             }
 
-            // Debugging: Print all names loaded into the staffMap
-            System.out.println("Loaded staff names: " + staffMap.keySet());
+            // Debugging: Print all IDs loaded into the staffMap
+            System.out.println("Loaded staff IDs: " + staffMap.keySet());
         } catch (IOException e) {
             e.printStackTrace();
         }
