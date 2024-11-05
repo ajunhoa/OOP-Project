@@ -51,7 +51,7 @@ public class Main {
 
         System.out.println("Welcome to the Hospital Management System");
         System.out.println("Enter your staff ID:");
-        String staffId = scanner.nextLine().trim();
+        String staffId = scanner.nextLine().trim().toUpperCase(); // Trim and convert to uppercase
 
         // Check if the staff ID exists in the staff map
         Staff staff = staffMap.get(staffId);
