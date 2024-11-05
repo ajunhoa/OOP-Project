@@ -120,7 +120,7 @@ public class Main {
 
                     // Create a Staff object and add it to the map with name as key
                     Staff staff = new Staff(id, name, role, gender, age, dateOfBirth, bloodType, contactInfo);
-                    staffMap.put(name.toLowerCase(), staff); // Store with lowercase for case-insensitive lookup
+                    staffMap.put(name, staff); // Store with lowercase for case-insensitive lookup
                 } catch (NumberFormatException e) {
                     System.out.println("Error parsing age for line: " + line);
                 }
