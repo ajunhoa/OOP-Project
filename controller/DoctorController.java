@@ -4,12 +4,13 @@ import model.Doctor;
 // import model.Appointment;
 // import model.Patient;
 import java.util.List;
+import Staff;
 
 public class DoctorController {
     private Doctor doctor;
 
-    public DoctorController(Doctor doctor) {
-        this.doctor = doctor;
+    public DoctorController(Staff staff) {
+        this.doctor = staff;
     }
 
     // Method to set availability

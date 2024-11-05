@@ -1,29 +1,21 @@
 package view;
 
-import controller.DoctorController;
 import model.Doctor;
-// import model.Patient;
-// import model.Appointment;
 import java.util.Scanner;
 
 public class DoctorView {
-    private DoctorController doctorController;
+    private Doctor doctor;
     private Scanner scanner;
 
-    public DoctorView(DoctorController doctorController) {
-        this.doctorController = doctorController;
+    public DoctorView(Doctor doctor) { // Accept Doctor directly
+        this.doctor = doctor;
         this.scanner = new Scanner(System.in);
     }
 
     public void displayDoctorMenu() {
         boolean exit = false;
         while (!exit) {
-            System.out.println("Doctor Menu:");
-            System.out.println("1. View Patient Medical Records");
-            System.out.println("2. Set Availability for Appointments");
-            System.out.println("3. Accept or Decline Appointment Requests");
-            System.out.println("4. View Upcoming Appointments");
-            System.out.println("5. Logout");
+            doctor.displayMenu();
             System.out.print("Select an option: ");
             int choice = scanner.nextInt();
             scanner.nextLine();
@@ -39,7 +31,7 @@ public class DoctorView {
                     manageAppointmentRequests();
                     break;
                 case 4:
-                    // viewUpcomingAppointments();
+                    // viewUpcomingAppointments();  // Uncomment if Appointment class exists
                     break;
                 case 5:
                     exit = true;
@@ -54,8 +46,7 @@ public class DoctorView {
     private void viewPatientRecord() {
         System.out.print("Enter Patient ID: ");
         String patientID = scanner.nextLine();
-        // Patient patient = new Patient(patientID, "John Doe");  // Assume we have this Patient for now
-        // doctorController.viewPatientRecord(patient);
+        doctor.viewPatientRecord(patientID);  // Call method directly on doctor
     }
 
     private void setDoctorAvailability() {
@@ -63,16 +54,21 @@ public class DoctorView {
         String date = scanner.nextLine();
         System.out.print("Enter Time (e.g., 10:00 AM): ");
         String time = scanner.nextLine();
-        doctorController.setAvailability(date, time);
+        doctor.setAvailability(date, time);  // Call method directly on doctor
     }
 
     private void manageAppointmentRequests() {
-        System.out.println("Managing appointments (mocked)...");  
+        System.out.print("Enter Appointment ID: ");
+        String appointmentID = scanner.nextLine();
+        System.out.print("Accept appointment? (yes/no): ");
+        boolean accept = scanner.nextLine().equalsIgnoreCase("yes");
+        doctor.manageAppointment(appointmentID, accept);  // Call method directly on doctor
     }
 
+    // Uncomment if Appointment class exists
     // private void viewUpcomingAppointments() {
     //     System.out.println("Upcoming appointments:");
-    //     for (Appointment appointment : doctorController.getUpcomingAppointments()) {
+    //     for (Appointment appointment : doctor.getUpcomingAppointments()) {
     //         System.out.println(appointment);
     //     }
     // }

@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+import model.Doctor;
+import view.DoctorView;
 
 class Staff {
     private String id;
@@ -68,6 +70,9 @@ public class Main {
                     case "Doctor":
                         System.out.println("Accessing Doctor's functionalities...");
                         // Doctor-specific actions here
+                        Doctor doctor = new Doctor(staff.getId(), staff.getName(), staff.getRole());
+                        DoctorView doctorView = new DoctorView(doctor);
+                        doctorView.displayDoctorMenu();
                         break;
                     case "Pharmacist":
                         System.out.println("Accessing Pharmacist's functionalities...");
