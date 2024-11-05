@@ -1,5 +1,7 @@
 import java.util.Scanner;
 
+import model.Patient;
+
 public class PatientView {
    private Patient patient;
 

@@ -1,3 +1,4 @@
+package model;
 public class Patient extends User {
     private String patientID;
     private String bloodType;
@@ -12,7 +13,7 @@ public class Patient extends User {
 
     // public MedicalRecord viewMedicalRecord() {
     //     return medicalRecord;
-    // }
+    // }/
 
     public void updateContactInfo(String contactNumber, String email) {
         // Logic to update contact information (you might want to add fields for contactNumber and email)
@@ -27,7 +28,7 @@ public class Patient extends User {
         // appointment.cancel();
     }
 
-    @Override
+    
     public void displayMenu() {
         // This can remain empty or include basic functionality, but it's required to override
     }

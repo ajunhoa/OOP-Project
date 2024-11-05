@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 import model.Doctor;
+import model.Patient;
 import view.DoctorView;
 
 class Staff {
@@ -69,7 +70,6 @@ public class Main {
                 // Role-based logic
                 switch (staff.getRole()) {
                     case "Doctor":
-                        System.out.println("Accessing Doctor's functionalities...");
                         // Doctor-specific actions here
                         Doctor doctor = new Doctor(staff.getId(), staff.getName(), staff.getRole());
                         DoctorView doctorView = new DoctorView(doctor);
