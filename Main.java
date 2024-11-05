@@ -89,36 +89,41 @@ public class Main {
     // Method to load staff details from CSV
     private static Map<String, Staff> loadStaffDetails(String filePath) {
         Map<String, Staff> staffMap = new HashMap<>();
-        
+
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;
             br.readLine(); // Skip the header line
 
             while ((line = br.readLine()) != null) {
-                String[] values = line.split(",");
-                if (values.length < 8) continue; // Ensure there are enough columns
+                // Debugging: Print each line read from the CSV
+                System.out.println("Processing line: " + line);
 
-                String id = values[0].trim();
-                String name = values[1].trim();
-                String role = values[2].trim();
-                String gender = values[3].trim();
-                int age = 0;
-                
-                // Handle age parsing with error handling
-                try {
-                    age = values[4].isEmpty() ? 0 : Integer.parseInt(values[4].trim());
-                } catch (NumberFormatException e) {
-                    System.out.println("Invalid age format for " + name);
-                    continue; // Skip this entry if age is invalid
+                // Split the line into values
+                String[] values = line.split(",");
+
+                // Ensure there are enough columns to create a staff object
+                if (values.length < 2) {
+                    System.out.println("Skipping line, not enough columns: " + line);
+                    continue; // Skip this iteration
                 }
 
-                String dateOfBirth = values[5].trim(); // New field
-                String bloodType = values[6].trim();   // New field
-                String contactInfo = values[7].trim(); // New field
+                // Use a try-catch block to handle potential parsing errors
+                try {
+                    String id = values.length > 0 ? values[0].trim() : "";
+                    String name = values.length > 1 ? values[1].trim() : "";
+                    String role = values.length > 2 ? values[2].trim() : "";
+                    String gender = values.length > 3 ? values[3].trim() : "";
+                    int age = values.length > 4 && !values[4].isEmpty() ? Integer.parseInt(values[4].trim()) : 0; // Default to 0 if age is empty
+                    String dateOfBirth = values.length > 5 ? values[5].trim() : "";
+                    String bloodType = values.length > 6 ? values[6].trim() : "";
+                    String contactInfo = values.length > 7 ? values[7].trim() : "";
 
-                // Create a Staff object and add it to the map
-                Staff staff = new Staff(id, name, role, gender, age, dateOfBirth, bloodType, contactInfo);
-                staffMap.put(name, staff);
+                    // Create a Staff object and add it to the map with name as key
+                    Staff staff = new Staff(id, name, role, gender, age, dateOfBirth, bloodType, contactInfo);
+                    staffMap.put(name.toLowerCase(), staff); // Store with lowercase for case-insensitive lookup
+                } catch (NumberFormatException e) {
+                    System.out.println("Error parsing age for line: " + line);
+                }
             }
 
             // Debugging: Print all names loaded into the staffMap
@@ -126,7 +131,7 @@ public class Main {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        
+
         return staffMap;
     }
 }
