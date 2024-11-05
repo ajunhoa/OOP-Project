@@ -7,20 +7,20 @@ public class Patient extends User {
         super(userID, name);
         this.patientID = patientID;
         this.bloodType = bloodType;
-        this.medicalRecord = new MedicalRecord();
+        // this.medicalRecord = new MedicalRecord();
     }
 
-    public MedicalRecord viewMedicalRecord() {
-        return medicalRecord;
-    }
+    // public MedicalRecord viewMedicalRecord() {
+    //     return medicalRecord;
+    // }
 
     public void updateContactInfo(String contactNumber, String email) {
         // Logic to update contact information (you might want to add fields for contactNumber and email)
     }
 
-    public boolean scheduleAppointment(Doctor doctor, String date, String time) {
-        return doctor.acceptAppointment(new Appointment(this, doctor, date, time));
-    }
+    // public boolean scheduleAppointment(Doctor doctor, String date, String time) {
+    //     return doctor.acceptAppointment(new Appointment(this, doctor, date, time));
+    // }
 
     public void cancelAppointment(Appointment appointment) {
         appointment.cancel();
