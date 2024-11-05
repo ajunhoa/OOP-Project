@@ -46,7 +46,7 @@ class Staff {
 
 public class Main {
     public static void main(String[] args) {
-        Map<String, Staff> staffMap = loadStaffDetails("finalise_list.csv");
+        Map<String, Staff> staffMap = loadStaffDetails("assets/finalise_list.csv");
 
         try (Scanner scanner = new Scanner(System.in)) {
             System.out.println("Welcome to the Hospital Management System");
