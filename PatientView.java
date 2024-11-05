@@ -22,7 +22,7 @@ public class PatientView {
                switch (choice) {
                   case 1:
                      System.out.println("Medical Record:");
-                     System.out.println(this.patient.viewMedicalRecord());
+                    //  System.out.println(this.patient.viewMedicalRecord());
                      break;
                   case 2:
                      System.out.println("Update Contact Information");
@@ -30,7 +30,7 @@ public class PatientView {
                      String contactNumber = scanner.nextLine();
                      System.out.print("Enter new email address: ");
                      String email = scanner.nextLine();
-                     this.patient.updateContactInfo(contactNumber, email);
+                     // this.patient.updateContactInfo(contactNumber, email);
                      System.out.println("Contact information updated.");
                      break;
                   case 3:

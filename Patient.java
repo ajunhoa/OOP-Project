@@ -1,7 +1,7 @@
 public class Patient extends User {
     private String patientID;
     private String bloodType;
-    private MedicalRecord medicalRecord;
+    // private MedicalRecord medicalRecord;
 
     public Patient(String userID, String name, String patientID, String bloodType) {
         super(userID, name);
@@ -22,8 +22,9 @@ public class Patient extends User {
     //     return doctor.acceptAppointment(new Appointment(this, doctor, date, time));
     // }
 
-    public void cancelAppointment(Appointment appointment) {
-        appointment.cancel();
+    public void cancelAppointment() {
+        System.out.println("Cancelling an appointment...");
+        // appointment.cancel();
     }
 
     @Override
