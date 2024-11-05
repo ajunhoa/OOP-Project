@@ -13,7 +13,7 @@ class Staff {
     private int age;
     private String dateOfBirth;
     private String bloodType;
-    private String contactInfo;
+    private String contactInfo; // Fixed variable name here
     private String password; // New field for password
     private int newUser; // New field for new user indicator
 
@@ -25,7 +25,7 @@ class Staff {
         this.age = age;
         this.dateOfBirth = dateOfBirth;
         this.bloodType = bloodType;
-        this.contactInfo = contactInfo;
+        this.contactInfo = contactInfo; // Fixed variable name here
         this.password = password;
         this.newUser = newUser;
     }
@@ -35,6 +35,7 @@ class Staff {
     public String getRole() { return role; }
     public String getId() { return id; }
     public String getPassword() { return password; }
+    public String getBloodType() { return bloodType; } // Added this getter
 
     @Override
     public String toString() {
@@ -78,8 +79,9 @@ public class Main {
                         // Administrator-specific actions here
                         break;
                     case "Patient":
-                        System.out.println("Accessing Patient's functionalities...");
-                        // Patient-specific actions here
+                        Patient patient = new Patient(staff.getId(), staff.getName(), staff.getId(), staff.getBloodType());
+                        PatientView patientView = new PatientView(patient);
+                        patientView.handleUserChoice();
                         break;
                     default:
                         System.out.println("Role not recognized.");
