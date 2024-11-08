@@ -32,6 +32,8 @@ public class User {
         public String getId() { return id; }
         public String getPassword() { return password; }
         public String getBloodType() { return bloodType; }
+        public String getContactInfo() { return contactInfo; }
+        public void setNewUser(int newUser) { this.newUser = newUser; }
     
         @Override
         public String toString() {
@@ -43,6 +45,10 @@ public class User {
     public User(String id, String name) {
         this.id = id;
         this.name = name;
+    }
+
+    public boolean isNewUser() {
+        return newUser == 1;
     }
 
     public boolean validatePassword(String inputPassword) {

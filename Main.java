@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+import controller.UserController;
 import model.Doctor;
 import model.Patient;
 import view.DoctorView;
@@ -13,7 +14,8 @@ import model.User;
 
 public class Main {
     public static void main(String[] args) {
-        Map<String, User> userMap = loadUserDetails("assets/finalise_list.csv");
+        String filePath = "assets/finalise_list.csv";
+        Map<String, User> userMap = loadUserDetails(filePath);
 
         try (Scanner scanner = new Scanner(System.in)) {
             System.out.println("Welcome to the Hospital Management System");
@@ -29,6 +31,8 @@ public class Main {
             if (user != null && user.getPassword().equals(password)) {
                 System.out.println("Welcome, " + user.getName());
                 System.out.println(user);
+                UserController.promptPasswordChange(user, filePath);
+
 
                 // Role-based logic
                 switch (user.getRole()) {
@@ -65,7 +69,7 @@ public class Main {
         Map<String, User> userMap = new HashMap<>();
 
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
-            String line = br.readLine(); // Skip header
+            String line = br.readLine();
 
             while ((line = br.readLine()) != null) {
                 // Debugging: Print each line read from the CSV
