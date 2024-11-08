@@ -7,6 +7,7 @@ import java.util.Scanner;
 import model.Doctor;
 import model.Patient;
 import view.DoctorView;
+import view.PatientView;
 import model.User;
 
 
