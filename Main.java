@@ -7,71 +7,33 @@ import java.util.Scanner;
 import model.Doctor;
 import model.Patient;
 import view.DoctorView;
+import model.User;
 
-class Staff {
-    private String id;
-    private String name;
-    private String role;
-    private String gender;
-    private int age;
-    private String dateOfBirth;
-    private String bloodType;
-    private String contactInfo; // Fixed variable name here
-    private String password; // New field for password
-    private int newUser; // New field for new user indicator
-
-    public Staff(String id, String name, String role, String gender, int age, String dateOfBirth, String bloodType, String contactInfo, String password, int newUser) {
-        this.id = id;
-        this.name = name;
-        this.role = role;
-        this.gender = gender;
-        this.age = age;
-        this.dateOfBirth = dateOfBirth;
-        this.bloodType = bloodType;
-        this.contactInfo = contactInfo; // Fixed variable name here
-        this.password = password;
-        this.newUser = newUser;
-    }
-
-    // Getters
-    public String getName() { return name; }
-    public String getRole() { return role; }
-    public String getId() { return id; }
-    public String getPassword() { return password; }
-    public String getBloodType() { return bloodType; } // Added this getter
-
-    @Override
-    public String toString() {
-        return "ID: " + id + ", Name: " + name + ", Role: " + role + ", Gender: " + gender +
-               ", Age: " + age + ", Date of Birth: " + dateOfBirth + ", Blood Type: " + bloodType +
-               ", Contact Info: " + contactInfo + ", New User: " + newUser;
-    }
-}
 
 public class Main {
     public static void main(String[] args) {
-        Map<String, Staff> staffMap = loadStaffDetails("assets/finalise_list.csv");
+        Map<String, User> userMap = loadUserDetails("assets/finalise_list.csv");
 
         try (Scanner scanner = new Scanner(System.in)) {
             System.out.println("Welcome to the Hospital Management System");
-            System.out.print("Enter your Staff ID: ");
-            String staffId = scanner.nextLine().trim().toUpperCase();
+            System.out.print("Enter your User ID: ");
+            String userId = scanner.nextLine().trim().toUpperCase();
 
             System.out.print("Enter your Password: ");
             String password = scanner.nextLine().trim();
 
-            // Fetch the staff member based on ID
-            Staff staff = staffMap.get(staffId);
+            // Fetch the user member based on ID
+            User user = userMap.get(userId);
 
-            if (staff != null && staff.getPassword().equals(password)) {
-                System.out.println("Welcome, " + staff.getName());
-                System.out.println(staff);
+            if (user != null && user.getPassword().equals(password)) {
+                System.out.println("Welcome, " + user.getName());
+                System.out.println(user);
 
                 // Role-based logic
-                switch (staff.getRole()) {
+                switch (user.getRole()) {
                     case "Doctor":
                         // Doctor-specific actions here
-                        Doctor doctor = new Doctor(staff.getId(), staff.getName(), staff.getRole());
+                        Doctor doctor = new Doctor(user.getId(), user.getName(), user.getRole());
                         DoctorView doctorView = new DoctorView(doctor);
                         doctorView.displayDoctorMenu();
                         break;
@@ -84,7 +46,7 @@ public class Main {
                         // Administrator-specific actions here
                         break;
                     case "Patient":
-                        Patient patient = new Patient(staff.getId(), staff.getName(), staff.getId(), staff.getBloodType());
+                        Patient patient = new Patient(user.getId(), user.getName(), user.getId(), user.getBloodType());
                         PatientView patientView = new PatientView(patient);
                         patientView.handleUserChoice();
                         break;
@@ -98,8 +60,8 @@ public class Main {
     }
 
     // Method to load staff details from CSV
-    private static Map<String, Staff> loadStaffDetails(String filePath) {
-        Map<String, Staff> staffMap = new HashMap<>();
+    private static Map<String, User> loadUserDetails(String filePath) {
+        Map<String, User> userMap = new HashMap<>();
 
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line = br.readLine(); // Skip header
@@ -128,20 +90,20 @@ public class Main {
                     String password = values[8].trim();
                     int newUser = !values[9].isEmpty() ? Integer.parseInt(values[9].trim()) : 0;
 
-                    // Create and add Staff object to the map
-                    Staff staff = new Staff(id, name, role, gender, age, dateOfBirth, bloodType, contactInfo, password, newUser);
-                    staffMap.put(id, staff);
+                    // Create and add User object to the map
+                    User user = new User(id, name, role, gender, age, dateOfBirth, bloodType, contactInfo, password, newUser);
+                    userMap.put(id, user);
                 } catch (NumberFormatException e) {
                     System.out.println("Error parsing numeric values in line: " + line);
                 }
             }
 
-            // Debugging: Print all IDs loaded into the staffMap
-            System.out.println("Loaded staff IDs: " + staffMap.keySet());
+            // Debugging: Print all IDs loaded into the userMap
+            System.out.println("Loaded user IDs: " + userMap.keySet());
         } catch (IOException e) {
             System.out.println("Error reading the file: " + e.getMessage());
         }
 
-        return staffMap;
+        return userMap;
     }
 }

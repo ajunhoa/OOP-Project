@@ -7,7 +7,7 @@ public class DoctorView {
     private Doctor doctor;
     private Scanner scanner;
 
-    public DoctorView(Doctor doctor) { // Accept Doctor directly
+    public DoctorView(Doctor doctor) {
         this.doctor = doctor;
         this.scanner = new Scanner(System.in);
     }
@@ -15,7 +15,7 @@ public class DoctorView {
     public void displayDoctorMenu() {
         boolean exit = false;
         while (!exit) {
-            doctor.displayMenu();
+            this.displayMenu();
             System.out.print("Select an option: ");
             int choice = scanner.nextInt();
             scanner.nextLine();
@@ -72,4 +72,13 @@ public class DoctorView {
     //         System.out.println(appointment);
     //     }
     // }
+         public void displayMenu() {
+        System.out.println("\n=== Doctor Menu ===");
+        System.out.println("1. View Patient Medical Records");
+        System.out.println("2. Set Availability for Appointments");
+        System.out.println("3. Accept or Decline Appointment Requests");
+        System.out.println("4. View Upcoming Appointments");
+        System.out.println("5. Logout");
+    }
+       
 }

@@ -1,22 +1,48 @@
 package model;
 
-public abstract class User {
-    private String userID;
+public class User {
+    private String id;
     private String name;
+    private String role;
+    private String gender;
+    private int age;
+    private String dateOfBirth;
+    private String bloodType;
+    private String contactInfo;
     private String password;
+    private int newUser;
 
-    public User(String userID, String name) {
-        this.userID = userID;
+    public User(String id, String name, String role, String gender, int age, String dateOfBirth, 
+                 String bloodType, String contactInfo, String password, int newUser) {
+        this.id = id;
         this.name = name;
-        this.password = "password"; // Default password
+        this.role = role;
+        this.gender = gender;
+        this.age = age;
+        this.dateOfBirth = dateOfBirth;
+        this.bloodType = bloodType;
+        this.contactInfo = contactInfo;
+        this.password = password;
+        this.newUser = newUser;
     }
 
-    public String getUserID() {
-        return userID;
-    }
+        // Getters and any other methods needed by Staff
+        public String getName() { return name; }
+        public String getRole() { return role; }
+        public String getId() { return id; }
+        public String getPassword() { return password; }
+        public String getBloodType() { return bloodType; }
+    
+        @Override
+        public String toString() {
+            return "ID: " + id + ", Name: " + name + ", Role: " + role + ", Gender: " + gender +
+                   ", Age: " + age + ", Date of Birth: " + dateOfBirth + ", Blood Type: " + bloodType +
+                   ", Contact Info: " + contactInfo + ", New User: " + newUser;
+        }
 
-    public String getName() {
-        return name;
+    public User(String id, String name) {
+        this.id = id;
+        this.name = name;
     }
 
     public boolean validatePassword(String inputPassword) {
@@ -27,6 +53,4 @@ public abstract class User {
         this.password = newPassword;
     }
 
-    // Abstract method for menu display; subclasses implement their specific menus
-    public abstract void displayMenu();
 }

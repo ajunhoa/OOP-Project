@@ -55,12 +55,6 @@ public class Doctor extends User {
     //     return appointments;
     // }
 
-    @Override
-    public void displayMenu() {
-        System.out.println("1. View Patient Medical Records");
-        System.out.println("2. Set Availability for Appointments");
-        System.out.println("3. Accept or Decline Appointment Requests");
-        System.out.println("4. View Upcoming Appointments");
-        System.out.println("5. Logout");
-    }
+
+
 }
