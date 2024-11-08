@@ -2,14 +2,12 @@ package controller;
 
 import model.User;
 import java.io.*;
-import java.util.Map;
-import model.User;
 
 public class UserController {
 
     public static void promptPasswordChange(User user, String filePath) {
         if (user.isNewUser()) {
-            System.out.println("Please change your password:");
+            System.out.println("Please change your password for first time log in");
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
             try {

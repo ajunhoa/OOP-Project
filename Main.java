@@ -30,7 +30,7 @@ public class Main {
 
             if (user != null && user.getPassword().equals(password)) {
                 System.out.println("Welcome, " + user.getName());
-                System.out.println(user);
+                // System.out.println(user);
                 UserController.promptPasswordChange(user, filePath);
 
 
