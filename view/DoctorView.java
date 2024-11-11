@@ -1,7 +1,5 @@
 package view;
 
-import controller.DoctorController;
-import model.Doctor;
 // import model.Patient;
 // import model.Appointment;
 import java.util.Scanner;

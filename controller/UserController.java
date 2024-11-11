@@ -11,7 +11,7 @@ import model.Patient;
  * This class facilitates user authentication and allows for updating user account details like password.
  * @author
  * @version 1.0
- * @since 2023-11-01
+ * @since 2024-11-01
  */
 public class UserController {
 
