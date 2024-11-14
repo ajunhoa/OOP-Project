@@ -1,18 +1,20 @@
 package view;
-
-import java.util.Scanner;
 import model.Doctor;
+import java.util.Scanner;
+import controller.AppointmentSlotController;
+import model.AppointmentSlot;
 
 public class DoctorView {
     private Doctor doctor;
     private Scanner scanner;
+    private AppointmentSlot appointmentSlot = new AppointmentSlot();
 
-    public DoctorView(Doctor doctor, Scanner scanner) {
+    public DoctorView(Doctor doctor) {
         this.doctor = doctor;
-        this.scanner = scanner;
+        this.scanner = new Scanner(System.in);
     }
 
-    public void displayDoctorMenu() {
+    public void displayDoctorMenu(String doctorID) {
         boolean exit = false;
         while (!exit) {
             this.displayMenu();
@@ -22,17 +24,26 @@ public class DoctorView {
 
             switch (choice) {
                 case 1:
-                    viewPatientRecord();
+                    //viewPatientRecord();
                     break;
                 case 2:
-                    setDoctorAvailability();
+                    //setDoctorAvailability();
                     break;
                 case 3:
-                    manageAppointmentRequests();
+                    appointmentSlot.viewPersonalSchedule(doctorID);
                     break;
                 case 4:
+                    appointmentSlot.setAvailability(doctorID);
                     break;
                 case 5:
+                    break;
+                case 6:
+                    appointmentSlot.viewUpcomingAppointment(doctorID);
+                    break;
+                case 7:
+                    
+                    break;
+                case 8:
                     exit = true;
                     System.out.println("Logging out...");
                     break;
@@ -42,34 +53,20 @@ public class DoctorView {
         }
     }
 
-    private void viewPatientRecord() {
-        System.out.print("Enter Patient ID: ");
-        String patientID = scanner.nextLine();
-        doctor.viewPatientRecord(patientID);
-    }
 
-    private void setDoctorAvailability() {
-        System.out.print("Enter Date (e.g., 2023-09-19): ");
-        String date = scanner.nextLine();
-        System.out.print("Enter Time (e.g., 10:00 AM): ");
-        String time = scanner.nextLine();
-        doctor.setAvailability(date, time);
-    }
-
-    private void manageAppointmentRequests() {
-        System.out.print("Enter Appointment ID: ");
-        String appointmentID = scanner.nextLine();
-        System.out.print("Accept appointment? (yes/no): ");
-        boolean accept = scanner.nextLine().equalsIgnoreCase("yes");
-        doctor.manageAppointment(appointmentID, accept);
-    }
-
-    public void displayMenu() {
+         public void displayMenu() {
         System.out.println("\n=== Doctor Menu ===");
         System.out.println("1. View Patient Medical Records");
-        System.out.println("2. Set Availability for Appointments");
-        System.out.println("3. Accept or Decline Appointment Requests");
-        System.out.println("4. View Upcoming Appointments");
-        System.out.println("5. Logout");
+        System.out.println("2. Update Patient Medical Records");
+        System.out.println("3. View Personal Schedule");
+        System.out.println("4. Set Availability for Appointments");
+        System.out.println("5. Accept or Decline Appointment Requests");
+        System.out.println("6. View Upcoming Appointments");
+        System.out.println("7. Record Appointment Outcome");
+        System.out.println("8. Logout");
+
+
+
     }
+       
 }

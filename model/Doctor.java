@@ -49,12 +49,7 @@ public class Doctor extends User {
             System.out.println("Appointment declined.");
         }
     }
-
-    // Method to get upcoming appointments (stub example)
-    // public List<Appointment> getUpcomingAppointments() {
-    //     return appointments;
-    // }
-
+    
 
 
 }

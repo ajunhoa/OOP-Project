@@ -1,0 +1,8 @@
+﻿Staff ID,Name,Role,Gender,Age,Date of Birth,Blood Type,Contact Information,Password,New User
+D001,John Smith,Doctor,Male,45,,,,password,0
+D002,Emily Clarke,Doctor,Female,38,,,,password,0
+P001,Mark Lee,Pharmacist,Male,29,,,,password,1
+A001,Sarah Lee,Administrator,Female,40,,,,password,1
+P1001,Alice Brown,Patient,Female,,14/5/1980,A+,alice.brown@example.com,password,1
+P1002,Bob Stone,Patient,Male,,22/11/1975,B+,bob.stone@example.com,password,1
+P1003,Charlie White,Patient,Male,,8/7/1990,O-,charlie.white@example.com,password,1
