@@ -57,7 +57,7 @@ public class PatientView {
     }
 
     // Display Patient Menu
-    public void displayPatientMenu() {
+    private void displayPatientMenu() {
         System.out.println("\n=== Patient Menu ===");
         System.out.println("1. View Medical Record");
         System.out.println("2. Update Personal Information");
