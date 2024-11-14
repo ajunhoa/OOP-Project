@@ -14,10 +14,12 @@ import model.User;
 
 public class Main {
     public static void main(String[] args) {
+        // Load user details
         String filePath = "assets/finalise_list.csv";
         Map<String, User> userMap = loadUserDetails(filePath);
-
+        // Load appointment details
         try (Scanner scanner = new Scanner(System.in)) {
+
             System.out.println("Welcome to the Hospital Management System");
             System.out.print("Enter your User ID: ");
             String userId = scanner.nextLine().trim().toUpperCase();
@@ -40,7 +42,7 @@ public class Main {
                         // Doctor-specific actions here
                         Doctor doctor = new Doctor(user.getId(), user.getName(), user.getRole());
                         DoctorView doctorView = new DoctorView(doctor);
-                        doctorView.displayDoctorMenu();
+                        doctorView.displayDoctorMenu(userId);
                         break;
                     case "Pharmacist":
                         System.out.println("Accessing Pharmacist's functionalities...");
@@ -111,4 +113,5 @@ public class Main {
 
         return userMap;
     }
+
 }
