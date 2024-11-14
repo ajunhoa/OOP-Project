@@ -64,9 +64,6 @@ public class DoctorView {
         System.out.println("6. View Upcoming Appointments");
         System.out.println("7. Record Appointment Outcome");
         System.out.println("8. Logout");
-
-
-
     }
        
 }
