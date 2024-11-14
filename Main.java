@@ -11,6 +11,7 @@ import model.Staff;
 import model.User;
 import view.DoctorView;
 import view.PatientView;
+import view.PharmacistView;
 
 public class Main {
     public static void main(String[] args) {
@@ -45,7 +46,9 @@ public class Main {
                         doctorView.displayDoctorMenu(userId);
                         break;
                     case "Pharmacist":
-                        System.out.println("Accessing Pharmacist's functionalities...");
+                        PharmacistView pharmacistView = new PharmacistView(scanner);
+                        pharmacistView.displayPharmacistMenu(); 
+
                         break;
                     case "Administrator":
                         System.out.println("Accessing Administrator's functionalities...");

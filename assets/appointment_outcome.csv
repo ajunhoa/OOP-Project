@@ -1,5 +1,5 @@
 Appointment ID,Patient ID,Doctor ID,Date of Appointment,Type of services,Medicine prescribed,Consultation notes,Status
 APPT1,P1001,D001,12/12/2222,XRAY,PANADOL,PAIN EVERYWHERE,Pending
-APPT1,P1001,D002,12/12/2222,XRAY,NIL,NIL,Pending
-APPT1,P1001,D001,12/12/2222,nil,nil,nil,Pending
-APPT1,P1001,D001,12/12/2222,xray,nil,nil,Pending
+APPT10,P1002,D001,16/12/2024,Consultation,Loratadine,Allergic to seafood,Pending
+APPT11,P1001,D001,20/11/2024,Consultation,Plan B,Underage,Pending
+APPT9,P1003,D002,22/12/2024,CT Scan,Ibuprofen,Headache,Pending
