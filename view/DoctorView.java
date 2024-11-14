@@ -1,13 +1,15 @@
 package view;
 import model.Doctor;
 import java.util.Scanner;
-import controller.AppointmentSlotController;
 import model.AppointmentSlot;
+import model.AppointmentOutcomeRecord;
+
 
 public class DoctorView {
     private Doctor doctor;
     private Scanner scanner;
     private AppointmentSlot appointmentSlot = new AppointmentSlot();
+    private AppointmentOutcomeRecord appointmentOutcomeRecord = new AppointmentOutcomeRecord();
 
     public DoctorView(Doctor doctor) {
         this.doctor = doctor;
@@ -27,7 +29,7 @@ public class DoctorView {
                     //viewPatientRecord();
                     break;
                 case 2:
-                    //setDoctorAvailability();
+                    //updatePatientRecord();
                     break;
                 case 3:
                     appointmentSlot.viewPersonalSchedule(doctorID);
@@ -36,12 +38,13 @@ public class DoctorView {
                     appointmentSlot.setAvailability(doctorID);
                     break;
                 case 5:
+                // acceptdecline
                     break;
                 case 6:
                     appointmentSlot.viewUpcomingAppointment(doctorID);
                     break;
                 case 7:
-                    
+                    appointmentOutcomeRecord.recordAppointmentOutcome(doctorID);
                     break;
                 case 8:
                     exit = true;
@@ -54,7 +57,7 @@ public class DoctorView {
     }
 
 
-         public void displayMenu() {
+        public void displayMenu() {
         System.out.println("\n=== Doctor Menu ===");
         System.out.println("1. View Patient Medical Records");
         System.out.println("2. Update Patient Medical Records");

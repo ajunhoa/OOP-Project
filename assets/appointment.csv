@@ -1,8 +1,8 @@
 Appointment ID,Doctor ID,Patient ID,Date,Time,Status
-APPT1,D001,,12/12/2222,12:00 pm,Available
+APPT1,D001,P1001,12/12/2222,12:00 pm,Completed
 APPT2,D002,,10/10/2020,10:20 pm,Available
-APPT3,D001,,11/11/2020,10:00 pm,Confirmed
+APPT3,D001,P1003,11/11/2020,10:00 pm,Confirmed
 APPT4,D001,,11/11/2020,2:30 pm,Available
-APPT5,D001,,11/11/2020,12:00 pm,Confirmed
+APPT5,D001,P1002,11/11/2020,12:00 pm,Confirmed
 APPT6,D001,,3/5/2024,5:50 pm,Pending
-APPT7,D001,,15/11/2024,1:20 AM,Available
+APPT7,D001,,15/11/2024,1:20 am,Available

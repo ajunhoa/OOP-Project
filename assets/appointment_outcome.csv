@@ -1,1 +1,5 @@
-Appointment ID	Date of Appointment	Type of services	Medicine prescribed	Consultation notes	Status
+Appointment ID,Patient ID,Doctor ID,Date of Appointment,Type of services,Medicine prescribed,Consultation notes,Status
+APPT1,P1001,D001,12/12/2222,XRAY,PANADOL,PAIN EVERYWHERE,Pending
+APPT1,P1001,D002,12/12/2222,XRAY,NIL,NIL,Pending
+APPT1,P1001,D001,12/12/2222,nil,nil,nil,Pending
+APPT1,P1001,D001,12/12/2222,xray,nil,nil,Pending
