@@ -1,86 +1,120 @@
 package view;
-import java.util.Scanner;
 
 import model.Patient;
+import controller.MedicalRecordController; // Assuming you will implement this controller later
+import java.util.Scanner;
 
 public class PatientView {
-   private Patient patient;
+    private Patient patient;
+    private Scanner scanner;
 
-   public PatientView(Patient patient) {
-      this.patient = patient;
-   }
+    public PatientView(Patient patient, Scanner scanner) {
+        this.patient = patient;
+        this.scanner = scanner;
+    }
 
-   public void handleUserChoice() {
-      try (Scanner scanner = new Scanner(System.in)) {
-         boolean isRunning = true;
+    public void handleUserChoice() {
+        boolean exit = false;
+        while (!exit) {
+            displayPatientMenu();
+            System.out.print("Select an option: ");
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // To consume the newline character after the integer input
 
-         while (isRunning) {
-            this.displayMenu();
-            System.out.print("Enter your choice: ");
-
-            // Error handling for invalid input
-            try {
-               int choice = scanner.nextInt();
-               scanner.nextLine(); // Consume newline left-over
-               switch (choice) {
-                  case 1:
-                     System.out.println("Medical Record:");
-                    //  System.out.println(this.patient.viewMedicalRecord());
-                     break;
-                  case 2:
-                     System.out.println("Update Contact Information");
-                     System.out.print("Enter new contact number: ");
-                     String contactNumber = scanner.nextLine();
-                     System.out.print("Enter new email address: ");
-                     String email = scanner.nextLine();
-                     // this.patient.updateContactInfo(contactNumber, email);
-                     System.out.println("Contact information updated.");
-                     break;
-                  case 3:
-                     System.out.println("Viewing available appointment slots...");
-                     // Add logic to display available slots
-                     break;
-                  case 4:
-                     System.out.println("Scheduling an appointment...");
-                     // Add logic for scheduling an appointment
-                     break;
-                  case 5:
-                     System.out.println("Rescheduling an appointment...");
-                     // Add logic for rescheduling an appointment
-                     break;
-                  case 6:
-                     System.out.println("Cancelling an appointment...");
-                     // Add logic for cancelling an appointment
-                     break;
-                  case 7:
-                     System.out.println("Viewing past appointment outcome records...");
-                     // Add logic to view past appointment outcomes
-                     break;
-                  case 8:
-                     isRunning = false;
-                     System.out.println("Logging out...");
-                     break;
-                  default:
-                     System.out.println("Invalid choice, please try again.");
-               }
-            } catch (Exception e) {
-               System.out.println("Invalid input. Please enter a number from the menu.");
-               scanner.nextLine(); // Clear invalid input
+            switch (choice) {
+                case 1:
+                    viewMedicalRecord();
+                    break;
+                case 2:
+                    updatePersonalInformation();
+                    break;
+                case 3:
+                    viewAvailableAppointmentSlots();
+                    break;
+                case 4:
+                    scheduleAppointment();
+                    break;
+                case 5:
+                    rescheduleAppointment();
+                    break;
+                case 6:
+                    cancelAppointment();
+                    break;
+                case 7:
+                    viewScheduledAppointments();
+                    break;
+                case 8:
+                    viewPastAppointmentOutcomeRecords();
+                    break;
+                case 9:
+                    System.out.println("Logging out...");
+                    exit = true;
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
             }
-         }
-      }
-   }
+        }
+    }
 
-   public void displayMenu() {
-      System.out.println("\n=== Patient Menu ===");
-      System.out.println("1. View Medical Record");
-      System.out.println("2. Update Personal Information");
-      System.out.println("3. View Available Appointment Slots");
-      System.out.println("4. Schedule an Appointment");
-      System.out.println("5. Reschedule an Appointment");
-      System.out.println("6. Cancel an Appointment");
-      System.out.println("7. View Past Appointment Outcome Records");
-      System.out.println("8. Logout");
-      System.out.println("====================");
-   }
+    // Display Patient Menu
+    public void displayPatientMenu() {
+        System.out.println("\n=== Patient Menu ===");
+        System.out.println("1. View Medical Record");
+        System.out.println("2. Update Personal Information");
+        System.out.println("3. View Available Appointment Slots");
+        System.out.println("4. Schedule an Appointment");
+        System.out.println("5. Reschedule an Appointment");
+        System.out.println("6. Cancel an Appointment");
+        System.out.println("7. View Scheduled Appointments");
+        System.out.println("8. View Past Appointment Outcome Records");
+        System.out.println("9. Logout");
+    }
+
+    // Method to View Medical Record
+    private void viewMedicalRecord() {
+        System.out.println("Viewing medical record...");
+        patient.viewMedicalRecord();  // Assuming this method exists in the Patient class
+    }
+
+    // Method to Update Personal Information
+    private void updatePersonalInformation() {
+        System.out.println("Updating personal information...");
+        MedicalRecordController.updatePersonalInformation(patient, scanner); // Placeholder for controller method
+    }
+
+    // Method to View Available Appointment Slots
+    private void viewAvailableAppointmentSlots() {
+        System.out.println("Viewing available appointment slots...");
+        patient.viewAvailableSlots();  // Assuming this method exists in the Patient class
+    }
+
+    // Method to Schedule an Appointment
+    private void scheduleAppointment() {
+        System.out.println("Scheduling an appointment...");
+        patient.scheduleAppointment(scanner);  // Assuming this method exists in the Patient class
+    }
+
+    // Method to Reschedule an Appointment
+    private void rescheduleAppointment() {
+        System.out.println("Rescheduling an appointment...");
+        patient.rescheduleAppointment(scanner);  // Assuming this method exists in the Patient class
+    }
+
+    // Method to Cancel an Appointment
+    private void cancelAppointment() {
+        System.out.println("Canceling an appointment...");
+        patient.cancelAppointment(scanner);  // Assuming this method exists in the Patient class
+    }
+
+    // Method to View Scheduled Appointments
+    private void viewScheduledAppointments() {
+        System.out.println("Viewing scheduled appointments...");
+        patient.viewScheduledAppointments();  // Assuming this method exists in the Patient class
+    }
+
+    // Method to View Past Appointment Outcome Records
+    private void viewPastAppointmentOutcomeRecords() {
+        System.out.println("Viewing past appointment outcome records...");
+        patient.viewPastAppointmentOutcomeRecords();  // Assuming this method exists in the Patient class
+    }
 }

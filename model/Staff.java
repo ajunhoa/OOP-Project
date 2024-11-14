@@ -1,4 +1,7 @@
 package model;
+
+
+
 public class Staff extends User {
 
     public Staff(String id, String name, String role, String gender, int age, int newUser, String password) {

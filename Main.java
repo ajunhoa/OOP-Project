@@ -10,6 +10,7 @@ import model.Patient;
 import model.Staff;
 import model.User;
 import view.DoctorView;
+import view.PatientView;
 
 public class Main {
     public static void main(String[] args) {
@@ -51,6 +52,9 @@ public class Main {
                         break;
                     case "Patient":
                         // Removed unnecessary code that was commented out
+                        Patient patient = new Patient(user.getId(), user.getName(), user.getDateOfBirth(), user.getGender(), user.getBloodType(), user.getContactInfo(), user.isNewUser() ? 1 : 0, user.getPassword(), user.getContactNumber());
+                        PatientView patientView = new PatientView(patient, scanner);  // Pass scanner here
+                        patientView.handleUserChoice();
                         break;
                     default:
                         System.out.println("Role not recognized.");
@@ -112,7 +116,7 @@ public class Main {
                 } else {    
                     System.out.println("Skipping line, not enough columns: " + line);
                 }
-            }
+            }   
 
             System.out.println("Loaded user IDs from " + filePath + ": " + userMap.keySet());
         } catch (IOException e) {
