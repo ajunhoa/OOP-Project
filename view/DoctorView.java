@@ -38,7 +38,7 @@ public class DoctorView {
                     appointmentSlot.setAvailability(doctorID);
                     break;
                 case 5:
-                // acceptdecline
+                    appointmentSlot.manageAppointmentRequests(doctorID);
                     break;
                 case 6:
                     appointmentSlot.viewUpcomingAppointment(doctorID);
