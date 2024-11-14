@@ -16,7 +16,7 @@ import java.util.Scanner;
 
 /**
  * The AdministratorView class provides the user interface specifically
- * for administrators. It allows administrators to manage their password, view staff, medicine inventory, and appointments.
+ * for administrators. It allows administrators to change password, view staff, medicine inventory, and appointments.
  * @version 1.1
  */
 
@@ -26,7 +26,7 @@ public class AdministratorView {
     private static final String MEDICINE_FILE_PATH = "path/to/Medicine_List.csv";
 
     // Initialize StaffController with the loaded staff list
-    private static StaffController staffController = new StaffController(new ArrayList<>());
+    private static StaffController staffController = new StaffController(new ArrayList<>()); //probably loading in staff list from csv file instead
 
     public static void displayUserMenu() {
         Scanner scanner = new Scanner(System.in);
@@ -34,10 +34,11 @@ public class AdministratorView {
             System.out.println("=====================================");
             System.out.println("Administrator Portal");
             System.out.println("1. Change password");
-            System.out.println("2. View staff list");
-            System.out.println("3. View medicine inventory");
-            System.out.println("4. View appointments");
-            System.out.println("5. Logout");
+            System.out.println("2. View and Manage Hospital Staff");
+            System.out.println("3. View appointments");
+            System.out.println("4. View and Manage Medicine Inventory");
+            System.out.println("5. Approve Replenishment Requests");
+            System.out.println("6. Logout");
             System.out.print("Enter choice: ");
             try {
                 int choice = scanner.nextInt();
@@ -50,12 +51,14 @@ public class AdministratorView {
                         viewStaffList();
                         continue;
                     case 3:
-                        viewInventory();
-                        continue;
-                    case 4:
                         viewAppointment();
                         continue;
+                    case 4:
+                        viewInventory();
+                        continue;
                     case 5:
+                        viewRequests();//request acception
+                    case 6:
                         HospitalManagementSystem.currentUser = null;
                         System.out.println("Logging out...");
                         return;

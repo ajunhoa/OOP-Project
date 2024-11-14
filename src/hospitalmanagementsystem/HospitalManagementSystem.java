@@ -7,11 +7,11 @@ import java.util.Scanner;
 
 import model.Administrator;
 import model.UserConcrete;
-import models.Doctor;
+import model.Doctor;
 import model.Patient;
 import model.Pharmacist;
 import view.AdministratorView;
-import views.DoctorView;
+import view.DoctorView;
 import view.PharmacistView;
 
 public class HospitalManagementSystem {
