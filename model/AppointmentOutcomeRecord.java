@@ -5,6 +5,8 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class AppointmentOutcomeRecord {
@@ -81,23 +83,110 @@ public class AppointmentOutcomeRecord {
         return null;
     }
 
-    public void viewAppointmentOutcomes() {
+    public void viewAppointmentOutcomeRecord() {
         try (BufferedReader br = new BufferedReader(new FileReader(outcomeFilePath))) {
             String line;
+            br.readLine();
             System.out.println("Appointment Outcome Records:");
+            
             while ((line = br.readLine()) != null) {
                 String[] values = line.split(",");
-                System.out.println("Appointment ID: " + values[0] +
-                                   ", Patient ID: " + values[1] +
-                                   ", Doctor ID: " + values[2] +
-                                   ", Date of Appointment: " + values[3] +
-                                   ", Type of Services: " + values[4] +
-                                   ", Medicine Prescribed: " + values[5] +
-                                   ", Consultation Notes: " + values[6] +
-                                   ", Status: " + values[7]);
+                if (values.length >= 8) {
+                    System.out.println("Appointment ID: " + values[0] +
+                                       ", Patient ID: " + values[1] +
+                                       ", Doctor ID: " + values[2] +
+                                       ", Date of Appointment: " + values[3] +
+                                       ", Type of Services: " + values[4] +
+                                       ", Medicine Prescribed: " + values[5] +
+                                       ", Consultation Notes: " + values[6] +
+                                       ", Status: " + values[7]);
+                } else {
+                    System.out.println("Skipping line due to insufficient columns: " + line);
+                }
             }
         } catch (IOException e) {
             System.out.println("Error reading the appointment outcome file: " + e.getMessage());
         }
     }
+    
+    public void updateMedicineStatus() {
+    List<String[]> pendingAppointments = new ArrayList<>();
+
+    // Read the appointment outcome records and find those with status "Pending"
+    try (BufferedReader br = new BufferedReader(new FileReader(outcomeFilePath))) {
+        String line;
+        br.readLine(); // Skip header line
+        while ((line = br.readLine()) != null) {
+            String[] values = line.split(",");
+            if (values.length >= 8 && values[7].equalsIgnoreCase("Pending")) {
+                pendingAppointments.add(values);
+            }
+        }
+    } catch (IOException e) {
+        System.out.println("Error reading the appointment outcome file: " + e.getMessage());
+    }
+
+    // If there are no pending appointments
+    if (pendingAppointments.isEmpty()) {
+        System.out.println("No pending appointments found.");
+        return;
+    }
+
+    // Display pending appointments
+    System.out.println("Pending Appointment Outcomes:");
+    for (int i = 0; i < pendingAppointments.size(); i++) {
+        String[] appointment = pendingAppointments.get(i);
+        System.out.println((i + 1) + ". Appointment ID: " + appointment[0] +
+                           ", Patient ID: " + appointment[1] +
+                           ", Doctor ID: " + appointment[2] +
+                           ", Date of Appointment: " + appointment[3] +
+                           ", Type of Services: " + appointment[4] +
+                           ", Medicine Prescribed: " + appointment[5] +
+                           ", Consultation Notes: " + appointment[6]);
+    }
+
+    // Prompt pharmacist to select an appointment ID to update
+    Scanner scanner = new Scanner(System.in);
+    System.out.print("Enter the Appointment ID that you have dispensed medicine to: ");
+    String selectedAppointmentID = scanner.nextLine().trim().toUpperCase();
+
+    if (updateAppointmentStatus(selectedAppointmentID, "Dispensed")) {
+        System.out.println("Appointment " + selectedAppointmentID + " status updated to 'Dispensed'.");
+    } else {
+        System.out.println("Failed to update the status. Please ensure the Appointment ID is correct.");
+    }
+}
+
+private boolean updateAppointmentStatus(String appointmentID, String newStatus) {
+    List<String> lines = new ArrayList<>();
+    boolean isUpdated = false;
+
+    try (BufferedReader br = new BufferedReader(new FileReader(outcomeFilePath))) {
+        String line;
+        while ((line = br.readLine()) != null) {
+            String[] values = line.split(",");
+            if (values.length >= 8 && values[0].equalsIgnoreCase(appointmentID)) {
+                values[7] = newStatus; 
+                line = String.join(",", values);
+                isUpdated = true; 
+            }
+            lines.add(line);
+        }
+    } catch (IOException e) {
+        System.out.println("Error reading the appointment outcome file: " + e.getMessage());
+        return false;
+    }
+
+    try (BufferedWriter writer = new BufferedWriter(new FileWriter(outcomeFilePath))) {
+        for (String l : lines) {
+            writer.write(l);
+            writer.newLine();
+        }
+        return isUpdated;
+    } catch (IOException e) {
+        System.out.println("Error writing to the appointment outcome file: " + e.getMessage());
+        return false;
+    }
+}
+
 }
