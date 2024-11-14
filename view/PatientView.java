@@ -1,7 +1,7 @@
 package view;
 
 import model.Patient;
-import controller.MedicalRecordController; // Assuming you will implement this controller later
+// import controller.MedicalRecordController; // Assuming you will implement this controller later
 import java.util.Scanner;
 
 public class PatientView {
@@ -79,7 +79,7 @@ public class PatientView {
     // Method to Update Personal Information
     private void updatePersonalInformation() {
         System.out.println("Updating personal information...");
-        MedicalRecordController.updatePersonalInformation(patient, scanner); // Placeholder for controller method
+        // MedicalRecordController.updatePersonalInformation(patient, scanner); // Placeholder for controller method
     }
 
     // Method to View Available Appointment Slots
