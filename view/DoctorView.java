@@ -1,15 +1,15 @@
 package view;
 
-import model.Doctor;
 import java.util.Scanner;
+import model.Doctor;
 
 public class DoctorView {
     private Doctor doctor;
     private Scanner scanner;
 
-    public DoctorView(Doctor doctor) {
+    public DoctorView(Doctor doctor, Scanner scanner) {
         this.doctor = doctor;
-        this.scanner = new Scanner(System.in);
+        this.scanner = scanner;
     }
 
     public void displayDoctorMenu() {
@@ -31,7 +31,6 @@ public class DoctorView {
                     manageAppointmentRequests();
                     break;
                 case 4:
-                    // viewUpcomingAppointments();  // Uncomment if Appointment class exists
                     break;
                 case 5:
                     exit = true;
@@ -46,7 +45,7 @@ public class DoctorView {
     private void viewPatientRecord() {
         System.out.print("Enter Patient ID: ");
         String patientID = scanner.nextLine();
-        doctor.viewPatientRecord(patientID);  // Call method directly on doctor
+        doctor.viewPatientRecord(patientID);
     }
 
     private void setDoctorAvailability() {
@@ -54,7 +53,7 @@ public class DoctorView {
         String date = scanner.nextLine();
         System.out.print("Enter Time (e.g., 10:00 AM): ");
         String time = scanner.nextLine();
-        doctor.setAvailability(date, time);  // Call method directly on doctor
+        doctor.setAvailability(date, time);
     }
 
     private void manageAppointmentRequests() {
@@ -62,17 +61,10 @@ public class DoctorView {
         String appointmentID = scanner.nextLine();
         System.out.print("Accept appointment? (yes/no): ");
         boolean accept = scanner.nextLine().equalsIgnoreCase("yes");
-        doctor.manageAppointment(appointmentID, accept);  // Call method directly on doctor
+        doctor.manageAppointment(appointmentID, accept);
     }
 
-    // Uncomment if Appointment class exists
-    // private void viewUpcomingAppointments() {
-    //     System.out.println("Upcoming appointments:");
-    //     for (Appointment appointment : doctor.getUpcomingAppointments()) {
-    //         System.out.println(appointment);
-    //     }
-    // }
-         public void displayMenu() {
+    public void displayMenu() {
         System.out.println("\n=== Doctor Menu ===");
         System.out.println("1. View Patient Medical Records");
         System.out.println("2. Set Availability for Appointments");
@@ -80,5 +72,4 @@ public class DoctorView {
         System.out.println("4. View Upcoming Appointments");
         System.out.println("5. Logout");
     }
-       
 }
