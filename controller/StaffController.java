@@ -11,7 +11,7 @@ public class StaffController {
 
     public StaffController() {
         doctorMap = new HashMap<>();
-        loadStaffDetails(); // Load staff details into the HashMap
+        loadStaffDetails();
     }
 
     private void loadStaffDetails() {
@@ -23,7 +23,7 @@ public class StaffController {
                 if (values.length >= 7 && values[2].equalsIgnoreCase("Doctor")) {
                     String doctorID = values[0].trim();
                     String doctorName = values[1].trim();
-                    doctorMap.put(doctorID, doctorName); // Store doctor ID and name in the HashMap
+                    doctorMap.put(doctorID, doctorName); 
                 }
             }
         } catch (IOException e) {
@@ -31,7 +31,6 @@ public class StaffController {
         }
     }
 
-    // Method to get doctor name by ID
     public String getDoctorNameByID(String doctorID) {
         return doctorMap.getOrDefault(doctorID, "Unknown Doctor");
     }
@@ -65,17 +64,17 @@ public class StaffController {
     private boolean isStaffIdExists(String staffId) {
         try (BufferedReader br = new BufferedReader(new FileReader(staffFilePath))) {
             String line;
-            br.readLine(); // Skip header if present
+            br.readLine();
             while ((line = br.readLine()) != null) {
                 String[] values = line.split(",");
                 if (values.length >= 1 && values[0].trim().equalsIgnoreCase(staffId)) {
-                    return true; // ID exists
+                    return true; 
                 }
             }
         } catch (IOException e) {
             System.out.println("Error reading the staff file: " + e.getMessage());
         }
-        return false; // ID does not exist
+        return false;
     }
 
     public boolean updateStaff(Staff updatedStaff) {
@@ -171,7 +170,7 @@ public class StaffController {
     }
 
     public void displayStaff(String role, String gender, Integer age) {
-        List<Staff> staffList = filterStaff(role, gender, age); // Use the filterStaff method with parameters
+        List<Staff> staffList = filterStaff(role, gender, age); 
     
         if (staffList.isEmpty()) {
             System.out.println("No staff members found.");

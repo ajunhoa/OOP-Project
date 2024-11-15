@@ -17,18 +17,15 @@ public class Main {
         String patientFilePath = "assets/updatedpatientlist.csv";
         String staffFilePath = "assets/updatedstafflist.csv";
         String medicalFilePath = "assets/medicalrecords.csv";
-        // Load patient and staff data
-        Map<String, User> userMap = DataInitializer.loadPatientDetails(patientFilePath);
-        userMap.putAll(DataInitializer.loadStaffDetails(staffFilePath)); // Load staff separately
 
-        // Load medical records and link them to patients
+        Map<String, User> userMap = DataInitializer.loadPatientDetails(patientFilePath);
+        userMap.putAll(DataInitializer.loadStaffDetails(staffFilePath)); 
+
         Map<String, MedicalRecord> medicalRecordMap = DataInitializer.loadMedicalRecords(medicalFilePath);
         DataInitializer.linkMedicalRecordsToPatients(userMap, medicalRecordMap);
 
-        // Initialize MedicalRecordController globally
         MedicalRecordController medicalRecordController = new MedicalRecordController(medicalRecordMap, userMap, medicalFilePath, patientFilePath);
 
-        // Debug: Verify medical records linked to patients
         for (Map.Entry<String, User> entry : userMap.entrySet()) {
             if (entry.getValue() instanceof Patient) {
                 Patient patient = (Patient) entry.getValue();

@@ -24,7 +24,7 @@ public class AppointmentSlotController {
 
     public void scheduleAppointment(String patientID) {
         List<String[]> availableSlots = new ArrayList<>();
-        StaffController staffController = new StaffController(); // Create an instance of StaffController
+        StaffController staffController = new StaffController(); 
     
         try (BufferedReader br = new BufferedReader(new FileReader(appointmentFilePath))) {
             String line;
@@ -35,12 +35,12 @@ public class AppointmentSlotController {
             while ((line = br.readLine()) != null) {
                 String[] values = line.split(",");
     
-                if (values.length >= 6 && values[5].equalsIgnoreCase("Available")) {
+                if (values.length >= 6 && values[5].equalsIgnoreCase("Available")|| values[5].equalsIgnoreCase("Cancelled")) {
                     availableSlots.add(values); 
-                    String doctorName = staffController.getDoctorNameByID(values[1]); // Get doctor name using doctor ID
+                    String doctorName = staffController.getDoctorNameByID(values[1]); 
                     System.out.println("Slot " + displayCount +
                                        ": Appointment ID: " + values[0] +
-                                       ", Doctor Name: " + doctorName + // Display doctor name
+                                       ", Doctor Name: " + doctorName + 
                                        ", Date: " + values[3] +
                                        ", Time: " + values[4]);
                     displayCount++; 
@@ -76,7 +76,7 @@ public class AppointmentSlotController {
     
     public void rescheduleAppointment(String patientID) {
         List<String[]> currentAppointments = new ArrayList<>();
-        StaffController staffController = new StaffController(); // Create an instance of StaffController
+        StaffController staffController = new StaffController(); 
     
         try (BufferedReader br = new BufferedReader(new FileReader(appointmentFilePath))) {
             String line;
@@ -86,13 +86,12 @@ public class AppointmentSlotController {
             int displayCount = 1;
             while ((line = br.readLine()) != null) {
                 String[] values = line.split(",");
-                // Update the condition to check for both Pending and Confirmed statuses
                 if (values.length >= 6 && values[2].equalsIgnoreCase(patientID) && 
                     (values[5].equalsIgnoreCase("Pending") || values[5].equalsIgnoreCase("Confirmed"))) {
                     currentAppointments.add(values);
-                    String doctorName = staffController.getDoctorNameByID(values[1]); // Get doctor name using doctor ID
+                    String doctorName = staffController.getDoctorNameByID(values[1]); 
                     System.out.println(displayCount + ". Appointment ID: " + values[0] +
-                                       ", Doctor Name: " + doctorName + // Display doctor name
+                                       ", Doctor Name: " + doctorName +
                                        ", Date: " + values[3] +
                                        ", Time: " + values[4] +
                                        ", Status: " + values[5]);
@@ -133,7 +132,7 @@ public class AppointmentSlotController {
     
             while ((line = br.readLine()) != null) {
                 String[] values = line.split(",");
-                if (values.length >= 6 && values[5].equalsIgnoreCase("Available")) {
+                if (values.length >= 6 && values[5].equalsIgnoreCase("Available")|| values[5].equalsIgnoreCase("Cancelled")) {
                     availableSlots.add(values);
                     String doctorName = staffController.getDoctorNameByID(values[1]); // Get doctor name using doctor ID
                     System.out.println("Slot " + displayCount + ": Appointment ID: " + values[0] +

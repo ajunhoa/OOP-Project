@@ -2,18 +2,16 @@
 
     public class MedicalRecord {
 
-        private String patientId;        // Patient ID (linked to the Patient class)
-        private String pastDiagnoses;    // Stores the past medical diagnoses of the patient
-        private String treatment;        // Stores the treatment information
+        private String patientId;
+        private String pastDiagnoses;
+        private String treatment;
 
-        // Constructor to initialize the medical record with necessary details
         public MedicalRecord(String patientId, String pastDiagnoses, String treatment) {
             this.patientId = patientId;
             this.pastDiagnoses = pastDiagnoses;
             this.treatment = treatment;
         }
 
-    // Getters and Setters for the fields
     public String getPatientId() {
         return patientId;
     }
@@ -39,7 +37,6 @@
         this.treatment = treatment;
     }
 
-    // Method to display the medical record details
     public void displayMedicalRecord(Patient patient) {
         System.out.println("=== Medical Record ===");
         System.out.println("Patient ID: " + patient.getId());
@@ -52,7 +49,6 @@
         System.out.println("Treatment: " + treatment);
     }
 
-    // Overriding toString method to represent the medical record in a human-readable format
     @Override
     public String toString() {
         return "Patient ID: " + patientId + ", Past Diagnoses: " + pastDiagnoses + ", Treatment: " + treatment;

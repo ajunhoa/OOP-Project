@@ -135,7 +135,7 @@ public class AdministratorView {
         String gender = scanner.nextLine();
         System.out.print("Enter New Age: ");
         int age = scanner.nextInt();
-        scanner.nextLine(); // Consume newline
+        scanner.nextLine();
         System.out.print("Enter New Password: ");
         String password = scanner.nextLine();
 

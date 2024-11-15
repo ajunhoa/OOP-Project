@@ -11,11 +11,11 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class MedicalRecordController {
-    private Map<String, MedicalRecord> medicalRecords; // Map of medical records
-    private Map<String, User> users; // Map of user data
+    private Map<String, MedicalRecord> medicalRecords;
+    private Map<String, User> users; 
     private Scanner scanner;
-    private String medicalRecordFilePath; // File path to the medical records CSV file
-    private String userFilePath; // File path to the user/patient list CSV file
+    private String medicalRecordFilePath; 
+    private String userFilePath; 
 
     public MedicalRecordController(Map<String, MedicalRecord> medicalRecords, Map<String, User> users, String medicalRecordFilePath, String userFilePath) {
         this.medicalRecords = medicalRecords;
@@ -31,9 +31,9 @@ public class MedicalRecordController {
         if (user instanceof Patient) {
             System.out.print("Enter new contact information: ");
             String newContactInfo = scanner.nextLine().trim();
-            user.setContactInfo(newContactInfo); // Update the User object
+            user.setContactInfo(newContactInfo); 
             System.out.println("Contact information updated successfully.");
-            saveUserRecordsToFile(); // Save the updated user record to file
+            saveUserRecordsToFile(); 
         } else {
             System.out.println("No user record found for Patient ID: " + patientId);
         }
@@ -47,9 +47,9 @@ public class MedicalRecordController {
             String newContactNumber = scanner.nextLine().trim();
             try {
                 int contactNumber = Integer.parseInt(newContactNumber);
-                user.setContactNumber(contactNumber); // Update the User object
+                user.setContactNumber(contactNumber);
                 System.out.println("Contact number updated successfully.");
-                saveUserRecordsToFile(); // Save the updated user record to file
+                saveUserRecordsToFile(); 
             } catch (NumberFormatException e) {
                 System.out.println("Invalid contact number. Please enter numeric values only.");
             }
@@ -64,9 +64,9 @@ public class MedicalRecordController {
         if (record != null) {
             System.out.print("Enter new diagnoses: ");
             String newDiagnoses = scanner.nextLine().trim();
-            record.setPastDiagnoses(newDiagnoses); // Update diagnoses in MedicalRecord
+            record.setPastDiagnoses(newDiagnoses); 
             System.out.println("Diagnoses updated successfully.");
-            saveMedicalRecordsToFile(); // Save the updated medical record to file
+            saveMedicalRecordsToFile();
         } else {
             System.out.println("No medical record found for Patient ID: " + patientId);
         }
@@ -78,36 +78,31 @@ public class MedicalRecordController {
         if (record != null) {
             System.out.print("Enter new prescription: ");
             String newPrescription = scanner.nextLine().trim();
-            //record.setPrescription(newPrescription); // Update prescription in MedicalRecord
             System.out.println("Prescription updated successfully.");
-            saveMedicalRecordsToFile(); // Save the updated medical record to file
+            saveMedicalRecordsToFile(); 
         } else {
             System.out.println("No medical record found for Patient ID: " + patientId);
         }
     }
 
-    // Method to update treatment
     public void updateTreatment(String patientId) {
         MedicalRecord record = medicalRecords.get(patientId);
         if (record != null) {
             System.out.print("Enter new treatment: ");
             String newTreatment = scanner.nextLine().trim();
-            record.setTreatment(newTreatment); // Update treatment in MedicalRecord
+            record.setTreatment(newTreatment); 
             System.out.println("Treatment updated successfully.");
-            saveMedicalRecordsToFile(); // Save the updated medical record to file
+            saveMedicalRecordsToFile();
         } else {
             System.out.println("No medical record found for Patient ID: " + patientId);
         }
     }
 
-    // Method to save updated medical records back to the medical records CSV file
     public void saveMedicalRecordsToFile() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(medicalRecordFilePath))) {
-            // Write header line
             writer.write("Patient ID,Past Diagnoses,Treatment");
             writer.newLine();
 
-            // Write each medical record in CSV format
             for (MedicalRecord record : medicalRecords.values()) {
                 String line = record.getPatientId() + "," +
                               record.getPastDiagnoses() + "," +
@@ -121,16 +116,13 @@ public class MedicalRecordController {
         }
     }
     
-    // Method to save only patient records back to the patient list CSV file
     public void saveUserRecordsToFile() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(userFilePath))) {
-            // Write header line
             writer.write("Patient ID,Name,Date of Birth,Gender,Blood Type,Contact Info,New User,Password,Contact Number");
             writer.newLine();
 
-            // Write only patients to the file
             for (User user : users.values()) {
-                if (user instanceof Patient) { // Filter for Patient objects
+                if (user instanceof Patient) { 
                     String line = user.getId() + "," +
                                   user.getName() + "," +
                                   user.getDateOfBirth() + "," +

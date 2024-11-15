@@ -67,7 +67,6 @@ public class PatientView {
         }
     }
 
-    // Display Patient Menu
     private void displayPatientMenu() {
         System.out.println("\n=== Patient Menu ===");
         System.out.println("1. View Medical Record");
@@ -83,7 +82,7 @@ public class PatientView {
 
     private void viewMedicalRecord() {
         if (patient.getMedicalRecord() != null) {
-            patient.getMedicalRecord().displayMedicalRecord(patient); // Pass the patient object
+            patient.getMedicalRecord().displayMedicalRecord(patient); 
         } else {
             System.out.println("No medical record available for this patient.");
         }
@@ -100,10 +99,10 @@ public class PatientView {
 
         switch (choice) {
             case 1:
-                medicalRecordController.updateContactInfo(patient.getId()); // Using MedicalRecordController to update contact info
+                medicalRecordController.updateContactInfo(patient.getId());
                 break;
             case 2:
-                medicalRecordController.updateContactNumber(patient.getId()); // Using MedicalRecordController to update contact number
+                medicalRecordController.updateContactNumber(patient.getId());
                 break;
             default:
                 System.out.println("Invalid choice. Returning to main menu.");

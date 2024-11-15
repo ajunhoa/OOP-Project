@@ -8,15 +8,13 @@ import java.util.Map;
 
 public class DataInitializer {
 
-    // Method to load patient details from the CSV file
     public static Map<String, User> loadPatientDetails(String patientFilePath) {
         Map<String, User> userMap = new HashMap<>();
 
         try (BufferedReader patientReader = new BufferedReader(new FileReader(patientFilePath))) {
             String patientLine;
-            patientReader.readLine(); // Skip header line
+            patientReader.readLine();
 
-            // Load patient data
             while ((patientLine = patientReader.readLine()) != null) {
                 if (patientLine.trim().isEmpty()) continue;
 
@@ -36,7 +34,6 @@ public class DataInitializer {
                         Patient patient = new Patient(id, name, dateOfBirth, gender, bloodType, contactInfo, newUser, password, contactNumber);
                         userMap.put(id, patient);
                     } catch (NumberFormatException e) {
-                        // Handle any parsing error
                     }
                 }
             }
@@ -46,16 +43,13 @@ public class DataInitializer {
 
         return userMap;
     }
-
-    // Method to load staff details from the CSV file
     public static Map<String, User> loadStaffDetails(String staffFilePath) {
         Map<String, User> userMap = new HashMap<>();
 
         try (BufferedReader staffReader = new BufferedReader(new FileReader(staffFilePath))) {
             String staffLine;
-            staffReader.readLine(); // Skip header line
+            staffReader.readLine();
 
-            // Load staff data
             while ((staffLine = staffReader.readLine()) != null) {
                 if (staffLine.trim().isEmpty()) continue;
 
@@ -73,7 +67,6 @@ public class DataInitializer {
                         User staff = new Staff(id, name, role, gender, age, newUser, password);
                         userMap.put(id, staff);
                     } catch (NumberFormatException e) {
-                        // Handle any parsing error
                     }   
                 }
             }
@@ -84,30 +77,27 @@ public class DataInitializer {
         return userMap;
     }
 
-    // Method to load medical record details from the CSV file
     public static Map<String, MedicalRecord> loadMedicalRecords(String medicalFilePath) {
         Map<String, MedicalRecord> medicalRecordMap = new HashMap<>();
     
         try (BufferedReader medicalReader = new BufferedReader(new FileReader(medicalFilePath))) {
             String line;
-            medicalReader.readLine(); // Skip header line
+            medicalReader.readLine(); 
     
             // Load medical record data
             while ((line = medicalReader.readLine()) != null) {
                 if (line.trim().isEmpty()) continue;
     
                 String[] values = line.split(",");
-                if (values.length == 3) {  // Ensure correct number of columns (Patient ID, Past Diagnoses, Treatment)
+                if (values.length == 3) { 
                     try {
-                        String patientId = values[0].trim();   // Patient ID
-                        String pastDiagnoses = values[1].trim();  // Past Diagnoses
-                        String treatment = values[2].trim();      // Treatment
+                        String patientId = values[0].trim(); 
+                        String pastDiagnoses = values[1].trim(); 
+                        String treatment = values[2].trim(); 
     
-                        // Create a MedicalRecord object and store it in the map
                         MedicalRecord medicalRecord = new MedicalRecord(patientId, pastDiagnoses, treatment);
                         medicalRecordMap.put(patientId, medicalRecord);
                     } catch (Exception e) {
-                        // Handle any parsing error
                     }
                 }
             }
@@ -118,22 +108,18 @@ public class DataInitializer {
         return medicalRecordMap;
     }
     
-    // Method to link patients with their medical records
     public static void linkMedicalRecordsToPatients(Map<String, User> userMap, Map<String, MedicalRecord> medicalRecordMap) {
         for (Map.Entry<String, User> entry : userMap.entrySet()) {
             User user = entry.getValue();
     
-            // Ensure we're only working with Patient objects
             if (user instanceof Patient) {
                 Patient patient = (Patient) user;
     
-                // Retrieve the corresponding medical record using the patient's ID
                 MedicalRecord medicalRecord = medicalRecordMap.get(patient.getId());
     
-                // Debugging: Check if a record is found and being linked
                 if (medicalRecord != null) {
                     System.out.println("Linking Medical Record to Patient ID: " + patient.getId());
-                    patient.setMedicalRecord(medicalRecord); // Link the record
+                    patient.setMedicalRecord(medicalRecord); 
                 } else {
                     System.out.println("No Medical Record found for Patient ID: " + patient.getId());
                 }

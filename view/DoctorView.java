@@ -108,7 +108,7 @@ public class DoctorView {
 
         try (BufferedReader br = new BufferedReader(new FileReader(appointmentFilePath))) {
             String line;
-            br.readLine(); // Skip the header line
+            br.readLine(); 
 
             while ((line = br.readLine()) != null) {
                 String[] values = line.split(",");
@@ -117,10 +117,9 @@ public class DoctorView {
                     String patientID = values[2].trim();
                     String status = values[5].trim();
 
-                    // Check if the Doctor ID matches and the status is "Confirmed" or "Completed"
                     if (appointmentDoctorID.equalsIgnoreCase(doctorID) &&
                             (status.equalsIgnoreCase("Confirmed") || status.equalsIgnoreCase("Completed"))) {
-                        patientIDs.add(patientID); // Add patient ID to the set to avoid duplicates
+                        patientIDs.add(patientID);
                     }
                 }
             }

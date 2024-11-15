@@ -8,19 +8,19 @@ import controller.StaffController;
 
 public class AppointmentOutcomeRecord {
     private static final String outcomeFilePath = "assets/appointment_outcome.csv";
-    private static final String appointmentFilePath = "assets/appointment.csv"; // Path to appointment.csv
+    private static final String appointmentFilePath = "assets/appointment.csv"; 
     private Scanner scanner;
-    private AppointmentSlot appointmentSlot; // Instance of AppointmentSlot for updating appointments
+    private AppointmentSlot appointmentSlot; 
 
     public AppointmentOutcomeRecord() {
         this.scanner = new Scanner(System.in);
-        this.appointmentSlot = new AppointmentSlot(); // Create an instance here
+        this.appointmentSlot = new AppointmentSlot();
     }
 
     // Method to add a new appointment outcome record
     public void addAppointmentOutcome(String appointmentID, String patientID, String doctorID, String dateOfAppointment, String typeOfServices, String medicinePrescribed, String consultationNotes, String status) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(outcomeFilePath, true))) {
-            // Write the new outcome record to the CSV file
+
             writer.write(appointmentID + "," + patientID + "," + doctorID + "," + dateOfAppointment + "," + typeOfServices + "," + medicinePrescribed + "," + consultationNotes + "," + status);
             writer.newLine();
             System.out.println("Appointment outcome recorded successfully.");
@@ -33,18 +33,16 @@ public class AppointmentOutcomeRecord {
         System.out.print("Enter Appointment ID: ");
         String appointmentID = scanner.nextLine();
 
-        // Check for existing Appointment ID and retrieve Patient ID and Date of Appointment
         String[] appointmentDetails = getAppointmentDetails(appointmentID);
         if (appointmentDetails == null) {
             System.out.println("Appointment ID not found. Please enter a valid Appointment ID.");
             return;
         }
 
-        String patientID = appointmentDetails[0]; // Patient ID
-        String dateOfAppointment = appointmentDetails[1]; // Date of Appointment
-        String apptStatus = appointmentDetails[2]; // Status
+        String patientID = appointmentDetails[0]; 
+        String dateOfAppointment = appointmentDetails[1]; 
+        String apptStatus = appointmentDetails[2];
 
-        // Check if the appointment status is "Confirmed"
         if (!apptStatus.equalsIgnoreCase("Confirmed")) {
             System.out.println("Cannot record appointment outcome. Appointment is not confirmed.");
             return;
@@ -57,24 +55,21 @@ public class AppointmentOutcomeRecord {
         System.out.print("Enter Consultation Notes: ");
         String consultationNotes = scanner.nextLine();
 
-        // Add the appointment outcome to appointment_outcome.csv
-        String status = "Pending"; // Default status for outcomes
+        
+        String status = "Pending";
         addAppointmentOutcome(appointmentID.toUpperCase(), patientID.toUpperCase(), doctorID.toUpperCase(), dateOfAppointment, typeOfServices, medicinePrescribed, consultationNotes, status);
 
-        // Use AppointmentSlot to update the appointment.csv
         appointmentSlot.updateAppointmentStatus(appointmentID, "Completed");
         System.out.println("Appointment ID: " + appointmentID + " marked as 'Completed' in appointment.csv.");
     }
 
-    // Method to retrieve appointment details based on Appointment ID
     private String[] getAppointmentDetails(String appointmentID) {
         try (BufferedReader br = new BufferedReader(new FileReader(appointmentFilePath))) {
             String line;
-            br.readLine(); // Skip header if present
+            br.readLine();
             while ((line = br.readLine()) != null) {
                 String[] values = line.split(",");
                 if (values.length >= 6 && values[0].equalsIgnoreCase(appointmentID)) {
-                    // Return Patient ID, Date of Appointment, and Status
                     return new String[]{values[2], values[3], values[5]};
                 }
             }
@@ -87,7 +82,7 @@ public class AppointmentOutcomeRecord {
     public void viewAppointmentOutcomeRecord() {
         try (BufferedReader br = new BufferedReader(new FileReader(outcomeFilePath))) {
             String line;
-            br.readLine(); // Skip header if present
+            br.readLine();
             System.out.println("Appointment Outcome Records:");
 
             while ((line = br.readLine()) != null) {
@@ -113,7 +108,6 @@ public class AppointmentOutcomeRecord {
     public void updateMedicineStatus() {
         List<String[]> pendingAppointments = new ArrayList<>();
     
-        // Read the appointment outcome records and find those with status "Pending"
         try (BufferedReader br = new BufferedReader(new FileReader(outcomeFilePath))) {
             String line;
             br.readLine(); // Skip header line
@@ -146,7 +140,6 @@ public class AppointmentOutcomeRecord {
                                ", Consultation Notes: " + appointment[6]);
         }
     
-        // Prompt pharmacist to select an appointment ID to update
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter the Appointment ID that you have dispensed medicine to: ");
         String selectedAppointmentID = scanner.nextLine().trim().toUpperCase();
@@ -228,25 +221,23 @@ public void viewCompletedOutcomeRecord() {
 public void viewPastAppointmentOutcomeRecords(String patientID) {
     try (BufferedReader br = new BufferedReader(new FileReader(outcomeFilePath))) {
         String line;
-        br.readLine(); // Skip header if present
+        br.readLine(); 
         System.out.println("Past Appointment Outcome Records for Patient ID: " + patientID);
 
-        boolean hasRecords = false; // Flag to check if records are found
-        StaffController staffController = new StaffController(); // Create an instance of StaffController
+        boolean hasRecords = false; 
+        StaffController staffController = new StaffController(); 
 
         while ((line = br.readLine()) != null) {
             String[] values = line.split(",");
             if (values.length >= 8 && values[1].equalsIgnoreCase(patientID)) {
-                String doctorName = staffController.getDoctorNameByID(values[2]); // Get doctor name using doctor ID
-                // Print the details of the appointment outcome record
+                String doctorName = staffController.getDoctorNameByID(values[2]);
                 System.out.println("Appointment ID: " + values[0] +
-                                   ", Doctor Name: " + doctorName + // Display doctor name
+                                   ", Doctor Name: " + doctorName + 
                                    ", Date of Appointment: " + values[3] +
                                    ", Type of Services: " + values[4] +
                                    ", Medicine Prescribed: " + values[5] +
-                                   ", Consultation Notes: " + values[6] +
-                                   ", Status: " + values[7]);
-                hasRecords = true; // Set flag to true if records are found
+                                   ", Consultation Notes: " + values[6]);
+                hasRecords = true; 
             }
         }
 

@@ -13,7 +13,7 @@ public class UserController {
             System.out.println("Please change your password for first-time login");
 
             System.out.print("Enter new password: ");
-            String newPassword = scanner.nextLine(); // Use Scanner instead of BufferedReader
+            String newPassword = scanner.nextLine(); 
 
             user.changePassword(newPassword);
             user.setNewUser(0);
@@ -43,23 +43,18 @@ public class UserController {
                 String[] values = line.split(",");
     
                 System.out.println("Debug: Processing line: " + line);
-    
-                // Check for correct number of columns in both Staff and Patient CSV files
+
                 if (values.length >= 7 && values[0].trim().equalsIgnoreCase(userId)) {
                     System.out.println("Debug: Found matching user ID: " + userId);
     
-                    // Update the columns for newUser and password
                     if (filePath.contains("staff")) {
-                        // For staff: newUser is at index 5, password at index 6
-                        values[5] = String.valueOf(newUserFlag);  // Update newUser
-                        values[6] = newPassword;  // Update password
+                        values[5] = String.valueOf(newUserFlag);  
+                        values[6] = newPassword;  
                     } else if (filePath.contains("patient")) {
-                        // For patient: newUser is at index 6, password at index 7
-                        values[6] = String.valueOf(newUserFlag);  // Update newUser
-                        values[7] = newPassword;  // Update password
+                        values[6] = String.valueOf(newUserFlag);  
+                        values[7] = newPassword; 
                     }
     
-                    // Join the values back into a CSV format line
                     line = String.join(",", values);
                     isUpdated = true;
                     System.out.println("Debug: Updated line: " + line);
@@ -72,7 +67,6 @@ public class UserController {
             return false;
         }
     
-        // Write all lines back to the CSV file
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath))) {
             for (String l : lines) {
                 bw.write(l);

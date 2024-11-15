@@ -28,13 +28,11 @@
             this.contactNumber = contactNumber;
         }
 
-        // Overloaded constructor
         public User(String id, String name) {
             this.id = id;
             this.name = name;
         }
 
-        // Getters
         public String getName() { return name; }
         public String getRole() { return role; }
         public String getId() { return id; }
@@ -57,12 +55,10 @@
         public void setBloodType(String bloodType) { this.bloodType = bloodType; }
         public void setContactInfo(String contactInfo) { this.contactInfo = contactInfo; }
         
-        // Method to check if the user is new
         public boolean isNewUser() {
             return newUser == 1;
         }   
 
-    // In User class
         public boolean validatePassword(String inputPassword) {
             System.out.println("Debug: Stored Password: [" + password + "]");
             System.out.println("Debug: Input Password: [" + inputPassword.trim() + "]");
@@ -70,7 +66,6 @@
         }
 
 
-        // Change password
         public void changePassword(String newPassword) {
             this.password = newPassword;
         }
