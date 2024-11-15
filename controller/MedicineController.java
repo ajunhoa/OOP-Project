@@ -3,10 +3,13 @@ package controller;
 import model.Medicine;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 
 public class MedicineController {
     private final String medicineFilePath = "assets/medicine.csv"; // Path to the CSV file
@@ -58,4 +61,111 @@ public class MedicineController {
             }
         }
     }
+
+    public void addMedicine(Scanner scanner) {
+        viewInventory(); // Show current inventory before adding
+        System.out.println("\n=== Add New Medicine ===");
+        System.out.print("Enter Medicine Name: ");
+        String medicineName = scanner.nextLine().trim(); // Trimmed input
+    
+        // Check if the medicine already exists
+        if (medicineMap.containsKey(medicineName)) {
+            System.out.println("Medicine with this name already exists.");
+            return;
+        }
+    
+        System.out.print("Enter Current Stock: ");
+        int initialStock = scanner.nextInt();
+        scanner.nextLine(); 
+    
+        System.out.print("Enter Low Stock Alert: ");
+        int lowStockAlert = scanner.nextInt();
+        scanner.nextLine(); 
+    
+        Medicine newMedicine = new Medicine(medicineName, initialStock, lowStockAlert, "Available");
+    
+        medicineMap.put(medicineName, newMedicine);
+    
+        saveMedicines();
+    
+        System.out.println("Medicine added successfully.");
+    }
+
+    public void deleteMedicine(Scanner scanner) {
+        viewInventory(); // Show current inventory before deleting
+        System.out.println("\n=== Delete Medicine ===");
+        System.out.print("Enter Medicine Name: ");
+        String medicineName = scanner.nextLine().trim(); // Trimmed input
+    
+        // Check if the medicine exists
+        if (!medicineMap.containsKey(medicineName)) {
+            System.out.println("Medicine with this name not found.");
+            return;
+        }
+
+        medicineMap.remove(medicineName);
+
+        saveMedicines();
+    
+        System.out.println("Medicine deleted successfully.");
+    }
+
+    public void updateStock(Scanner scanner) {
+        viewInventory();
+        System.out.println("\n=== Update Medicine Stock ===");
+        System.out.print("Enter Medicine Name: ");
+        String medicineName = scanner.nextLine().trim();
+    
+        // Check for case insensitive match
+        Medicine medicine = medicineMap.values().stream()
+            .filter(m -> m.getMedicineName().equalsIgnoreCase(medicineName))
+            .findFirst()
+            .orElse(null);
+    
+        if (medicine == null) {
+            System.out.println("Medicine not found in inventory.");
+            return;
+        }
+    
+        System.out.println("Current Stock: " + medicine.getCurrentStock());
+        System.out.print("Enter new stock level (or -1 to skip): ");
+        int newStock = scanner.nextInt();
+        scanner.nextLine(); 
+        if (newStock != -1) {
+            medicine.setCurrentStock(newStock);
+        }
+    
+        System.out.print("Enter new low stock alert level (or -1 to skip): ");
+        int newLowStockAlert = scanner.nextInt();
+        scanner.nextLine(); 
+        if (newLowStockAlert != -1) {
+            medicine.setLowStockAlert(newLowStockAlert);
+        }
+    
+        if (medicine.getCurrentStock() < medicine.getLowStockAlert()) {
+            medicine.setMedicineStatus("Low"); // Update status to "Low"
+        } else {
+            medicine.setMedicineStatus("Available"); // Reset status if above alert level
+        }
+    
+        saveMedicines();
+    
+        System.out.println("Stock updated successfully.");
+    }
+
+    private void saveMedicines() {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(medicineFilePath))) {
+            writer.write("Medicine Name,Current Stock,Low Stock Alert,Status\n");
+            for (Medicine medicine : medicineMap.values()) {
+                writer.write(medicine.getMedicineName() + "," +
+                             medicine.getCurrentStock() + "," +
+                             medicine.getLowStockAlert() + "," +
+                             medicine.getMedicineStatus() + "\n");
+            }
+        } catch (IOException e) {
+            System.out.println("Error writing to medicine file: " + e.getMessage());
+        }
+    }
+
+
 }

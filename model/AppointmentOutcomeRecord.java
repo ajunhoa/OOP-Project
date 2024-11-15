@@ -189,4 +189,38 @@ private boolean updateAppointmentStatus(String appointmentID, String newStatus) 
     }
 }
 
+public void viewCompletedOutcomeRecord() {
+    try (BufferedReader br = new BufferedReader(new FileReader(outcomeFilePath))) {
+        String line;
+        br.readLine(); // Skip header if present
+        System.out.println("Completed Appointment Outcome Records:");
+
+        boolean hasCompletedRecords = false; 
+        int lineCount = 0;
+
+        while ((line = br.readLine()) != null) {
+            lineCount++;
+            String[] values = line.split(",");
+
+            if (values.length >= 8 && values[7].equalsIgnoreCase("Completed")) { // Check for completed status
+                System.out.println("Appointment ID: " + values[0] +
+                                   ", Patient ID: " + values[1] +
+                                   ", Doctor ID: " + values[2] +
+                                   ", Date of Appointment: " + values[3] +
+                                   ", Type of Services: " + values[4] +
+                                   ", Medicine Prescribed: " + values[5] +
+                                   ", Consultation Notes: " + values[6] +
+                                   ", Status: " + values[7]);
+                hasCompletedRecords = true;
+            }
+        }
+
+        if (!hasCompletedRecords) {
+            System.out.println("No completed appointment outcome records found.");
+        }
+    } catch (IOException e) {
+        System.out.println("Error reading the appointment outcome file: " + e.getMessage());
+    }
+}
+
 }

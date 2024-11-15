@@ -1,18 +1,28 @@
 package view;
 
 import controller.StaffController;
+import controller.MedicineController;
 import model.Staff;
+import model.AppointmentSlot;
+import model.AppointmentOutcomeRecord;
 
-import java.util.List;
 import java.util.Scanner;
 
 public class AdministratorView {
     private Scanner scanner;
     private StaffController staffController;
+    private AppointmentSlot appointmentSlot;
+    private AppointmentOutcomeRecord appointmentOutcomeRecord;
+    private MedicineController medicineController;
+
 
     public AdministratorView(Scanner scanner) {
         this.scanner = scanner;
-        this.staffController = new StaffController(); // Initialize the StaffController
+        this.staffController = new StaffController();
+        this.appointmentSlot = new AppointmentSlot();
+        this.appointmentOutcomeRecord = new AppointmentOutcomeRecord();
+        this.medicineController = new MedicineController();
+
     }
 
     public void displayAdministratorMenu() {
@@ -21,17 +31,18 @@ public class AdministratorView {
             this.displayMenu();
             System.out.print("Select an option: ");
             int choice = scanner.nextInt();
-            scanner.nextLine(); // To consume the newline character after the integer input
+            scanner.nextLine();
 
             switch (choice) {
                 case 1:
                     manageHospitalStaff();
                     break;
                 case 2:
-                    // Implement the logic to view appointment details
+                    appointmentSlot.viewAllAppointments();
+                    appointmentOutcomeRecord.viewCompletedOutcomeRecord();
                     break;
                 case 3:
-                    // Implement the logic to view and manage medication inventory
+                    manageMedicineInventory();
                     break;
                 case 4:
                     // Implement the logic to approve replenishment requests
@@ -66,7 +77,7 @@ public class AdministratorView {
             System.out.println("5. Back to Administrator Menu");
             System.out.print("Select an option: ");
             int choice = scanner.nextInt();
-            scanner.nextLine(); // To consume the newline character
+            scanner.nextLine();
 
             switch (choice) {
                 case 1:
@@ -82,7 +93,7 @@ public class AdministratorView {
                     displayStaff();
                     break;
                 case 5:
-                    managing = false; // Exit the managing staff loop
+                    managing = false;
                     break;
                 default:
                     System.out.println("Invalid choice. Please try again.");
@@ -128,7 +139,7 @@ public class AdministratorView {
         System.out.print("Enter New Password: ");
         String password = scanner.nextLine();
 
-        Staff updatedStaff = new Staff(id, name, role, gender, age, 0, password); // Assuming newUser  is 0 for existing users
+        Staff updatedStaff = new Staff(id, name, role, gender, age, 1, password);
         if (staffController.updateStaff(updatedStaff)) {
             System.out.println("Staff updated successfully.");
         } else {
@@ -167,6 +178,38 @@ public class AdministratorView {
         }
     
         staffController.displayStaff(role, gender, age);
+    }
+
+    public void manageMedicineInventory() {
+        boolean backToMain = false;
+        while (!backToMain) {
+            System.out.println("\n=== Manage Medicine Inventory ===");
+            System.out.println("1. Add New Medicine");
+            System.out.println("2. Delete Medicine");
+            System.out.println("3. Update Stock");
+            System.out.println("4. Back to Administrator Menu");
+            System.out.print("Select an option: ");
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
+    
+            switch (choice) {
+                case 1:
+                    medicineController.addMedicine(scanner);
+                    break;
+                case 2:
+                    medicineController.deleteMedicine(scanner);
+                    break;
+                case 3:
+                    medicineController.updateStock(scanner);
+                    break;
+                case 4:
+                    backToMain = true;
+                    break;
+                default:
+                    System.out.println("Invalid option. Please try again.");
+                    break;
+            }
+        }
     }
 
 }

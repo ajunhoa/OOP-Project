@@ -234,6 +234,47 @@ public class AppointmentSlot {
         }
     }
 
+    public void viewAllAppointments() {
+        try (BufferedReader br = new BufferedReader(new FileReader(appointment_filepath))) {
+            String line;
+            br.readLine(); 
+            System.out.println("All Appointments:");
+    
+            boolean hasAppointments = false; 
+            int lineCount = 0;
+    
+            while ((line = br.readLine()) != null) {
+                lineCount++;
+                String[] values = line.split(",");
+    
+                if (values.length >= 6) { 
+                    String appointmentID = values[0];
+                    String doctorID = values[1];
+                    String patientID = values[2];
+                    String date = values[3];
+                    String time = values[4];
+                    String status = values[5];
+    
+                    System.out.println("Appointment ID: " + appointmentID +
+                                       ", Doctor ID: " + doctorID +
+                                       ", Patient ID: " + patientID +
+                                       ", Date: " + date +
+                                       ", Time: " + time +
+                                       ", Status: " + status);
+                    hasAppointments = true;
+                } else {
+                    System.out.println("Skipping line " + lineCount + " due to insufficient columns.");
+                }
+            }
+    
+            if (!hasAppointments) {
+                System.out.println("No appointments found.");
+            }
+        } catch (IOException e) {
+            System.out.println("Error reading the appointment file: " + e.getMessage());
+        }
+    }
+
     
     
 }
