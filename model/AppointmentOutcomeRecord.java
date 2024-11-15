@@ -156,7 +156,7 @@ public void viewCompletedOutcomeRecord() {
             lineCount++;
             String[] values = line.split(",");
 
-            if (values.length >= 8 && values[7].equalsIgnoreCase("Completed")) { // Check for completed status
+            if (values.length >= 8 && values[7].equalsIgnoreCase("Completed")) { 
                 System.out.println("Appointment ID: " + values[0] +
                                    ", Patient ID: " + values[1] +
                                    ", Doctor ID: " + values[2] +
