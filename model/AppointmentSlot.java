@@ -205,7 +205,7 @@ public class AppointmentSlot {
         }
     }
 
-    private void updateAppointmentStatus(String appointmentID, String newStatus) {
+    public void updateAppointmentStatus(String appointmentID, String newStatus) {
         List<String> lines = new ArrayList<>();
 
         try (BufferedReader br = new BufferedReader(new FileReader(appointment_filepath))) {
