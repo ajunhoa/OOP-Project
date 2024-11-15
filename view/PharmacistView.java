@@ -1,8 +1,8 @@
 package view;
 
-import model.AppointmentOutcomeRecord;
 import controller.MedicineController;
 import java.util.Scanner;
+import model.AppointmentOutcomeRecord;
 public class PharmacistView {
 
     private Scanner scanner;
@@ -20,7 +20,7 @@ public class PharmacistView {
         while (!exit) {
             this.displayMenu();
             System.out.print("Select an option: ");
-            int choice = scanner.nextInt();
+            int choice = scanner.nextInt(); 
             scanner.nextLine();
 
             switch (choice) {

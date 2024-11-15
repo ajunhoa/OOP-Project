@@ -4,27 +4,29 @@ import java.util.Scanner;
 
 public class Patient extends User {
 
+    private MedicalRecord medicalRecord;  // Composition: Patient has a MedicalRecord
+
     public Patient(String id, String name, String dateOfBirth, String gender, String bloodType, 
-                   String contactInfo, int newUser, String password, int contactNumber) {
+                   String contactInfo, int newUser, String password, int contactNumber, MedicalRecord medicalRecord) {
         super(id, name, "Patient", gender, 0, dateOfBirth, bloodType, contactInfo, password, newUser, contactNumber);
+        this.medicalRecord = medicalRecord;  // Initialize medicalRecord via constructor
     }
 
     @Override
     public String toString() {
         return "Patient ID: " + getId() + ", Name: " + getName() + ", Date of Birth: " + getDateOfBirth() +
-               ", Gender: " + getGender() + ", Blood Type: " + getBloodType() +
-               ", Contact Info: " + getContactInfo() + ", Contact Number: " + getContactNumber() +
-               ", New User: " + (isNewUser() ? "Yes" : "No");
+                ", Gender: " + getGender() + ", Blood Type: " + getBloodType() +
+                ", Contact Info: " + getContactInfo() + ", Contact Number: " + getContactNumber() +
+                ", New User: " + (isNewUser() ? "Yes" : "No");
     }
+
     // Method to view the patient's medical record
     public void viewMedicalRecord() {
-        // Code to view medical record
-        System.out.println("Medical Record: [Placeholder for patient's medical record]");
+        System.out.println("Medical Record: " + medicalRecord);  // Show the medical record details
     }
 
     // Method to view available appointment slots
     public void viewAvailableSlots() {
-        // Code to show available appointment slots
         System.out.println("Available slots: [Placeholder for available appointment slots]");
     }
 
@@ -36,7 +38,6 @@ public class Patient extends User {
         String date = scanner.nextLine();
         System.out.print("Enter appointment time (HH:MM AM/PM): ");
         String time = scanner.nextLine();
-        // Logic to schedule an appointment
         System.out.println("Appointment scheduled with doctor " + doctorId + " on " + date + " at " + time);
     }
 
@@ -48,7 +49,6 @@ public class Patient extends User {
         String newDate = scanner.nextLine();
         System.out.print("Enter new time (HH:MM AM/PM): ");
         String newTime = scanner.nextLine();
-        // Logic to reschedule an appointment
         System.out.println("Appointment " + appointmentId + " rescheduled to " + newDate + " at " + newTime);
     }
 
@@ -56,20 +56,16 @@ public class Patient extends User {
     public void cancelAppointment(Scanner scanner) {
         System.out.print("Enter appointment ID to cancel: ");
         String appointmentId = scanner.nextLine();
-        // Logic to cancel the appointment
         System.out.println("Appointment " + appointmentId + " has been canceled.");
     }
 
     // Method to view scheduled appointments
     public void viewScheduledAppointments() {
-        // Code to display scheduled appointments
         System.out.println("Scheduled appointments: [Placeholder for scheduled appointments]");
     }
 
     // Method to view past appointment outcome records
     public void viewPastAppointmentOutcomeRecords() {
-        // Code to view past appointment outcomes
         System.out.println("Past appointment outcomes: [Placeholder for past appointment outcomes]");
     }
-
 }
