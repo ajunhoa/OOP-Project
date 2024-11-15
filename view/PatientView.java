@@ -1,8 +1,7 @@
 package view;
 
-import model.Patient;
-// import controller.MedicalRecordController; // Assuming you will implement this controller later
 import java.util.Scanner;
+import model.Patient;
 
 public class PatientView {
     private Patient patient;
@@ -73,8 +72,12 @@ public class PatientView {
     // Method to View Medical Record
     private void viewMedicalRecord() {
         System.out.println("Viewing medical record...");
-        patient.viewMedicalRecord();  // Assuming this method exists in the Patient class
-    }
+        if (patient.getMedicalRecord() != null) {
+            patient.viewMedicalRecord();  // Assuming this method exists in the Patient class
+        } else {
+            System.out.println("No medical record available for this patient.");
+        }
+    }   
 
     // Method to Update Personal Information
     private void updatePersonalInformation() {
