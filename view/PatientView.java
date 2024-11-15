@@ -1,15 +1,18 @@
 package view;
 
+import controller.MedicalRecordController;
 import java.util.Scanner;
 import model.Patient;
 
 public class PatientView {
     private Patient patient;
     private Scanner scanner;
+    private MedicalRecordController medicalRecordController; // Controller for updating info
 
-    public PatientView(Patient patient, Scanner scanner) {
+    public PatientView(Patient patient, Scanner scanner, MedicalRecordController medicalRecordController) {
         this.patient = patient;
         this.scanner = scanner;
+        this.medicalRecordController = medicalRecordController;
     }
 
     public void handleUserChoice() {
@@ -69,55 +72,64 @@ public class PatientView {
         System.out.println("9. Logout");
     }
 
-    // Method to View Medical Record
     private void viewMedicalRecord() {
-        System.out.println("Viewing medical record...");
         if (patient.getMedicalRecord() != null) {
-            patient.viewMedicalRecord();  // Assuming this method exists in the Patient class
+            patient.getMedicalRecord().displayMedicalRecord(patient); // Pass the patient object
         } else {
             System.out.println("No medical record available for this patient.");
         }
-    }   
+    }
+    
 
     // Method to Update Personal Information
     private void updatePersonalInformation() {
-        System.out.println("Updating personal information...");
-        // MedicalRecordController.updatePersonalInformation(patient, scanner); // Placeholder for controller method
-    }
+        System.out.println("\n=== Update Personal Information ===");
+        System.out.println("1. Update Contact Information");
+        System.out.println("2. Update Contact Number");
+        System.out.print("Select an option: ");
+        int choice = scanner.nextInt();
+        scanner.nextLine(); // To consume the newline character after integer input
 
-    // Method to View Available Appointment Slots
+        switch (choice) {
+            case 1:
+                medicalRecordController.updateContactInfo(patient.getId()); // Using MedicalRecordController to update contact info
+                break;
+            case 2:
+                medicalRecordController.updateContactNumber(patient.getId()); // Using MedicalRecordController to update contact number
+                break;
+            default:
+                System.out.println("Invalid choice. Returning to main menu.");
+        }
+    }
+    // Placeholder for viewAvailableAppointmentSlots method
     private void viewAvailableAppointmentSlots() {
         System.out.println("Viewing available appointment slots...");
-        patient.viewAvailableSlots();  // Assuming this method exists in the Patient class
     }
 
-    // Method to Schedule an Appointment
+    // Placeholder for scheduleAppointment method
     private void scheduleAppointment() {
         System.out.println("Scheduling an appointment...");
-        patient.scheduleAppointment(scanner);  // Assuming this method exists in the Patient class
     }
 
-    // Method to Reschedule an Appointment
+    // Placeholder for rescheduleAppointment method
     private void rescheduleAppointment() {
         System.out.println("Rescheduling an appointment...");
-        patient.rescheduleAppointment(scanner);  // Assuming this method exists in the Patient class
     }
 
-    // Method to Cancel an Appointment
+    // Placeholder for cancelAppointment method
     private void cancelAppointment() {
         System.out.println("Canceling an appointment...");
-        patient.cancelAppointment(scanner);  // Assuming this method exists in the Patient class
     }
 
-    // Method to View Scheduled Appointments
+    // Placeholder for viewScheduledAppointments method
     private void viewScheduledAppointments() {
         System.out.println("Viewing scheduled appointments...");
-        patient.viewScheduledAppointments();  // Assuming this method exists in the Patient class
     }
 
-    // Method to View Past Appointment Outcome Records
+    // Placeholder for viewPastAppointmentOutcomeRecords method
     private void viewPastAppointmentOutcomeRecords() {
         System.out.println("Viewing past appointment outcome records...");
-        patient.viewPastAppointmentOutcomeRecords();  // Assuming this method exists in the Patient class
     }
+
+    // Other methods as you provided, e.g., viewAvailableAppointmentSlots, scheduleAppointment, etc.
 }
