@@ -25,7 +25,7 @@ public class MedicalRecordController {
         this.userFilePath = userFilePath;
     }
 
-    // Method to update patient's contact information
+    // Method to update patient's contact information       
     public void updateContactInfo(String patientId) {
         User user = users.get(patientId);
         if (user instanceof Patient) {
@@ -149,4 +149,26 @@ public class MedicalRecordController {
             System.out.println("Error writing to the patient list file: " + e.getMessage());
         }
     }
+    public void viewMedicalRecord(String patientId) {
+        MedicalRecord record = medicalRecords.get(patientId);
+        if (record != null) {
+            System.out.println("\n=== Medical Record ===");
+            System.out.println("Patient ID: " + record.getPatientId());
+            System.out.println("Past Diagnoses: " + record.getPastDiagnoses());
+            System.out.println("Treatment: " + record.getTreatment());
+    
+            User user = users.get(patientId);
+            if (user instanceof Patient) {
+                Patient patient = (Patient) user;
+                System.out.println("Name: " + patient.getName());
+                System.out.println("Date of Birth: " + patient.getDateOfBirth());
+                System.out.println("Gender: " + patient.getGender());
+                System.out.println("Contact Information: " + patient.getContactInfo());
+                System.out.println("Blood Type: " + patient.getBloodType());
+            }
+        } else {
+            System.out.println("No medical record found for Patient ID: " + patientId);
+        }
+    }
+    
 }

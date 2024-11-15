@@ -1,19 +1,22 @@
 package view;
+
+import controller.MedicalRecordController;
 import model.Doctor;
 import java.util.Scanner;
 import model.AppointmentSlot;
 import model.AppointmentOutcomeRecord;
-
 
 public class DoctorView {
     private Doctor doctor;
     private Scanner scanner;
     private AppointmentSlot appointmentSlot = new AppointmentSlot();
     private AppointmentOutcomeRecord appointmentOutcomeRecord = new AppointmentOutcomeRecord();
+    private MedicalRecordController medicalRecordController;
 
-    public DoctorView(Doctor doctor) {
+    public DoctorView(Doctor doctor, MedicalRecordController medicalRecordController) {
         this.doctor = doctor;
         this.scanner = new Scanner(System.in);
+        this.medicalRecordController = medicalRecordController;
     }
 
     public void displayDoctorMenu(String doctorID) {
@@ -26,10 +29,50 @@ public class DoctorView {
 
             switch (choice) {
                 case 1:
-                    //viewPatientRecord();
+                    System.out.print("Enter Patient ID to view medical records: ");
+                    String patientIdToView = scanner.nextLine().trim();
+                    medicalRecordController.viewMedicalRecord(patientIdToView);
                     break;
                 case 2:
-                    //updatePatientRecord();
+                    System.out.print("Enter Patient ID to update medical records: ");
+                    String patientIdToUpdate = scanner.nextLine().trim();
+
+                    boolean backToMenu = false;
+                    while (!backToMenu) {
+                        System.out.println("\n=== Update Options ===");
+                        System.out.println("1. Update Contact Info");
+                        System.out.println("2. Update Contact Number");
+                        System.out.println("3. Update Diagnoses");
+                        System.out.println("4. Update Prescription");
+                        System.out.println("5. Update Treatment");
+                        System.out.println("6. Back to Main Menu");
+                        System.out.print("Select an option: ");
+                        int updateChoice = scanner.nextInt();
+                        scanner.nextLine();
+
+                        switch (updateChoice) {
+                            case 1:
+                                medicalRecordController.updateContactInfo(patientIdToUpdate);
+                                break;
+                            case 2:
+                                medicalRecordController.updateContactNumber(patientIdToUpdate);
+                                break;
+                            case 3:
+                                medicalRecordController.updateDiagnoses(patientIdToUpdate);
+                                break;
+                            case 4:
+                                medicalRecordController.updatePrescription(patientIdToUpdate);
+                                break;
+                            case 5:
+                                medicalRecordController.updateTreatment(patientIdToUpdate);
+                                break;
+                            case 6:
+                                backToMenu = true;
+                                break;
+                            default:
+                                System.out.println("Invalid option. Please try again.");
+                        }
+                    }
                     break;
                 case 3:
                     appointmentSlot.viewPersonalSchedule(doctorID);
@@ -56,8 +99,7 @@ public class DoctorView {
         }
     }
 
-
-        public void displayMenu() {
+    public void displayMenu() {
         System.out.println("\n=== Doctor Menu ===");
         System.out.println("1. View Patient Medical Records");
         System.out.println("2. Update Patient Medical Records");
@@ -68,5 +110,4 @@ public class DoctorView {
         System.out.println("7. Record Appointment Outcome");
         System.out.println("8. Logout");
     }
-       
 }
