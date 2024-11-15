@@ -31,22 +31,22 @@ public class PatientView {
                     updatePersonalInformation();
                     break;
                 case 3:
-                    viewAvailableAppointmentSlots();
+                    
                     break;
                 case 4:
-                    scheduleAppointment();
+                   
                     break;
                 case 5:
-                    rescheduleAppointment();
+                 
                     break;
                 case 6:
-                    cancelAppointment();
+                    
                     break;
                 case 7:
-                    viewScheduledAppointments();
+                    
                     break;
                 case 8:
-                    viewPastAppointmentOutcomeRecords();
+                   
                     break;
                 case 9:
                     System.out.println("Logging out...");
@@ -101,35 +101,5 @@ public class PatientView {
                 System.out.println("Invalid choice. Returning to main menu.");
         }
     }
-    // Placeholder for viewAvailableAppointmentSlots method
-    private void viewAvailableAppointmentSlots() {
-        System.out.println("Viewing available appointment slots...");
-    }
-
-    // Placeholder for scheduleAppointment method
-    private void scheduleAppointment() {
-        System.out.println("Scheduling an appointment...");
-    }
-
-    // Placeholder for rescheduleAppointment method
-    private void rescheduleAppointment() {
-        System.out.println("Rescheduling an appointment...");
-    }
-
-    // Placeholder for cancelAppointment method
-    private void cancelAppointment() {
-        System.out.println("Canceling an appointment...");
-    }
-
-    // Placeholder for viewScheduledAppointments method
-    private void viewScheduledAppointments() {
-        System.out.println("Viewing scheduled appointments...");
-    }
-
-    // Placeholder for viewPastAppointmentOutcomeRecords method
-    private void viewPastAppointmentOutcomeRecords() {
-        System.out.println("Viewing past appointment outcome records...");
-    }
-
-    // Other methods as you provided, e.g., viewAvailableAppointmentSlots, scheduleAppointment, etc.
+    
 }
