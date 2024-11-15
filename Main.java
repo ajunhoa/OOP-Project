@@ -9,12 +9,13 @@ import model.User;
 import view.DoctorView;
 import view.PatientView;
 import view.PharmacistView;
+import view.AdministratorView;
 
 public class Main {
     public static void main(String[] args) {
         String patientFilePath = "assets/updatedpatientlist.csv";
         String staffFilePath = "assets/updatedstafflist.csv";
-        String medicalFilePath = "assets/medicalrecords.csv"; // Add this for medical records
+        String medicalFilePath = "assets/medicalrecords.csv";
         
         // Load patient and staff data
         Map<String, User> userMap = DataInitializer.loadPatientDetails(patientFilePath);
@@ -22,7 +23,7 @@ public class Main {
 
         // Load medical records and link them to patients
         Map<String, MedicalRecord> medicalRecordMap = DataInitializer.loadMedicalRecords(medicalFilePath);
-        DataInitializer.linkMedicalRecordsToPatients(userMap, medicalRecordMap); // Ensure the medical records are linked to the patients
+        DataInitializer.linkMedicalRecordsToPatients(userMap, medicalRecordMap);
 
         // After linking medical records, print for verification
         for (Map.Entry<String, User> entry : userMap.entrySet()) {
@@ -51,9 +52,9 @@ public class Main {
                 System.out.println("Welcome, " + user.getName());
                 
                 String filePath = user.getRole().equals("Patient") ? patientFilePath : staffFilePath;
-                UserController.promptPasswordChange(user, filePath, scanner);  // Pass scanner here
+                UserController.promptPasswordChange(user, filePath, scanner);
 
-                switch (user.getRole()) {   
+                switch (user.getRole()) {
                     case "Doctor":
                         Doctor doctor = new Doctor(user.getId(), user.getName(), user.getRole());
                         DoctorView doctorView = new DoctorView(doctor);
@@ -64,13 +65,13 @@ public class Main {
                         pharmacistView.displayPharmacistMenu(); 
                         break;
                     case "Administrator":
-                        System.out.println("Accessing Administrator's functionalities...");
+                        AdministratorView administratorView = new AdministratorView(scanner);
+                        administratorView.displayAdministratorMenu(); 
                         break;
                     case "Patient":
-                        // Now the patient object is linked to their medical record
                         Patient patient = new Patient(user.getId(), user.getName(), user.getDateOfBirth(), user.getGender(), user.getBloodType(), user.getContactInfo(), user.isNewUser() ? 1 : 0, user.getPassword(), user.getContactNumber());
-                        PatientView patientView = new PatientView(patient, scanner);  // Pass the patient object and scanner
-                        patientView.handleUserChoice();  // This should be the correct way to display the patient menu
+                        PatientView patientView = new PatientView(patient, scanner); 
+                        patientView.handleUserChoice();
                         break;
                     default:
                         System.out.println("Role not recognized.");

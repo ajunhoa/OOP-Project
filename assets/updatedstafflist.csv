@@ -2,4 +2,8 @@
 D001,John Smith,Doctor,Male,45,0,password
 D002,Emily Clarke,Doctor,Female,38,0,password1
 P001,Mark Lee,Pharmacist,Male,29,0,password
-A001,Sarah Lee,Administrator,Female,40,1,password
+A001,Sarah Lee,Administrator,Female,40,0,password
+P002,Neen,Pharmacist,female,11,1,password
+P003,Nillo,Pharmacist,Male,12,1,password
+P005,alor,Pharmacist,male,20,1,password
+P004,hello,Doctor,male,23,1,password
