@@ -54,12 +54,12 @@ public class Main {
                 System.out.println("Welcome, " + user.getName());
 
                 String filePath = user.getRole().equals("Patient") ? patientFilePath : staffFilePath;
-                UserController.promptPasswordChange(user, filePath, scanner); // Pass scanner here
+                UserController.promptPasswordChange(user, filePath, scanner);
 
                 switch (user.getRole()) {
                     case "Doctor":
                         Doctor doctor = new Doctor(user.getId(), user.getName(), user.getRole());
-                        DoctorView doctorView = new DoctorView(doctor, medicalRecordController); // Pass MedicalRecordController
+                        DoctorView doctorView = new DoctorView(doctor, medicalRecordController);
                         doctorView.displayDoctorMenu(userId);
                         break;
 

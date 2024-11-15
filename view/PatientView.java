@@ -3,16 +3,22 @@ package view;
 import controller.MedicalRecordController;
 import java.util.Scanner;
 import model.Patient;
+import model.AppointmentSlot;
+import controller.AppointmentSlotController;
 
 public class PatientView {
     private Patient patient;
     private Scanner scanner;
-    private MedicalRecordController medicalRecordController; // Controller for updating info
+    private MedicalRecordController medicalRecordController; 
+    private AppointmentSlot appointmentSlot;
+    private AppointmentSlotController appointmentSlotController;
 
     public PatientView(Patient patient, Scanner scanner, MedicalRecordController medicalRecordController) {
         this.patient = patient;
         this.scanner = scanner;
         this.medicalRecordController = medicalRecordController;
+        this.appointmentSlot = new AppointmentSlot();
+        this.appointmentSlotController = new AppointmentSlotController();
     }
 
     public void handleUserChoice() {
@@ -21,7 +27,7 @@ public class PatientView {
             displayPatientMenu();
             System.out.print("Select an option: ");
             int choice = scanner.nextInt();
-            scanner.nextLine(); // To consume the newline character after the integer input
+            scanner.nextLine();
 
             switch (choice) {
                 case 1:
@@ -31,16 +37,16 @@ public class PatientView {
                     updatePersonalInformation();
                     break;
                 case 3:
-                    
+                    appointmentSlot.viewAvailableAppointmentSlots();
                     break;
                 case 4:
-                   
+                    appointmentSlotController.scheduleAppointment(patient.getId());
                     break;
                 case 5:
-                 
+                    appointmentSlotController.rescheduleAppointment(patient.getId());
                     break;
                 case 6:
-                    
+                    appointmentSlotController.cancelAppointment(patient.getId());
                     break;
                 case 7:
                     
@@ -101,5 +107,6 @@ public class PatientView {
                 System.out.println("Invalid choice. Returning to main menu.");
         }
     }
+    
     
 }

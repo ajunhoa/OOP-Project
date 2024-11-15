@@ -27,7 +27,7 @@ public class MedicineController {
     private void loadMedicines() {
         try (BufferedReader br = new BufferedReader(new FileReader(medicineFilePath))) {
             String line;
-            br.readLine(); // Skip header line
+            br.readLine();
 
             while ((line = br.readLine()) != null) {
                 String[] values = line.split(",");
@@ -37,9 +37,8 @@ public class MedicineController {
                     int lowStockAlert = Integer.parseInt(values[2].trim());
                     String status = values.length > 3 ? values[3].trim() : "Available"; 
 
-                    // Create a Medicine object and add it to the map
                     Medicine medicine = new Medicine(name, currentStock, lowStockAlert, status);
-                    medicineMap.put(name, medicine); // Use medicine name as the key
+                    medicineMap.put(name, medicine); 
                 }
             }
         } catch (IOException e) {
