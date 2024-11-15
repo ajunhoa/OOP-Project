@@ -7,8 +7,34 @@ import java.util.stream.Collectors;
 public class StaffController {
 
     private final String staffFilePath = "assets/updatedstafflist.csv";
+    private Map<String, String> doctorMap;
 
+    public StaffController() {
+        doctorMap = new HashMap<>();
+        loadStaffDetails(); // Load staff details into the HashMap
+    }
 
+    private void loadStaffDetails() {
+        try (BufferedReader br = new BufferedReader(new FileReader(staffFilePath))) {
+            String line;
+            br.readLine(); // Skip header if present
+            while ((line = br.readLine()) != null) {
+                String[] values = line.split(",");
+                if (values.length >= 7 && values[2].equalsIgnoreCase("Doctor")) {
+                    String doctorID = values[0].trim();
+                    String doctorName = values[1].trim();
+                    doctorMap.put(doctorID, doctorName); // Store doctor ID and name in the HashMap
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Error reading the staff file: " + e.getMessage());
+        }
+    }
+
+    // Method to get doctor name by ID
+    public String getDoctorNameByID(String doctorID) {
+        return doctorMap.getOrDefault(doctorID, "Unknown Doctor");
+    }
     
     public boolean addStaff(Staff newStaff) {
         if (isStaffIdExists(newStaff.getId())) {

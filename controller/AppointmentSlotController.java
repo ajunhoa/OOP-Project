@@ -24,6 +24,7 @@ public class AppointmentSlotController {
 
     public void scheduleAppointment(String patientID) {
         List<String[]> availableSlots = new ArrayList<>();
+        StaffController staffController = new StaffController(); // Create an instance of StaffController
     
         try (BufferedReader br = new BufferedReader(new FileReader(appointmentFilePath))) {
             String line;
@@ -36,9 +37,11 @@ public class AppointmentSlotController {
     
                 if (values.length >= 6 && values[5].equalsIgnoreCase("Available")) {
                     availableSlots.add(values); 
-                    System.out.println("Slot " + displayCount  +
-                                       //", Doctor ID: " + values[1] +
-                                       ": Date: " + values[3] +
+                    String doctorName = staffController.getDoctorNameByID(values[1]); // Get doctor name using doctor ID
+                    System.out.println("Slot " + displayCount +
+                                       ": Appointment ID: " + values[0] +
+                                       ", Doctor Name: " + doctorName + // Display doctor name
+                                       ", Date: " + values[3] +
                                        ", Time: " + values[4]);
                     displayCount++; 
                 }
@@ -57,7 +60,7 @@ public class AppointmentSlotController {
         System.out.print("Select a slot number to schedule an appointment: ");
         int choice = scanner.nextInt();
         scanner.nextLine();
-
+    
         if (choice < 1 || choice > availableSlots.size()) {
             System.out.println("Invalid choice. Please try again.");
             return;
@@ -73,19 +76,23 @@ public class AppointmentSlotController {
     
     public void rescheduleAppointment(String patientID) {
         List<String[]> currentAppointments = new ArrayList<>();
+        StaffController staffController = new StaffController(); // Create an instance of StaffController
     
         try (BufferedReader br = new BufferedReader(new FileReader(appointmentFilePath))) {
             String line;
             br.readLine();
-            System.out.println("Current Pending Appointments for Patient ID: " + patientID);
+            System.out.println("Current Appointments for Patient ID: " + patientID);
     
             int displayCount = 1;
             while ((line = br.readLine()) != null) {
                 String[] values = line.split(",");
-                if (values.length >= 6 && values[2].equalsIgnoreCase(patientID) && values[5].equalsIgnoreCase("Pending")) {
+                // Update the condition to check for both Pending and Confirmed statuses
+                if (values.length >= 6 && values[2].equalsIgnoreCase(patientID) && 
+                    (values[5].equalsIgnoreCase("Pending") || values[5].equalsIgnoreCase("Confirmed"))) {
                     currentAppointments.add(values);
+                    String doctorName = staffController.getDoctorNameByID(values[1]); // Get doctor name using doctor ID
                     System.out.println(displayCount + ". Appointment ID: " + values[0] +
-                                       ", Doctor ID: " + values[1] +
+                                       ", Doctor Name: " + doctorName + // Display doctor name
                                        ", Date: " + values[3] +
                                        ", Time: " + values[4] +
                                        ", Status: " + values[5]);
@@ -94,7 +101,7 @@ public class AppointmentSlotController {
             }
     
             if (currentAppointments.isEmpty()) {
-                System.out.println("No pending appointments found for Patient ID: " + patientID);
+                System.out.println("No pending or confirmed appointments found for Patient ID: " + patientID);
                 return;
             }
     
@@ -128,8 +135,9 @@ public class AppointmentSlotController {
                 String[] values = line.split(",");
                 if (values.length >= 6 && values[5].equalsIgnoreCase("Available")) {
                     availableSlots.add(values);
+                    String doctorName = staffController.getDoctorNameByID(values[1]); // Get doctor name using doctor ID
                     System.out.println("Slot " + displayCount + ": Appointment ID: " + values[0] +
-                                       ", Doctor ID: " + values[1] +
+                                       ", Doctor Name: " + doctorName + // Display doctor name
                                        ", Date: " + values[3] +
                                        ", Time: " + values[4]);
                     displayCount++;
@@ -212,55 +220,57 @@ public class AppointmentSlotController {
     }
 
     public void cancelAppointment(String patientID) {
-        List<String[]> appointments = new ArrayList<>();
-    
-        try (BufferedReader br = new BufferedReader(new FileReader(appointmentFilePath))) {
-            String line;
-            br.readLine();
-            System.out.println("Appointments for Patient ID: " + patientID);
-    
-            int displayCount = 1;
-            while ((line = br.readLine()) != null) {
-                String[] values = line.split(",");
-                if (values.length >= 6 && values[2].equalsIgnoreCase(patientID) && 
-                    (values[5].equalsIgnoreCase("Pending") || values[5].equalsIgnoreCase("Confirmed"))) {
-                    appointments.add(values);
-                    System.out.println(displayCount + ". Appointment ID: " + values[0] +
-                                       ", Doctor ID: " + values[1] +
-                                       ", Date: " + values[3] +
-                                       ", Time: " + values[4] +
-                                       ", Status: " + values[5]);
-                    displayCount++;
-                }
+    List<String[]> appointments = new ArrayList<>();
+    StaffController staffController = new StaffController(); // Create an instance of StaffController
+
+    try (BufferedReader br = new BufferedReader(new FileReader(appointmentFilePath))) {
+        String line;
+        br.readLine();
+        System.out.println("Appointments for Patient ID: " + patientID);
+
+        int displayCount = 1;
+        while ((line = br.readLine()) != null) {
+            String[] values = line.split(",");
+            if (values.length >= 6 && values[2].equalsIgnoreCase(patientID) && 
+                (values[5].equalsIgnoreCase("Pending") || values[5].equalsIgnoreCase("Confirmed"))) {
+                appointments.add(values);
+                String doctorName = staffController.getDoctorNameByID(values[1]); // Get doctor name using doctor ID
+                System.out.println(displayCount + ". Appointment ID: " + values[0] +
+                                   ", Doctor Name: " + doctorName + // Display doctor name
+                                   ", Date: " + values[3] +
+                                   ", Time: " + values[4] +
+                                   ", Status: " + values[5]);
+                displayCount++;
             }
-    
-            if (appointments.isEmpty()) {
-                System.out.println("No appointments found for Patient ID: " + patientID);
-                return;
-            }
-    
-        } catch (IOException e) {
-            System.out.println("Error reading the appointment file: " + e.getMessage());
+        }
+
+        if (appointments.isEmpty()) {
+            System.out.println("No appointments found for Patient ID: " + patientID);
             return;
         }
-    
-        System.out.print("Select an appointment number to cancel: ");
-        int choice = scanner.nextInt();
-        scanner.nextLine();
-    
-        if (choice < 1 || choice > appointments.size()) {
-            System.out.println("Invalid choice. Please try again.");
-            return;
-        }
-    
-        String[] selectedAppointment = appointments.get(choice - 1);
-        String appointmentID = selectedAppointment[0];
-        String doctorID = selectedAppointment[1];
-    
-        cancelAppointmentStatus(appointmentID, doctorID, null, "Cancelled");
-    
-        System.out.println("Appointment ID: " + appointmentID + " has been cancelled successfully.");
+
+    } catch (IOException e) {
+        System.out.println("Error reading the appointment file: " + e.getMessage());
+        return;
     }
+
+    System.out.print("Select an appointment number to cancel: ");
+    int choice = scanner.nextInt();
+    scanner.nextLine();
+
+    if (choice < 1 || choice > appointments.size()) {
+        System.out.println("Invalid choice. Please try again.");
+        return;
+    }
+
+    String[] selectedAppointment = appointments.get(choice - 1);
+    String appointmentID = selectedAppointment[0];
+    String doctorID = selectedAppointment[1];
+
+    cancelAppointmentStatus(appointmentID, doctorID, null, "Cancelled");
+
+    System.out.println("Appointment ID: " + appointmentID + " has been cancelled successfully.");
+}
     
     private void cancelAppointmentStatus(String appointmentID, String doctorID, String patientID, String status) {
         List<String> lines = new ArrayList<>();

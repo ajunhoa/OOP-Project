@@ -5,6 +5,7 @@ import java.util.Scanner;
 import model.Patient;
 import model.AppointmentSlot;
 import controller.AppointmentSlotController;
+import model.AppointmentOutcomeRecord;
 
 public class PatientView {
     private Patient patient;
@@ -12,6 +13,7 @@ public class PatientView {
     private MedicalRecordController medicalRecordController; 
     private AppointmentSlot appointmentSlot;
     private AppointmentSlotController appointmentSlotController;
+    private AppointmentOutcomeRecord appointmentOutcomeRecord;
 
     public PatientView(Patient patient, Scanner scanner, MedicalRecordController medicalRecordController) {
         this.patient = patient;
@@ -19,6 +21,7 @@ public class PatientView {
         this.medicalRecordController = medicalRecordController;
         this.appointmentSlot = new AppointmentSlot();
         this.appointmentSlotController = new AppointmentSlotController();
+        this.appointmentOutcomeRecord = new AppointmentOutcomeRecord();
     }
 
     public void handleUserChoice() {
@@ -52,7 +55,7 @@ public class PatientView {
                     appointmentSlot.viewScheduledAppointments(patient.getId());
                     break;
                 case 8:
-                   
+                    appointmentOutcomeRecord.viewPastAppointmentOutcomeRecords(patient.getId());
                     break;
                 case 9:
                     System.out.println("Logging out...");
@@ -87,14 +90,13 @@ public class PatientView {
     }
     
 
-    // Method to Update Personal Information
     private void updatePersonalInformation() {
         System.out.println("\n=== Update Personal Information ===");
         System.out.println("1. Update Contact Information");
         System.out.println("2. Update Contact Number");
         System.out.print("Select an option: ");
         int choice = scanner.nextInt();
-        scanner.nextLine(); // To consume the newline character after integer input
+        scanner.nextLine();
 
         switch (choice) {
             case 1:

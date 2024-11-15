@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import controller.StaffController;
 
 public class AppointmentOutcomeRecord {
     private static final String outcomeFilePath = "assets/appointment_outcome.csv";
@@ -222,5 +223,40 @@ public void viewCompletedOutcomeRecord() {
         System.out.println("Error reading the appointment outcome file: " + e.getMessage());
     }
 }
+
+public void viewPastAppointmentOutcomeRecords(String patientID) {
+    try (BufferedReader br = new BufferedReader(new FileReader(outcomeFilePath))) {
+        String line;
+        br.readLine(); // Skip header if present
+        System.out.println("Past Appointment Outcome Records for Patient ID: " + patientID);
+
+        boolean hasRecords = false; // Flag to check if records are found
+        StaffController staffController = new StaffController(); // Create an instance of StaffController
+
+        while ((line = br.readLine()) != null) {
+            String[] values = line.split(",");
+            if (values.length >= 8 && values[1].equalsIgnoreCase(patientID)) {
+                String doctorName = staffController.getDoctorNameByID(values[2]); // Get doctor name using doctor ID
+                // Print the details of the appointment outcome record
+                System.out.println("Appointment ID: " + values[0] +
+                                   ", Doctor Name: " + doctorName + // Display doctor name
+                                   ", Date of Appointment: " + values[3] +
+                                   ", Type of Services: " + values[4] +
+                                   ", Medicine Prescribed: " + values[5] +
+                                   ", Consultation Notes: " + values[6] +
+                                   ", Status: " + values[7]);
+                hasRecords = true; // Set flag to true if records are found
+            }
+        }
+
+        if (!hasRecords) {
+            System.out.println("No past appointment outcome records found for Patient ID: " + patientID);
+        }
+
+    } catch (IOException e) {
+        System.out.println("Error reading the appointment outcome file: " + e.getMessage());
+    }
+}
+
 
 }

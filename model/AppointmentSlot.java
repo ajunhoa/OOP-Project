@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import controller.StaffController;
+
 public class AppointmentSlot {
     
     private static final String appointment_filepath = "assets/appointment.csv";
@@ -278,34 +280,34 @@ public class AppointmentSlot {
     public void viewAvailableAppointmentSlots() {
         try (BufferedReader br = new BufferedReader(new FileReader(appointment_filepath))) {
             String line;
-            br.readLine();
+            br.readLine(); // Skip header
             System.out.println("Available Appointment Slots:");
     
             boolean hasAvailableSlots = false; 
-            int lineCount = 0;
+            StaffController staffController = new StaffController(); // Create an instance of StaffController
     
             while ((line = br.readLine()) != null) {
-                lineCount++;
                 String[] values = line.split(",");
     
                 if (values.length >= 6) { 
                     String appointmentID = values[0];
-                    //String doctorID = values[1];
-                    //String patientID = values[2];
+                    String doctorID = values[1];
+                    String patientID = values[2];
                     String date = values[3];
                     String time = values[4];
                     String status = values[5];
     
+                    // Only display slots that are available (not booked)
                     if (status.equalsIgnoreCase("Available")) {
+                        String doctorName = staffController.getDoctorNameByID(doctorID); // Get doctor name using doctor ID
+    
                         System.out.println("Appointment ID: " + appointmentID +
-                                           //", Doctor ID: " + doctorID +
-                                           //", Patient ID: " + patientID +
+                                           ", Doctor Name: " + doctorName + // Display doctor name
                                            ", Date: " + date +
-                                           ", Time: " + time);
+                                           ", Time: " + time +
+                                           ", Status: " + status);
                         hasAvailableSlots = true;
                     }
-                } else {
-                    System.out.println("Skipping line " + lineCount + " due to insufficient columns.");
                 }
             }
     
@@ -318,35 +320,39 @@ public class AppointmentSlot {
     }
     
     public void viewScheduledAppointments(String patientID) {
-        List<String[]> scheduledAppointments = new ArrayList<>();
-    
-        try (BufferedReader br = new BufferedReader(new FileReader(appointment_filepath))) {
-            String line;
-            br.readLine();
-            System.out.println("Scheduled Appointments for Patient ID: " + patientID);
-    
-            int displayCount = 1; 
-            while ((line = br.readLine()) != null) {
-                String[] values = line.split(",");
-                if (values.length >= 6 && values[2].equalsIgnoreCase(patientID) && 
-                    (values[5].equalsIgnoreCase("Pending") || values[5].equalsIgnoreCase("Confirmed"))) {
-                    scheduledAppointments.add(values);
-                    System.out.println(displayCount + //". Appointment ID: " + values[0] +
-                                       //", Doctor ID: " + values[1] +
-                                       ": Date: " + values[3] +
-                                       ", Time: " + values[4] +
-                                       ", Status: " + values[5]);
-                    displayCount++;
-                }
+    List<String[]> scheduledAppointments = new ArrayList<>();
+
+    try (BufferedReader br = new BufferedReader(new FileReader(appointment_filepath))) {
+        String line;
+        br.readLine(); // Skip header
+        System.out.println("Scheduled Appointments for Patient ID: " + patientID);
+        
+        int displayCount = 1; 
+        StaffController staffController = new StaffController(); // Create an instance of StaffController
+
+        while ((line = br.readLine()) != null) {
+            String[] values = line.split(",");
+            if (values.length >= 6 && values[2].equalsIgnoreCase(patientID) && 
+                (values[5].equalsIgnoreCase("Pending") || values[5].equalsIgnoreCase("Confirmed"))) {
+                scheduledAppointments.add(values);
+                String doctorName = staffController.getDoctorNameByID(values[1]); // Get doctor name using doctor ID
+                System.out.println(displayCount + 
+                                   ": Appointment ID: " + values[0] +
+                                   ", Doctor Name: " + doctorName + // Display doctor name
+                                   ", Date: " + values[3] +
+                                   ", Time: " + values[4] +
+                                   ", Status: " + values[5]);
+                displayCount++;
             }
-    
-            if (scheduledAppointments.isEmpty()) {
-                System.out.println("No scheduled appointments found for Patient ID: " + patientID);
-            }
-    
-        } catch (IOException e) {
-            System.out.println("Error reading the appointment file: " + e.getMessage());
         }
+
+        if (scheduledAppointments.isEmpty()) {
+            System.out.println("No scheduled appointments found for Patient ID: " + patientID);
+        }
+
+    } catch (IOException e) {
+        System.out.println("Error reading the appointment file: " + e.getMessage());
     }
+}
     
 }
