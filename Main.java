@@ -7,10 +7,10 @@ import model.Doctor;
 import model.MedicalRecord;
 import model.Patient;
 import model.User;
+import view.AdministratorView;
 import view.DoctorView;
 import view.PatientView;
-import view.PharmacistView;
-import view.AdministratorView;
+import view.PharmacistView;    
 
 public class Main {
     public static void main(String[] args) {
@@ -75,8 +75,6 @@ public class Main {
 
                     case "Patient":
                         Patient patient = (Patient) user;
-                        System.out.println("Patient Before View: " + patient);
-                        System.out.println("Medical Record Linked: " + (patient.getMedicalRecord() != null ? "Yes" : "No"));
                         PatientView patientView = new PatientView(patient, scanner, medicalRecordController);
                         patientView.handleUserChoice();
                         break;
