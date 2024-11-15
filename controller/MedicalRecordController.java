@@ -78,7 +78,7 @@ public class MedicalRecordController {
         if (record != null) {
             System.out.print("Enter new prescription: ");
             String newPrescription = scanner.nextLine().trim();
-            record.setPrescription(newPrescription); // Update prescription in MedicalRecord
+            //record.setPrescription(newPrescription); // Update prescription in MedicalRecord
             System.out.println("Prescription updated successfully.");
             saveMedicalRecordsToFile(); // Save the updated medical record to file
         } else {

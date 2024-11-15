@@ -12,7 +12,7 @@ package model;
         public void viewMedicalRecord() {
             System.out.println("Fetching Medical Record for Patient: " + getId());
             if (medicalRecord != null) {
-                medicalRecord.displayMedicalRecord(); // Show the medical record
+                medicalRecord.displayMedicalRecord(this); // Show the medical record
             } else {
                 System.out.println("No medical record found for patient.");
             }
