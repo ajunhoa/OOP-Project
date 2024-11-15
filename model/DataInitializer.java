@@ -123,19 +123,23 @@ public class DataInitializer {
         for (Map.Entry<String, User> entry : userMap.entrySet()) {
             User user = entry.getValue();
     
-            // Ensure we're only working with Patient objects, not Staff
+            // Ensure we're only working with Patient objects
             if (user instanceof Patient) {
                 Patient patient = (Patient) user;
     
                 // Retrieve the corresponding medical record using the patient's ID
                 MedicalRecord medicalRecord = medicalRecordMap.get(patient.getId());
     
-                // If a medical record exists, associate it with the patient
+                // Debugging: Check if a record is found and being linked
                 if (medicalRecord != null) {
-                    patient.setMedicalRecord(medicalRecord); // Set the medical record
+                    System.out.println("Linking Medical Record to Patient ID: " + patient.getId());
+                    patient.setMedicalRecord(medicalRecord); // Link the record
+                } else {
+                    System.out.println("No Medical Record found for Patient ID: " + patient.getId());
                 }
             }
         }
     }
+    
     
 }

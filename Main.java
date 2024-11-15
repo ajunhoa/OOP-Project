@@ -1,3 +1,4 @@
+import controller.MedicalRecordController;
 import controller.UserController;
 import java.util.Map;
 import java.util.Scanner;
@@ -14,7 +15,7 @@ public class Main {
     public static void main(String[] args) {
         String patientFilePath = "assets/updatedpatientlist.csv";
         String staffFilePath = "assets/updatedstafflist.csv";
-        String medicalFilePath = "assets/medicalrecords.csv"; // Add this for medical records
+        String medicalFilePath = "assets/medicalrecords.csv"; // Path to medical records
         
         // Load patient and staff data
         Map<String, User> userMap = DataInitializer.loadPatientDetails(patientFilePath);
@@ -36,7 +37,6 @@ public class Main {
             }
         }
 
-        
         try (Scanner scanner = new Scanner(System.in)) {    
             System.out.println("Welcome to the Hospital Management System");    
             System.out.print("Enter your User ID: ");
@@ -67,15 +67,30 @@ public class Main {
                         System.out.println("Accessing Administrator's functionalities...");
                         break;
                     case "Patient":
-                        // Now the patient object is linked to their medical record
-                        Patient patient = new Patient(user.getId(), user.getName(), user.getDateOfBirth(), user.getGender(), user.getBloodType(), user.getContactInfo(), user.isNewUser() ? 1 : 0, user.getPassword(), user.getContactNumber());
-                        PatientView patientView = new PatientView(patient, scanner);  // Pass the patient object and scanner
-                        patientView.handleUserChoice();  // This should be the correct way to display the patient menu
+                        // Use the existing Patient object from the userMap
+                        Patient patient = (Patient) user;
+                    
+                        // Initialize MedicalRecordController with all required parameters
+                        MedicalRecordController medicalRecordController = new MedicalRecordController(
+                            medicalRecordMap,         // Map of medical records
+                            userMap,                  // Map of users
+                            medicalFilePath,          // Path to medical records file
+                            patientFilePath           // Path to user/patient list file
+                        );
+                    
+                        // Debugging: Check if the medical record is linked
+                        System.out.println("Patient Before View: " + patient);
+                        System.out.println("Medical Record Linked: " + (patient.getMedicalRecord() != null ? "Yes" : "No"));
+                    
+                        // Pass the existing Patient object to the PatientView, along with MedicalRecordController
+                        PatientView patientView = new PatientView(patient, scanner, medicalRecordController);
+                        patientView.handleUserChoice(); // Display menu and handle actions
                         break;
-                    default:
+                    
+                    default:    
                         System.out.println("Role not recognized.");
                 }
-            } else {
+            } else {    
                 System.out.println("Invalid User ID or Password.");
             }
         }

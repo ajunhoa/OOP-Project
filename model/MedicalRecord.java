@@ -1,17 +1,17 @@
-package model;
+    package model;
 
-public class MedicalRecord {
+    public class MedicalRecord {
 
-    private String patientId;        // Patient ID (linked to the Patient class)
-    private String pastDiagnoses;    // Stores the past medical diagnoses of the patient
-    private String treatment;        // Stores the treatment information
+        private String patientId;        // Patient ID (linked to the Patient class)
+        private String pastDiagnoses;    // Stores the past medical diagnoses of the patient
+        private String treatment;        // Stores the treatment information
 
-    // Constructor to initialize the medical record with necessary details
-    public MedicalRecord(String patientId, String pastDiagnoses, String treatment) {
-        this.patientId = patientId;
-        this.pastDiagnoses = pastDiagnoses;
-        this.treatment = treatment;
-    }
+        // Constructor to initialize the medical record with necessary details
+        public MedicalRecord(String patientId, String pastDiagnoses, String treatment) {
+            this.patientId = patientId;
+            this.pastDiagnoses = pastDiagnoses;
+            this.treatment = treatment;
+        }
 
     // Getters and Setters for the fields
     public String getPatientId() {
@@ -25,6 +25,7 @@ public class MedicalRecord {
     public String getPastDiagnoses() {
         return pastDiagnoses;
     }
+    
 
     public void setPastDiagnoses(String pastDiagnoses) {
         this.pastDiagnoses = pastDiagnoses;
@@ -39,9 +40,14 @@ public class MedicalRecord {
     }
 
     // Method to display the medical record details
-    public void displayMedicalRecord() {
+    public void displayMedicalRecord(Patient patient) {
         System.out.println("=== Medical Record ===");
-        System.out.println("Patient ID: " + patientId);
+        System.out.println("Patient ID: " + patient.getId());
+        System.out.println("Name: " + patient.getName());
+        System.out.println("Date of Birth: " + patient.getDateOfBirth());
+        System.out.println("Gender: " + patient.getGender());
+        System.out.println("Contact Information: " + patient.getContactInfo() + ", Phone Number: " + patient.getContactNumber());
+        System.out.println("Blood Type: " + patient.getBloodType());
         System.out.println("Past Diagnoses: " + pastDiagnoses);
         System.out.println("Treatment: " + treatment);
     }

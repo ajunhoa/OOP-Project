@@ -54,6 +54,8 @@
         public void setAge(int age) { this.age = age; }
         public void setNewUser(int newUser) { this.newUser = newUser; }
         public void setContactNumber(int contactNumber) { this.contactNumber = contactNumber; }
+        public void setBloodType(String bloodType) { this.bloodType = bloodType; }
+        public void setContactInfo(String contactInfo) { this.contactInfo = contactInfo; }
         
         // Method to check if the user is new
         public boolean isNewUser() {
