@@ -317,5 +317,36 @@ public class AppointmentSlot {
         }
     }
     
+    public void viewScheduledAppointments(String patientID) {
+        List<String[]> scheduledAppointments = new ArrayList<>();
+    
+        try (BufferedReader br = new BufferedReader(new FileReader(appointment_filepath))) {
+            String line;
+            br.readLine();
+            System.out.println("Scheduled Appointments for Patient ID: " + patientID);
+    
+            int displayCount = 1; 
+            while ((line = br.readLine()) != null) {
+                String[] values = line.split(",");
+                if (values.length >= 6 && values[2].equalsIgnoreCase(patientID) && 
+                    (values[5].equalsIgnoreCase("Pending") || values[5].equalsIgnoreCase("Confirmed"))) {
+                    scheduledAppointments.add(values);
+                    System.out.println(displayCount + //". Appointment ID: " + values[0] +
+                                       //", Doctor ID: " + values[1] +
+                                       ": Date: " + values[3] +
+                                       ", Time: " + values[4] +
+                                       ", Status: " + values[5]);
+                    displayCount++;
+                }
+            }
+    
+            if (scheduledAppointments.isEmpty()) {
+                System.out.println("No scheduled appointments found for Patient ID: " + patientID);
+            }
+    
+        } catch (IOException e) {
+            System.out.println("Error reading the appointment file: " + e.getMessage());
+        }
+    }
     
 }

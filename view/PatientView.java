@@ -49,7 +49,7 @@ public class PatientView {
                     appointmentSlotController.cancelAppointment(patient.getId());
                     break;
                 case 7:
-                    
+                    appointmentSlot.viewScheduledAppointments(patient.getId());
                     break;
                 case 8:
                    
