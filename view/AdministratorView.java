@@ -45,7 +45,7 @@ public class AdministratorView {
                     manageMedicineInventory();
                     break;
                 case 4:
-                    // Implement the logic to approve replenishment requests
+                    medicineController.manageReplenishmentRequests(scanner);
                     break;
                 case 5:
                     exit = true;

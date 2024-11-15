@@ -1,7 +1,7 @@
 package view;
 
-import controller.MedicineController;
 import java.util.Scanner;
+import controller.MedicineController;
 import model.AppointmentOutcomeRecord;
 public class PharmacistView {
 
@@ -34,7 +34,7 @@ public class PharmacistView {
                     medicineController.viewInventory();
                     break;
                 case 4:
-                    
+                    medicineController.submitReplenishmentRequest(scanner);
                     break;
                 case 5:
                     exit = true;
