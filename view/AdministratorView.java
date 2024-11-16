@@ -162,28 +162,55 @@ public class AdministratorView {
     }
 
     private void displayStaff() {
-        System.out.print("Enter Role to filter, Doctor / Pharmacist (or press Enter to skip): ");
-        String role = scanner.nextLine();
-        if (role.isEmpty()) {
-            role = null;
-        }
-    
-        System.out.print("Enter Gender to filter, Male / Female (or press Enter to skip): ");
-        String gender = scanner.nextLine();
-        if (gender.isEmpty()) {
-            gender = null;
-        }
-    
-        System.out.print("Enter Age to filter (or press Enter to skip): ");
-        String ageInput = scanner.nextLine();
+        String role = null;
+        String gender = null;
         Integer age = null;
-        if (!ageInput.isEmpty()) {
-            age = Integer.parseInt(ageInput);
+    
+        while (true) {
+            System.out.print("Enter Role to filter, Doctor / Pharmacist (or press Enter to skip): ");
+            role = scanner.nextLine().trim();
+            if (role.isEmpty()) {
+                role = null;
+                break;
+            } else if (role.equalsIgnoreCase("Doctor") || role.equalsIgnoreCase("Pharmacist")) {
+                break;
+            } else {
+                System.out.println("Invalid role. Please enter 'Doctor', 'Pharmacist', or press Enter to skip.");
+            }
         }
     
+        while (true) {
+            System.out.print("Enter Gender to filter, Male / Female (or press Enter to skip): ");
+            gender = scanner.nextLine().trim();
+            if (gender.isEmpty()) {
+                gender = null;
+                break;
+            } else if (gender.equalsIgnoreCase("Male") || gender.equalsIgnoreCase("Female")) {
+                break;
+            } else {
+                System.out.println("Invalid gender. Please enter 'Male', 'Female', or press Enter to skip.");
+            }
+        }
+
+        while (true) {
+            System.out.print("Enter Age to filter (or press Enter to skip): ");
+            String ageInput = scanner.nextLine().trim();
+            if (ageInput.isEmpty()) {
+                age = null; 
+                break; 
+            } else {
+                try {
+                    age = Integer.parseInt(ageInput);
+                    break; 
+                } catch (NumberFormatException e) {
+                    System.out.println("Invalid age. Please enter a valid number or press Enter to skip.");
+                }
+            }
+        }
+    
+        // Call the controller to display staff with the provided filters
         staffController.displayStaff(role, gender, age);
     }
-
     public void manageMedicineInventory() {
         boolean backToMain = false;
         while (!backToMain) {
