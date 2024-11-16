@@ -5,7 +5,8 @@ package model;
  * It extends the User class and includes specific attributes and methods for staff members.
  */
 public class Staff extends User {
-
+    private String id;
+    private String name;
     /**
      * Constructs a Staff instance with the specified attributes.
      *
@@ -19,6 +20,12 @@ public class Staff extends User {
      */
     public Staff(String id, String name, String role, String gender, int age, int newUser , String password) {
         super(id, name, role, gender, age, "", "", "", password, newUser , 0);
+    }
+
+    public Staff(String id, String name) {
+        super(id, name, "", "", 0, "", "", "", "", 0, 0);
+        this.id = id;
+        this.name = name;
     }
 
     /**

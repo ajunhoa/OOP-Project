@@ -5,7 +5,7 @@ package model;
  * It extends the User class and includes specific attributes for doctors,
  * such as their ID and role.
  */
-public class Doctor extends User {
+public class Doctor extends Staff {
     /** The ID of the doctor. */
     private String doctorID;
     
