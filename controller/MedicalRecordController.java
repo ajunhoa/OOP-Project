@@ -1,15 +1,14 @@
 
 package controller;
 
-import model.MedicalRecord;
-import model.User;
-import model.Patient;
-
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Scanner;
+import model.MedicalRecord;
+import model.Patient;
+import model.User;
 /**
  * The MedicalRecordController class manages the medical records and user information
  * for patients in the hospital management system. It provides functionalities to update
@@ -220,4 +219,10 @@ public class MedicalRecordController {
             System.out.println("No medical record found for Patient ID: " + patientId);
         }
     }
+    public boolean isPatientIdValid(String patientId) {
+        // Check both users and medicalRecords to ensure a patient ID exists
+        return users.containsKey(patientId) && users.get(patientId) instanceof Patient
+                && medicalRecords.containsKey(patientId);
+    }
+    
 }

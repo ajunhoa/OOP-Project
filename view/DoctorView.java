@@ -60,6 +60,10 @@ public class DoctorView {
                 case 2:
                     System.out.print("Enter Patient ID to update medical records: ");
                     String patientIdToUpdate = scanner.nextLine().trim();
+                    if (!medicalRecordController.isPatientIdValid(patientIdToUpdate)) {
+                        System.out.println("Invalid Patient ID. Please ensure the ID is correct and try again.");
+                        break;
+                    }
 
                     boolean backToMenu = false;
                     while (!backToMenu) {
