@@ -1,44 +1,86 @@
+import controller.MedicalRecordController;
+import controller.UserController;
+import java.util.Map;
 import java.util.Scanner;
+import model.DataInitializer;
+import model.Doctor;
+import model.MedicalRecord;
+import model.Patient;
+import model.User;
+import view.AdministratorView;
+import view.DoctorView;
+import view.PatientView;
+import view.PharmacistView;    
 
 public class Main {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        String patientFilePath = "assets/updatedpatientlist.csv";
+        String staffFilePath = "assets/updatedstafflist.csv";
+        String medicalFilePath = "assets/medicalrecords.csv";
 
-        // Creating a sample patient
-        Patient patient = new Patient("P001", "John Doe", "PID123", "O+");
-        
-        // Creating a sample doctor
-        Doctor doctor = new Doctor("D001", "Dr. Smith", "DID456");
+        Map<String, User> userMap = DataInitializer.loadPatientDetails(patientFilePath);
+        userMap.putAll(DataInitializer.loadStaffDetails(staffFilePath)); 
 
-        // User selects a role to login (for this example, we’ll work with a patient)
-        System.out.println("Welcome to the Hospital Management System");
-        System.out.println("Select your role: ");
-        System.out.println("1. Patient");
-        System.out.println("2. Doctor");
-        System.out.println("3. Pharmacist");
-        System.out.println("4. Administrator");
-        int role = scanner.nextInt();
+        Map<String, MedicalRecord> medicalRecordMap = DataInitializer.loadMedicalRecords(medicalFilePath);
+        DataInitializer.linkMedicalRecordsToPatients(userMap, medicalRecordMap);
 
-        // Switch based on the selected role
-        switch (role) {
-            case 1:
-                // Patient role selected
-                PatientView patientView = new PatientView(patient);  // Create PatientView with Patient object
-                patientView.handleUserChoice();  // Call the method to handle patient menu
-                break;
-            case 2:
-                // Doctor Menu (similar logic for doctor can be implemented)
-                break;
-            case 3:
-                // Pharmacist Menu (similar logic for pharmacist can be implemented)
-                break;
-            case 4:
-                // Administrator Menu (similar logic for administrator can be implemented)
-                break;
-            default:
-                System.out.println("Invalid role selected.");
+        MedicalRecordController medicalRecordController = new MedicalRecordController(medicalRecordMap, userMap, medicalFilePath, patientFilePath);
+
+        // for (Map.Entry<String, User> entry : userMap.entrySet()) {
+        //     if (entry.getValue() instanceof Patient) {
+        //         Patient patient = (Patient) entry.getValue();
+        //         if (patient.getMedicalRecord() != null) {
+        //             System.out.println("Patient: " + patient.getName() + " has a medical record linked.");
+        //         } else {
+        //             System.out.println("Patient: " + patient.getName() + " has no medical record linked.");
+        //         }
+        //     }
+        // }
+
+        try (Scanner scanner = new Scanner(System.in)) {
+            System.out.println("Welcome to the Hospital Management System");
+            System.out.print("Enter your User ID: ");
+            String userId = scanner.nextLine().trim().toUpperCase();
+
+            System.out.print("Enter your Password: ");
+            String password = scanner.nextLine().trim();
+
+            User user = userMap.get(userId);
+
+            if (user != null && user.validatePassword(password)) {
+                System.out.println("Welcome, " + user.getName());
+
+                String filePath = user.getRole().equals("Patient") ? patientFilePath : staffFilePath;
+                UserController.promptPasswordChange(user, filePath, scanner);
+
+                switch (user.getRole()) {
+                    case "Doctor":
+                        Doctor doctor = new Doctor(user.getId(), user.getName(), user.getRole());
+                        DoctorView doctorView = new DoctorView(doctor, medicalRecordController);
+                        doctorView.showMenu(userId);
+                        break;
+
+                    case "Pharmacist":
+                        PharmacistView pharmacistView = new PharmacistView(scanner);
+                        pharmacistView.showMenu();
+                        break;
+
+                    case "Administrator":
+                        AdministratorView administratorView = new AdministratorView(scanner);
+                        administratorView.showMenu(); 
+                        break;
+                    case "Patient":
+                        Patient patient = (Patient) user;
+                        PatientView patientView = new PatientView(patient, scanner, medicalRecordController);
+                        patientView.showMenu();
+                        break;
+
+                    default:
+                        System.out.println("Role not recognized.");
+                }
+            } else {
+                System.out.println("Invalid User ID or Password.");
+            }
         }
-
-        scanner.close();
     }
 }
