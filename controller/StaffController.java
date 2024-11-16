@@ -80,14 +80,25 @@ public class StaffController {
     public boolean updateStaff(Staff updatedStaff) {
         List<String> lines = new ArrayList<>();
         boolean isUpdated = false;
-
+    
+        if (!updatedStaff.getRole().equalsIgnoreCase("Doctor") && 
+            !updatedStaff.getRole().equalsIgnoreCase("Pharmacist")) {
+            System.out.println("Invalid role. Only 'Doctor' or 'Pharmacist' can be updated.");
+            return false;
+        }
+    
         try (BufferedReader br = new BufferedReader(new FileReader(staffFilePath))) {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] values = line.split(",");
                 if (values.length >= 7 && values[0].equalsIgnoreCase(updatedStaff.getId())) {
+                    // Check if the current role is Administrator
+                    if (values[2].equalsIgnoreCase("Administrator")) {
+                        System.out.println("Cannot update Administrator role.");
+                        return false; 
+                    }
                     line = updatedStaff.getId() + "," + updatedStaff.getName() + "," + updatedStaff.getRole() + "," +
-                           updatedStaff.getGender() + "," + updatedStaff.getAge() + "," + updatedStaff.isNewUser () + "," +
+                           updatedStaff.getGender() + "," + updatedStaff.getAge() + "," + (updatedStaff.isNewUser ()? 1 : 0) + "," +
                            updatedStaff.getPassword();
                     isUpdated = true;
                 }
@@ -96,6 +107,7 @@ public class StaffController {
         } catch (IOException e) {
             System.out.println("Error reading the staff file: " + e.getMessage());
         }
+    
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(staffFilePath))) {
             for (String l : lines) {
                 writer.write(l);
@@ -111,27 +123,33 @@ public class StaffController {
     public boolean removeStaff(String staffId) {
         List<String> lines = new ArrayList<>();
         boolean isRemoved = false;
-
+    
         try (BufferedReader br = new BufferedReader(new FileReader(staffFilePath))) {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] values = line.split(",");
-                if (values.length >= 1 && !values[0].equalsIgnoreCase(staffId)) {
+                if (values.length >= 1) {
+                    if (values[0].equalsIgnoreCase(staffId)) {
+                        if (values[2].equalsIgnoreCase("Administrator")) {
+                            System.out.println("Cannot remove Administrator role.");
+                            return false;
+                        }
+                        isRemoved = true;
+                        continue;
+                    }
                     lines.add(line);
-                } else {
-                    isRemoved = true;
                 }
             }
         } catch (IOException e) {
             System.out.println("Error reading the staff file: " + e.getMessage());
         }
-
+    
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(staffFilePath))) {
             for (String l : lines) {
                 writer.write(l);
                 writer.newLine();
             }
-            return isRemoved;
+            return isRemoved; 
         } catch (IOException e) {
             System.out.println("Error writing to the staff file: " + e.getMessage());
             return false;
