@@ -68,35 +68,47 @@ public class AppointmentOutcomeRecord {
     public void recordAppointmentOutcome(String doctorID) {
         System.out.print("Enter Appointment ID: ");
         String appointmentID = scanner.nextLine();
-
+    
         String[] appointmentDetails = getAppointmentDetails(appointmentID);
         if (appointmentDetails == null) {
             System.out.println("Appointment ID not found. Please enter a valid Appointment ID.");
             return;
         }
-
+    
         String patientID = appointmentDetails[0]; 
         String dateOfAppointment = appointmentDetails[1]; 
         String apptStatus = appointmentDetails[2];
-
+    
         if (!apptStatus.equalsIgnoreCase("Confirmed")) {
             System.out.println("Cannot record appointment outcome. Appointment is not confirmed.");
             return;
         }
-
+    
         System.out.print("Enter Type of Services: ");
         String typeOfServices = scanner.nextLine();
         System.out.print("Enter Medicine Prescribed: ");
         String medicinePrescribed = scanner.nextLine();
         System.out.print("Enter Consultation Notes: ");
         String consultationNotes = scanner.nextLine();
-
+    
+        // Wrap fields in quotes if they contain commas
+        typeOfServices = includeComma(typeOfServices);
+        medicinePrescribed = includeComma(medicinePrescribed);
+        consultationNotes = includeComma(consultationNotes);
+    
         String status = "Pending";
         addAppointmentOutcome(appointmentID.toUpperCase(), patientID.toUpperCase(), doctorID.toUpperCase(), 
                               dateOfAppointment, typeOfServices, medicinePrescribed, consultationNotes, status);
-
+    
         appointmentSlot.updateAppointmentStatus(appointmentID, "Completed");
         System.out.println("Appointment ID: " + appointmentID + " marked as 'Completed' in appointment.csv.");
+    }
+    
+    private String includeComma(String value) {
+        if (value.contains(",")) {
+            return "\"" + value.replace("\"", "\"\"") + "\""; // Escape any existing quotes
+        }
+        return value;
     }
 
     /**
