@@ -1,8 +1,6 @@
 
 package controller;
 
-import model.Medicine;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
@@ -13,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import model.Medicine;
 /**
  * The MedicineController class manages the inventory of medicines in the hospital management system.
  * It provides functionalities to load medicines from a file, view inventory, add, delete, update stock,
@@ -211,48 +210,70 @@ public class MedicineController {
      */
     public void submitReplenishmentRequest(Scanner scanner) {
         List<Medicine> lowStockMedicines = new ArrayList<>();
-
+    
+        // Collect medicines with "Low" stock status
         for (Medicine medicine : medicineMap.values()) {
             if (medicine.getMedicineStatus().equalsIgnoreCase("Low")) {
                 lowStockMedicines.add(medicine);
             }
         }
-
+    
         if (lowStockMedicines.isEmpty()) {
             System.out.println("No medicines require replenishment.");
             return;
         }
-
+    
+        // Display medicines with low stock
         System.out.println("\n=== Medicines Low in Stock ===");
         for (int i = 0; i < lowStockMedicines.size(); i++) {
             Medicine medicine = lowStockMedicines.get(i);
             System.out.println((i + 1) + ". " + medicine.getMedicineName() + 
                                " - Current Stock: " + medicine.getCurrentStock());
         }
-
-        System.out.print("Select the number of the medicine to replenish: ");
-        int choice = scanner.nextInt();
-        scanner.nextLine(); 
-        
-        if (choice < 1 || choice > lowStockMedicines.size()) {
-            System.out.println("Invalid choice.");
-            return;
+    
+        // Input validation for choice selection
+        int choice = -1;
+        while (choice < 1 || choice > lowStockMedicines.size()) {
+            System.out.print("Select the number of the medicine to replenish: ");
+            if (scanner.hasNextInt()) {
+                choice = scanner.nextInt();
+                scanner.nextLine(); // Consume the newline
+                if (choice < 1 || choice > lowStockMedicines.size()) {
+                    System.out.println("Invalid choice. Please select a valid number.");
+                }
+            } else {
+                System.out.println("Invalid input. Please enter a number.");
+                scanner.next(); // Consume the invalid input
+            }
         }
-
+    
+        // Get the selected medicine
         Medicine selectedMedicine = lowStockMedicines.get(choice - 1);
-
-        System.out.print("Enter quantity to replenish: ");
-        int quantityRequested = scanner.nextInt();
-        scanner.nextLine(); 
-
+    
+        // Input validation for replenishment quantity
+        int quantityRequested = -1;
+        while (quantityRequested <= 0) {
+            System.out.print("Enter quantity to replenish: ");
+            if (scanner.hasNextInt()) {
+                quantityRequested = scanner.nextInt();
+                scanner.nextLine(); // Consume the newline
+                if (quantityRequested <= 0) {
+                    System.out.println("Invalid quantity. Please enter a positive number.");
+                }
+            } else {
+                System.out.println("Invalid input. Please enter a positive number.");
+                scanner.next(); // Consume the invalid input
+            }
+        }
+    
+        // Update the medicine status and save the request
         selectedMedicine.setMedicineStatus("Pending");
-
         saveReplenishmentRequest(selectedMedicine.getMedicineName(), quantityRequested, "Pending");
-
         saveMedicines();
-
+    
         System.out.println("Replenishment request submitted successfully for " + selectedMedicine.getMedicineName());
     }
+    
 
     /**
      * Saves a replenishment request to the replenish request file.
