@@ -3,9 +3,7 @@ D001,John Smith,Doctor,Male,45,0,password
 D002,Emily Clarke,Doctor,Female,38,0,password
 P001,Mark Lee,Pharmacist,Male,29,0,password
 A001,Sarah Lee,Administrator,Female,40,0,password
-P002,Neen,Pharmacist,female,11,0,test1
-P003,Nillo,Pharmacist,Male,12,1,password
-P005,alor,Pharmacist,male,20,1,password
-P004,hello,Doctor,male,23,1,password
-QWEQW,testing,Pharmacist,l,18,1,password
-test,testing,Doctor,Female,18,1,testing
+P002,Neen,Pharmacist,Female,41,0,test1
+P003,Nillo,Pharmacist,Male,32,1,password
+P005,Lincoln,Pharmacist,Male,26,1,password
+P004,Haibiscus,Doctor,Male,23,1,password

@@ -1,4 +1,4 @@
 Appointment ID,Patient ID,Doctor ID,Date of Appointment,Type of services,Medicine prescribed,Consultation notes,Status
-APPT3,P1002,D001,12/12/1112,try,try,try,Dispensed
-APPT4,P1001,D001,12/12/2004,test,test,test,Completed
+APPT3,P1002,D001,12/12/2024,try,try,try,Dispensed
+APPT4,P1001,D001,12/12/2024,test,test,test,Completed
 APPT11,P1001,D001,20/11/2024,test,test,test,Pending
