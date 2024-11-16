@@ -1,0 +1,7 @@
+Medicine Name,Current Stock,Low Stock Alert,Status
+Paracetamol,100,20,Pending
+Ibuprofen,50,10,Available
+Amoxicillin,75,15,Available
+Aspirin,25,40,Low
+Penicillin,30,20,Available
+Plan B,10,50,Low
