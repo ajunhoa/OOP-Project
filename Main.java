@@ -35,60 +35,89 @@ public class Main {
         String patientFilePath = "assets/updatedpatientlist.csv";
         String staffFilePath = "assets/updatedstafflist.csv";
         String medicalFilePath = "assets/medicalrecords.csv";
-
+    
+        // Load user and medical record data
         Map<String, User> userMap = DataInitializer.loadPatientDetails(patientFilePath);
-        userMap.putAll(DataInitializer.loadStaffDetails(staffFilePath)); 
-
+        userMap.putAll(DataInitializer.loadStaffDetails(staffFilePath));
+    
         Map<String, MedicalRecord> medicalRecordMap = DataInitializer.loadMedicalRecords(medicalFilePath);
         DataInitializer.linkMedicalRecordsToPatients(userMap, medicalRecordMap);
-
+    
+        // Initialize the MedicalRecordController
         MedicalRecordController medicalRecordController = new MedicalRecordController(medicalRecordMap, userMap, medicalFilePath, patientFilePath);
-
+    
         try (Scanner scanner = new Scanner(System.in)) {
-            System.out.println("Welcome to the Hospital Management System");
+            boolean loggedIn = false;
+            int attempts = 0;
+            final int maxAttempts = 3;
+            User user = null;
+    
+            // Prompt for User ID first
+            System.out.println("\nWelcome to the Hospital Management System");
             System.out.print("Enter your User ID: ");
             String userId = scanner.nextLine().trim().toUpperCase();
-
-            System.out.print("Enter your Password: ");
-            String password = scanner.nextLine().trim();
-
-            User user = userMap.get(userId);
-
-            if (user != null && user.validatePassword(password)) {
-                System.out.println("Welcome, " + user.getName());
-
-                String filePath = user.getRole().equals("Patient") ? patientFilePath : staffFilePath;
-                UserController.promptPasswordChange(user, filePath, scanner);
-
-                switch (user.getRole()) {
-                    case "Doctor":
-                        Doctor doctor = new Doctor(user.getId(), user.getName(), user.getRole());
-                        DoctorView doctorView = new DoctorView(doctor, medicalRecordController);
-                        doctorView.showMenu(userId);
-                        break;
-
-                    case "Pharmacist":
-                        PharmacistView pharmacistView = new PharmacistView(scanner);
-                        pharmacistView.showMenu();
-                        break;
-
-                    case "Administrator":
-                        AdministratorView administratorView = new AdministratorView(scanner);
-                        administratorView.showMenu(); 
-                        break;
-
-                    case "Patient":
-                        Patient patient = (Patient) user;
-                        PatientView patientView = new PatientView(patient, scanner, medicalRecordController);
-                        patientView.showMenu();
-                        break;
-
-                    default:
-                        System.out.println("Role not recognized.");
+    
+            // Check if the User ID exists
+            user = userMap.get(userId);
+    
+            if (user == null) {
+                System.out.println("Invalid User ID. Exiting program.");
+                System.exit(0);
+            }
+    
+            // Password entry loop
+            while (!loggedIn && attempts < maxAttempts) {
+                attempts++;
+                System.out.print("Enter your Password: ");
+                String password = scanner.nextLine().trim();
+    
+                if (user.validatePassword(password)) {
+                    System.out.println("Welcome, " + user.getName());
+                    loggedIn = true;
+    
+                    // Prompt for password change if necessary
+                    String filePath = user.getRole().equals("Patient") ? patientFilePath : staffFilePath;
+                    UserController.promptPasswordChange(user, filePath, scanner);
+    
+                    // Role-based menu handling
+                    switch (user.getRole()) {
+                        case "Doctor":
+                            Doctor doctor = new Doctor(user.getId(), user.getName(), user.getRole());
+                            DoctorView doctorView = new DoctorView(doctor, medicalRecordController);
+                            doctorView.showMenu(userId);
+                            break;
+    
+                        case "Pharmacist":
+                            PharmacistView pharmacistView = new PharmacistView(scanner);
+                            pharmacistView.showMenu();
+                            break;
+    
+                        case "Administrator":
+                            AdministratorView administratorView = new AdministratorView(scanner);
+                            administratorView.showMenu();
+                            break;
+    
+                        case "Patient":
+                            Patient patient = (Patient) user;
+                            PatientView patientView = new PatientView(patient, scanner, medicalRecordController);
+                            patientView.showMenu();
+                            break;
+    
+                        default:
+                            System.out.println("Role not recognized.");
+                    }
+                } else {
+                    System.out.println("Invalid Password. Please try again.");
+                    if (attempts == maxAttempts) {
+                        System.out.println("Too many failed attempts. Exiting the program.");
+                    }
                 }
-            } else {
-                System.out.println("Invalid User ID or Password.");
+            }
+    
+            if (!loggedIn) {
+                System.exit(0); // Exit the program after max attempts
             }
         }
     }
+    
 }
