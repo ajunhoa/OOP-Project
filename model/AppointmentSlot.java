@@ -8,6 +8,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 
 import controller.StaffController;
 
@@ -70,15 +74,116 @@ public class AppointmentSlot {
         String patientID = ""; 
         String date, time;
         String status = "Available"; 
-
+    
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter Date (DD/MM/YYYY): ");
         date = scanner.nextLine().trim();
         
+        // Validate the date format
+        if (!isValidDate(date)) {
+            System.out.println("Invalid date format. Please enter the date as DD/MM/YYYY.");
+            return; // Exit the method if the date format is invalid
+        }
+    
         System.out.print("Enter Time (HH:MM AM/PM): ");
         time = scanner.nextLine().trim();
-
+    
+        time = standardizeTime(time);
+        if (time.isEmpty()) {
+            System.out.println("Invalid time format. Please enter time as HH:MM AM/PM.");
+            return; 
+        }
+    
+        if (isAppointmentConflict(doctorID, date, time)) {
+            System.out.println("Cannot schedule appointment. There is already an appointment for this doctor on " + date + " at " + time + ".");
+            return; 
+        }
+    
         updateCSV(appointmentID, doctorID, patientID, date, time, status);
+    }
+    
+    /**
+     * Validates the date format (DD/MM/YYYY).
+     *
+     * @param date The input date string.
+     * @return true if the date format is valid, false otherwise.
+     */
+    private boolean isValidDate(String date) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        sdf.setLenient(false); // Set lenient to false to strictly parse the date
+        try {
+            Date parsedDate = sdf.parse(date); // This will throw ParseException if the date is invalid
+            return true; 
+        } catch (ParseException e) {
+            return false; 
+        }
+    }
+    
+    /**
+     * Standardizes the time input to a consistent format (HH:MM AM/PM).
+     *
+     * @param time The input time string.
+     * @return The standardized time string.
+     */
+    private String standardizeTime(String time) {
+        try {
+            // Split the input into time and period (AM/PM)
+            String[] parts = time.split(" ");
+            String timePart = parts[0]; // This should be "HH:MM"
+            String period = parts.length > 1 ? parts[1].toUpperCase() : ""; // This should be "AM" or "PM"
+    
+            // Handle cases where the hour is entered without leading zero
+            String[] timeComponents = timePart.split(":");
+            int hour = Integer.parseInt(timeComponents[0]);
+            String minute = timeComponents.length > 1 ? timeComponents[1] : "00"; // Default to "00" if no minutes are provided
+    
+            // Format the hour to 12-hour format with leading zero if necessary
+            if (hour < 1 || hour > 12) {
+                return ""; // If hour is out of range, return an empty string
+            }
+    
+            // Ensure the minute is two digits
+            minute = String.format("%02d", Integer.parseInt(minute));
+    
+            // Return the standardized time
+            return hour + ":" + minute + " " + period;
+        } catch (Exception e) {
+            return ""; // Return an empty string if there are parsing errors
+        }
+    }
+
+    
+    
+    /**
+     * Checks if there is an existing appointment for the specified doctor at the given date and time.
+     *
+     * @param doctorID The ID of the doctor to check for conflicts.
+     * @param date The date of the appointment to check.
+     * @param time The time of the appointment to check.
+     * @return true if there is a conflict, false otherwise.
+     */
+    private boolean isAppointmentConflict(String doctorID, String date, String time) {
+        try (BufferedReader br = new BufferedReader(new FileReader(appointment_filepath))) {
+            String line;
+            br.readLine(); // Skip header
+            while ((line = br.readLine()) != null) {
+                String[] values = line.split(",");
+                if (values.length >= 6) {
+                    String appointmentDoctorID = values[1];
+                    String appointmentDate = values[3];
+                    String appointmentTime = values[4];
+                    String status = values[5];
+    
+                    // Check if the doctor ID, date, and time match and the status is not cancelled
+                    if (appointmentDoctorID.equals(doctorID) && appointmentDate.equals(date) && appointmentTime.equals(time) && !status.equalsIgnoreCase("Cancelled")) {
+                        return true; // Conflict found
+                    }
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Error reading the appointment file: " + e.getMessage());
+        }
+        return false; // No conflict found
     }
 
     /**
