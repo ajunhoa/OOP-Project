@@ -36,12 +36,14 @@ cd OOP-Project
 OOP-Project/
 │
 ├── model/
+│   ├── Administrator.java
 │   ├── AppointmentOutcomeRecord.java
 │   ├── AppointmentSlot.java
 │   ├── Doctor.java
 │   ├── MedicalRecord.java
 │   ├── Medicine.java
 │   ├── Patient.java
+│   ├── Pharmacist.java
 │   ├── Staff.java
 │   └── User.java
 │
