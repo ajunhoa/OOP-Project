@@ -1,12 +1,11 @@
 package view;
 
-import controller.StaffController;
 import controller.MedicineController;
-import model.Staff;
-import model.AppointmentSlot;
-import model.AppointmentOutcomeRecord;
-
+import controller.StaffController;
 import java.util.Scanner;
+import model.AppointmentOutcomeRecord;
+import model.AppointmentSlot;
+import model.Staff;
 
 public class AdministratorView {
     private Scanner scanner;
@@ -46,6 +45,7 @@ public class AdministratorView {
                     appointmentOutcomeRecord.viewCompletedOutcomeRecord();
                     break;
                 case 3:
+                    medicineController.viewInventory();
                     manageMedicineInventory();
                     break;
                 case 4:
