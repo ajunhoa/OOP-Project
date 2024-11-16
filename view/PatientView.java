@@ -45,7 +45,7 @@ public class PatientView {
     public void showMenu() {
         boolean exit = false;
         while (!exit) {
-            displayPatientMenu();
+            displayMenu();
             System.out.print("Select an option: ");
             if (!scanner.hasNextInt()) {
                 System.out.println("Invalid input. Please enter a number between 1 and 9.");
@@ -93,7 +93,7 @@ public class PatientView {
     /**
      * Displays the options available in the patient menu.
      */
-    private void displayPatientMenu() {
+    private void displayMenu() {
         System.out.println("\n=== Patient Menu ===");
         System.out.println("1. View Medical Record");
         System.out.println("2. Update Personal Information");
