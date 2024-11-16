@@ -100,7 +100,7 @@ public class AppointmentOutcomeRecord {
         addAppointmentOutcome(appointmentID.toUpperCase(), patientID.toUpperCase(), doctorID.toUpperCase(), 
                               dateOfAppointment, typeOfServices, medicinePrescribed, consultationNotes, status);
     
-        appointmentSlot.updateAppointmentStatus(appointmentID, "Completed");
+        appointmentSlot.updateAppointmentStatus(appointmentID.toUpperCase(), "Completed");
         System.out.println("Appointment ID: " + appointmentID + " marked as 'Completed' in appointment.csv.");
     }
     
