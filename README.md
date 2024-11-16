@@ -56,7 +56,7 @@ OOP-Project/
 │   └── PharmacistView.java
 │
 ├── Javadocs/
-│   └── (generated documentation)
+│   └── (Javadocs files)
 │
 ├── assets/
 │   ├── updatedpatientlist.csv
