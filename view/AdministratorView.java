@@ -164,7 +164,7 @@ public class AdministratorView {
             role = null;
         }
     
-        System.out.print("Enter Gender to filter, M / F (or press Enter to skip): ");
+        System.out.print("Enter Gender to filter, Male / Female (or press Enter to skip): ");
         String gender = scanner.nextLine();
         if (gender.isEmpty()) {
             gender = null;
