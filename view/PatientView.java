@@ -60,7 +60,7 @@ public class PatientView {
                     viewMedicalRecord();
                     break;
                 case 2:
-                    updatePersonalInformation();
+                    viewPersonalInformation();
                     break;
                 case 3:
                     appointmentSlot.viewAvailableAppointmentSlots();
@@ -96,7 +96,7 @@ public class PatientView {
     private void displayMenu() {
         System.out.println("\n=== Patient Menu ===");
         System.out.println("1. View Medical Record");
-        System.out.println("2. Update Personal Information");
+        System.out.println("2. View Personal Information");
         System.out.println("3. View Available Appointment Slots");
         System.out.println("4. Schedule an Appointment");
         System.out.println("5. Reschedule an Appointment");
@@ -120,8 +120,8 @@ public class PatientView {
     /**
      * Allows the patient to update their personal information, such as contact email and contact number.
      */
-    private void updatePersonalInformation() {
-        System.out.println("\n=== Update Personal Information ===");
+    private void viewPersonalInformation() {
+        System.out.println("\n=== View Personal Information ===");
         System.out.println("1. Update Contact Email");
         System.out.println("2. Update Contact Number");
         System.out.print("Select an option: ");
