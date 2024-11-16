@@ -4,27 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b2c45203-dd4a-489a-a631-6622b59c260b" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controller/AppointmentSlotController.java" beforeDir="false" afterPath="$PROJECT_DIR$/controller/AppointmentSlotController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controller/MedicalRecordController.java" beforeDir="false" afterPath="$PROJECT_DIR$/controller/MedicalRecordController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controller/MedicineController.java" beforeDir="false" afterPath="$PROJECT_DIR$/controller/MedicineController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controller/StaffController.java" beforeDir="false" afterPath="$PROJECT_DIR$/controller/StaffController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/AppointmentOutcomeRecord.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/AppointmentOutcomeRecord.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/AppointmentSlot.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/AppointmentSlot.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/DataInitializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/DataInitializer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/Doctor.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/Doctor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/MedicalRecord.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/MedicalRecord.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/Medicine.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/Medicine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/Patient.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/Patient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/Staff.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/Staff.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/AdministratorView.java" beforeDir="false" afterPath="$PROJECT_DIR$/view/AdministratorView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/DoctorView.java" beforeDir="false" afterPath="$PROJECT_DIR$/view/DoctorView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/PatientView.java" beforeDir="false" afterPath="$PROJECT_DIR$/view/PatientView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/PharmacistView.java" beforeDir="false" afterPath="$PROJECT_DIR$/view/PharmacistView.java" afterDir="false" />
-    </list>
+    <list default="true" id="b2c45203-dd4a-489a-a631-6622b59c260b" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -199,7 +179,7 @@
       <workItem from="1731762333772" duration="125000" />
       <workItem from="1731762465132" duration="1987000" />
       <workItem from="1731765745580" duration="236000" />
-      <workItem from="1731765992929" duration="1433000" />
+      <workItem from="1731765992929" duration="3078000" />
     </task>
     <servers />
   </component>
