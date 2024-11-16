@@ -57,23 +57,22 @@ public class Main {
                     case "Doctor":
                         Doctor doctor = new Doctor(user.getId(), user.getName(), user.getRole());
                         DoctorView doctorView = new DoctorView(doctor, medicalRecordController);
-                        doctorView.displayDoctorMenu(userId);
+                        doctorView.showMenu(userId);
                         break;
 
                     case "Pharmacist":
                         PharmacistView pharmacistView = new PharmacistView(scanner);
-                        pharmacistView.displayPharmacistMenu();
+                        pharmacistView.showMenu();
                         break;
 
                     case "Administrator":
                         AdministratorView administratorView = new AdministratorView(scanner);
-                        administratorView.displayAdministratorMenu(); 
+                        administratorView.showMenu(); 
                         break;
-
                     case "Patient":
                         Patient patient = (Patient) user;
                         PatientView patientView = new PatientView(patient, scanner, medicalRecordController);
-                        patientView.handleUserChoice();
+                        patientView.showMenu();
                         break;
 
                     default:

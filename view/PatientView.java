@@ -24,7 +24,7 @@ public class PatientView {
         this.appointmentOutcomeRecord = new AppointmentOutcomeRecord();
     }
 
-    public void handleUserChoice() {
+    public void showMenu() {
         boolean exit = false;
         while (!exit) {
             displayPatientMenu();

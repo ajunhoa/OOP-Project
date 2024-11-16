@@ -25,7 +25,7 @@ public class AdministratorView {
 
     }
 
-    public void displayAdministratorMenu() {
+    public void showMenu() {
         boolean exit = false;
         while (!exit) {
             this.displayMenu();

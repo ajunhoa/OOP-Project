@@ -15,7 +15,7 @@ public class PharmacistView {
         this.medicineController = new MedicineController(); 
     }
 
-    public void displayPharmacistMenu() {
+    public void showMenu() {
         boolean exit = false;
         while (!exit) {
             this.displayMenu();

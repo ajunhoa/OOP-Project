@@ -25,7 +25,7 @@ public class DoctorView {
         this.medicalRecordController = medicalRecordController;
     }
 
-    public void displayDoctorMenu(String doctorID) {
+    public void showMenu(String doctorID) {
         boolean exit = false;
         while (!exit) {
             this.displayMenu();
