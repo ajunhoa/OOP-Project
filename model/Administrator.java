@@ -1,5 +1,10 @@
 package model;
 
+/**
+ * The Administrator class represents an administrator in the hospital management system.
+ * It extends the Staff class and includes specific attributes for administrators,
+ * such as their ID and role.
+ */
 public class Administrator extends Staff {
     
     /** The ID of the administrator. */
@@ -13,8 +18,8 @@ public class Administrator extends Staff {
      * @param role The role of the administrator.
      */
     public Administrator(String userID, String name, String role) {
-        super(userID, name, role, "", 0, 0, ""); // Call to the Staff constructor
-        this.administratorID = userID; // Assuming userID is the same as administratorID
+        super(userID, name, role, "", 0, 0, ""); 
+        this.administratorID = userID; 
     }
 
     /**
@@ -33,6 +38,6 @@ public class Administrator extends Staff {
      */
     @Override
     public String getRole() {
-        return super.getRole(); // Calls the getRole() method from the Staff class
+        return super.getRole(); 
     }
 }

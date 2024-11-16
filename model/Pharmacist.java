@@ -1,5 +1,10 @@
 package model;
 
+/**
+ * The Pharmacist class represents a pharmacist in the hospital management system.
+ * It extends the Staff class and includes specific attributes for pharmacists,
+ * such as their ID and role.
+ */
 public class Pharmacist extends Staff {
     
     /**
@@ -10,7 +15,7 @@ public class Pharmacist extends Staff {
      * @param role The role of the pharmacist.
      */
     public Pharmacist(String userID, String name, String role) {
-        super(userID, name, role, "", 0, 0, ""); // Call to the Staff constructor
+        super(userID, name, role, "", 0, 0, ""); 
     }
 
     /**
@@ -19,7 +24,7 @@ public class Pharmacist extends Staff {
      * @return The pharmacist ID.
      */
     public String getPharmacistID() {
-        return super.getId(); // Assuming getId() is defined in Staff
+        return super.getId();
     }
 
     /**
@@ -28,6 +33,6 @@ public class Pharmacist extends Staff {
      * @return The role of the pharmacist.
      */
     public String getRole() {
-        return super.getRole(); // Assuming getRole() is defined in Staff
+        return super.getRole();
     }
 }
