@@ -1,11 +1,11 @@
 package view;
 
+import controller.AppointmentSlotController;
 import controller.MedicalRecordController;
 import java.util.Scanner;
-import model.Patient;
-import model.AppointmentSlot;
-import controller.AppointmentSlotController;
 import model.AppointmentOutcomeRecord;
+import model.AppointmentSlot;
+import model.Patient;
 
 /**
  * The PatientView class is responsible for handling the patient's view of the Hospital Management System.
@@ -47,6 +47,11 @@ public class PatientView {
         while (!exit) {
             displayPatientMenu();
             System.out.print("Select an option: ");
+            if (!scanner.hasNextInt()) {
+                System.out.println("Invalid input. Please enter a number between 1 and 9.");
+                scanner.next(); // Clear invalid input
+                continue;
+            }
             int choice = scanner.nextInt();
             scanner.nextLine();
 
