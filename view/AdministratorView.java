@@ -122,16 +122,16 @@ public class AdministratorView {
             // Process the choice
             switch (choice) {
                 case 1:
-                    addStaff();
+                    staffController.addStaff();
                     break;
                 case 2:
-                    updateStaff();
+                    staffController.updateStaff();
                     break;
                 case 3:
-                    removeStaff();
+                    staffController.removeStaff();
                     break;
                 case 4:
-                    displayStaff();
+                    staffController.displayStaff();
                     break;
                 case 5:
                     System.out.println("Returning to the Administrator Menu...");
@@ -144,6 +144,7 @@ public class AdministratorView {
     }
     
 
+<<<<<<< Updated upstream
     /**
      * Prompts the user to enter details for a new staff member and adds them to the system.
      */
@@ -376,6 +377,8 @@ public class AdministratorView {
         // Call the controller to display staff with the provided filters
         staffController.displayStaff(role, gender, age);
     }
+=======
+>>>>>>> Stashed changes
 
     /**
      * Manages the medicine inventory by providing options to add, delete, update stock, or go back to the main menu.

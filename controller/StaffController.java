@@ -5,12 +5,15 @@ import java.util.*;
 import java.util.stream.Collectors;
 import model.Staff;
 
+
+
 /**
  * The StaffController class manages the staff records in the hospital management system.
  * It provides functionalities to load staff details, add, update, remove, and filter staff,
  * as well as displaying staff information.
  */
 public class StaffController {
+    private Scanner scanner;
 
     /** The file path for the staff records CSV file. */
     private final String staffFilePath = "assets/updatedstafflist.csv";
@@ -24,6 +27,7 @@ public class StaffController {
     public StaffController() {
         doctorMap = new HashMap<>();
         loadStaffDetails();
+        scanner = new Scanner(System.in);
     }
 
     /**
@@ -264,4 +268,125 @@ public class StaffController {
             }
         }
     }
+    
+    /**
+     * Prompts the user to enter details for a new staff member and adds them to the system.
+     */
+    public void addStaff() {
+        System.out.print("Enter Staff ID: ");
+        String id = scanner.nextLine().toUpperCase();
+        System.out.print("Enter Staff Name: ");
+        String name = scanner.nextLine();
+        System.out.print("Enter Role (Doctor/Pharmacist): ");
+        String role = scanner.nextLine();
+        System.out.print("Enter Gender: ");
+        String gender = scanner.nextLine();
+        System.out.print("Enter Age: ");
+        int age = scanner.nextInt();
+        scanner.nextLine();
+        System.out.print("Enter Password: ");
+        String password = scanner.nextLine();
+        
+        Staff newStaff = new Staff(id, name, role, gender, age, 1 , password); 
+        if (addStaff(newStaff)) {
+            System.out.println("Staff added successfully.");
+        } else {
+            System.out.println("Failed to add staff .");
+        }
+    }
+
+    /**
+     * Prompts the user to enter new details for an existing staff member and updates their information.
+     */
+    public void updateStaff() {
+        System.out.print("Enter Staff ID to update: ");
+        String id = scanner.nextLine();
+        System.out.print("Enter New Staff Name: ");
+        String name = scanner.nextLine();
+        System.out.print("Enter New Role (Doctor/Pharmacist): ");
+        String role = scanner.nextLine();
+        System.out.print("Enter New Gender: ");
+        String gender = scanner.nextLine();
+        System.out.print("Enter New Age: ");
+        int age = scanner.nextInt();
+        scanner.nextLine();
+        System.out.print("Enter New Password: ");
+        String password = scanner.nextLine();
+
+        Staff updatedStaff = new Staff(id.toUpperCase(), name, role, gender, age, 1, password);
+        if (updateStaff(updatedStaff)) {
+            System.out.println("Staff updated successfully.");
+        } else {
+            System.out.println("Failed to update staff.");
+        }
+    }
+
+    
+    /**
+     * Prompts the user to enter a staff ID and removes the corresponding staff member from the system.
+     */
+    public void removeStaff() {
+        System.out.print("Enter Staff ID to remove: ");
+        String id = scanner.nextLine();
+        if (removeStaff(id)) {
+            System.out.println("Staff removed successfully.");
+        } else {
+            System.out.println("Failed to remove staff.");
+        }
+    }
+
+    /**
+     * Prompts the user to enter filters for displaying staff and calls the controller to display the filtered staff list.
+     */
+    public void displayStaff() {
+        String role = null;
+        String gender = null;
+        Integer age = null;
+    
+        while (true) {
+            System.out.print("Enter Role to filter, Doctor / Pharmacist (or press Enter to skip): ");
+            role = scanner.nextLine().trim();
+            if (role.isEmpty()) {
+                role = null;
+                break;
+            } else if (role.equalsIgnoreCase("Doctor") || role.equalsIgnoreCase("Pharmacist")) {
+                break;
+            } else {
+                System.out.println("Invalid role. Please enter 'Doctor', 'Pharmacist', or press Enter to skip.");
+            }
+        }
+    
+        while (true) {
+            System.out.print("Enter Gender to filter, Male / Female (or press Enter to skip): ");
+            gender = scanner.nextLine().trim();
+            if (gender.isEmpty()) {
+                gender = null;
+                break;
+            } else if (gender.equalsIgnoreCase("Male") || gender.equalsIgnoreCase("Female")) {
+                break;
+            } else {
+                System.out.println("Invalid gender. Please enter 'Male', 'Female', or press Enter to skip.");
+            }
+        }
+
+        while (true) {
+            System.out.print("Enter Age to filter (or press Enter to skip): ");
+            String ageInput = scanner.nextLine().trim();
+            if (ageInput.isEmpty()) {
+                age = null; 
+                break; 
+            } else {
+                try {
+                    age = Integer.parseInt(ageInput);
+                    break; 
+                } catch (NumberFormatException e) {
+                    System.out.println("Invalid age. Please enter a valid number or press Enter to skip.");
+                }
+            }
+        }
+    
+        // Call the controller to display staff with the provided filters
+        displayStaff(role, gender, age);
+    }
+
 }
