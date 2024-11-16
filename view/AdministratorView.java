@@ -20,7 +20,7 @@ public class AdministratorView {
     private AppointmentOutcomeRecord appointmentOutcomeRecord;
     private MedicineController medicineController;
 
-    /**
+    /** 
      * Constructs an AdministratorView instance with the specified Scanner.
      *
      * @param scanner The Scanner object used to read user input.
@@ -97,10 +97,29 @@ public class AdministratorView {
             System.out.println("3. Remove Staff");
             System.out.println("4. Display Staff");
             System.out.println("5. Back to Administrator Menu");
-            System.out.print("Select an option: ");
-            int choice = scanner.nextInt();
-            scanner.nextLine();
-
+    
+            int choice = -1; // Initialize with an invalid value
+            boolean validInput = false;
+    
+            // Input validation loop
+            while (!validInput) {
+                System.out.print("Select an option: ");
+                if (scanner.hasNextInt()) {
+                    choice = scanner.nextInt();
+                    scanner.nextLine(); // Clear buffer
+    
+                    if (choice >= 1 && choice <= 5) {
+                        validInput = true; // Valid input
+                    } else {
+                        System.out.println("Invalid choice. Please select a number between 1 and 5.");
+                    }
+                } else {
+                    System.out.println("Invalid input. Please enter a number.");
+                    scanner.next(); // Clear invalid input
+                }
+            }
+    
+            // Process the choice
             switch (choice) {
                 case 1:
                     addStaff();
@@ -115,13 +134,15 @@ public class AdministratorView {
                     displayStaff();
                     break;
                 case 5:
+                    System.out.println("Returning to the Administrator Menu...");
                     managing = false;
                     break;
                 default:
-                    System.out.println("Invalid choice. Please try again.");
+                    System.out.println("Invalid choice. Please try again."); // This should never occur due to validation
             }
         }
     }
+    
 
     /**
      * Prompts the user to enter details for a new staff member and adds them to the system.
@@ -129,44 +150,156 @@ public class AdministratorView {
     private void addStaff() {
         System.out.print("Enter Staff ID: ");
         String id = scanner.nextLine().toUpperCase();
+        while (id.isEmpty()) {
+            System.out.print("Staff ID cannot be empty. Enter Staff ID: ");
+            id = scanner.nextLine().toUpperCase();
+        }
+    
         System.out.print("Enter Staff Name: ");
         String name = scanner.nextLine();
-        System.out.print("Enter Role (Doctor/Pharmacist): ");
-        String role = scanner.nextLine();
-        System.out.print("Enter Gender: ");
-        String gender = scanner.nextLine();
-        System.out.print("Enter Age: ");
-        int age = scanner.nextInt();
-        scanner.nextLine();
+        while (name.isEmpty()) {
+            System.out.print("Staff Name cannot be empty. Enter Staff Name: ");
+            name = scanner.nextLine();
+        }
+    
+        // Validate Role
+        String role;
+        while (true) {
+            System.out.print("Enter Role (Doctor/Pharmacist): ");
+            role = scanner.nextLine().trim();
+            if (role.equalsIgnoreCase("Doctor") || role.equalsIgnoreCase("Pharmacist")) {
+                role = role.substring(0, 1).toUpperCase() + role.substring(1).toLowerCase(); // Format properly
+                break;
+            } else {
+                System.out.println("Invalid role. Please enter 'Doctor' or 'Pharmacist'.");
+            }
+        }
+    
+        // Validate Gender
+        String gender;
+        while (true) {
+            System.out.print("Enter Gender (Male/Female): ");
+            gender = scanner.nextLine().trim();
+            if (gender.equalsIgnoreCase("Male") || gender.equalsIgnoreCase("Female")) {
+                gender = gender.substring(0, 1).toUpperCase() + gender.substring(1).toLowerCase(); // Format properly
+                break;
+            } else {
+                System.out.println("Invalid gender. Please enter 'Male' or 'Female'.");
+            }
+        }
+    
+        // Validate Age
+        int age = -1;
+        while (true) {
+            System.out.print("Enter Age: ");
+            if (scanner.hasNextInt()) {
+                age = scanner.nextInt();
+                scanner.nextLine(); // Clear buffer
+                if (age >= 18 && age <= 100) {
+                    break;
+                } else {
+                    System.out.println("Invalid age. Please enter an age between 18 and 100.");
+                }
+            } else {
+                System.out.println("Invalid input. Please enter a valid number for age.");
+                scanner.next(); // Clear invalid input
+            }
+        }
+    
         System.out.print("Enter Password: ");
         String password = scanner.nextLine();
-        
-        Staff newStaff = new Staff(id, name, role, gender, age, 1 , password); 
+        while (password.isEmpty()) {
+            System.out.print("Password cannot be empty. Enter Password: ");
+            password = scanner.nextLine();
+        }
+    
+        // Create and add the new staff member
+        Staff newStaff = new Staff(id, name, role, gender, age, 1, password);
         if (staffController.addStaff(newStaff)) {
             System.out.println("Staff added successfully.");
         } else {
-            System.out.println("Failed to add staff .");
+            System.out.println("Failed to add staff.");
         }
     }
+    
+    
 
     /**
      * Prompts the user to enter new details for an existing staff member and updates their information.
      */
     private void updateStaff() {
-        System.out.print("Enter Staff ID to update: ");
-        String id = scanner.nextLine();
+        String id;
+        while (true) {
+            System.out.print("Enter Staff ID to update: ");
+            id = scanner.nextLine();
+            if (id.isEmpty()) {
+                System.out.println("Staff ID cannot be empty. Please try again.");
+            } else if (!staffController.isStaffIdExists(id)) {
+                System.out.println("Staff ID not found in the system. Please enter a valid Staff ID.");
+            } else {
+                break; // Valid ID
+            }
+        }
+    
         System.out.print("Enter New Staff Name: ");
         String name = scanner.nextLine();
-        System.out.print("Enter New Role (Doctor/Pharmacist): ");
-        String role = scanner.nextLine();
-        System.out.print("Enter New Gender: ");
-        String gender = scanner.nextLine();
-        System.out.print("Enter New Age: ");
-        int age = scanner.nextInt();
-        scanner.nextLine();
+        while (name.isEmpty()) {
+            System.out.print("Staff Name cannot be empty. Enter New Staff Name: ");
+            name = scanner.nextLine();
+        }
+    
+        // Validate Role
+        String role;
+        while (true) {
+            System.out.print("Enter New Role (Doctor/Pharmacist): ");
+            role = scanner.nextLine().trim();
+            if (role.equalsIgnoreCase("Doctor") || role.equalsIgnoreCase("Pharmacist")) {
+                role = role.substring(0, 1).toUpperCase() + role.substring(1).toLowerCase(); // Format properly
+                break;
+            } else {
+                System.out.println("Invalid role. Please enter 'Doctor' or 'Pharmacist'.");
+            }
+        }
+    
+        // Validate Gender
+        String gender;
+        while (true) {
+            System.out.print("Enter New Gender (Male/Female): ");
+            gender = scanner.nextLine().trim();
+            if (gender.equalsIgnoreCase("Male") || gender.equalsIgnoreCase("Female")) {
+                gender = gender.substring(0, 1).toUpperCase() + gender.substring(1).toLowerCase(); // Format properly
+                break;
+            } else {
+                System.out.println("Invalid gender. Please enter 'Male' or 'Female'.");
+            }
+        }
+    
+        // Validate Age
+        int age = -1;
+        while (true) {
+            System.out.print("Enter New Age: ");
+            if (scanner.hasNextInt()) {
+                age = scanner.nextInt();
+                scanner.nextLine(); // Clear buffer
+                if (age >= 18 && age <= 100) {
+                    break;
+                } else {
+                    System.out.println("Invalid age. Please enter an age between 18 and 100.");
+                }
+            } else {
+                System.out.println("Invalid input. Please enter a valid number for age.");
+                scanner.next(); // Clear invalid input
+            }
+        }
+    
         System.out.print("Enter New Password: ");
         String password = scanner.nextLine();
-
+        while (password.isEmpty()) {
+            System.out.print("Password cannot be empty. Enter New Password: ");
+            password = scanner.nextLine();
+        }
+    
+        // Update staff details
         Staff updatedStaff = new Staff(id, name, role, gender, age, 1, password);
         if (staffController.updateStaff(updatedStaff)) {
             System.out.println("Staff updated successfully.");
@@ -174,6 +307,8 @@ public class AdministratorView {
             System.out.println("Failed to update staff.");
         }
     }
+    
+    
 
     /**
      * Prompts the user to enter a staff ID and removes the corresponding staff member from the system.

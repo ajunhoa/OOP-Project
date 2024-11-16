@@ -1,9 +1,9 @@
 package controller;
 
-import model.Staff;
 import java.io.*;
 import java.util.*;
 import java.util.stream.Collectors;
+import model.Staff;
 
 /**
  * The StaffController class manages the staff records in the hospital management system.
@@ -100,7 +100,7 @@ public class StaffController {
      * @param staffId The staff ID to check.
      * @return true if the staff ID exists, false otherwise.
      */
-    private boolean isStaffIdExists(String staffId) {
+    public boolean isStaffIdExists(String staffId) {
         try (BufferedReader br = new BufferedReader(new FileReader(staffFilePath))) {
             String line;
             br.readLine(); // Skip header line

@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Scanner;
+
 /**
  * The Patient class represents a patient in the hospital management system.
  * It extends the User class and includes specific attributes and methods for patients,
@@ -19,26 +21,13 @@ public class Patient extends User {
      * @param gender The gender of the patient.
      * @param bloodType The blood type of the patient.
      * @param contactInfo The contact information of the patient.
-     * @param newUser  Indicates if the patient is a new user (1 for yes, 0 for no).
+     * @param newUser Indicates if the patient is a new user (1 for yes, 0 for no).
      * @param password The password for the patient account.
      * @param contactNumber The contact number of the patient.
      */
     public Patient(String id, String name, String dateOfBirth, String gender, String bloodType, 
-                   String contactInfo, int newUser , String password, int contactNumber) {
-        super(id, name, "Patient", gender, 0, dateOfBirth, bloodType, contactInfo, password, newUser , contactNumber);
-    }
-
-    /**
-     * Displays the medical record for this patient.
-     * If no medical record is found, a message is displayed indicating this.
-     */
-    public void viewMedicalRecord() {
-        System.out.println("Fetching Medical Record for Patient: " + getId());
-        if (medicalRecord != null) {
-            medicalRecord.displayMedicalRecord(this); 
-        } else {
-            System.out.println("No medical record found for patient.");
-        }
+                   String contactInfo, int newUser, String password, int contactNumber) {
+        super(id, name, "Patient", gender, 0, dateOfBirth, bloodType, contactInfo, password, newUser, contactNumber);
     }
 
     /**
@@ -47,12 +36,7 @@ public class Patient extends User {
      * @param medicalRecord The MedicalRecord object to associate with this patient.
      */
     public void setMedicalRecord(MedicalRecord medicalRecord) {
-        this.medicalRecord = medicalRecord; 
-        if (medicalRecord != null) {
-            // System.out.println("Medical record set for patient: " + getName());
-        } else {
-            System.out.println("No medical record found for patient: " + getName());
-        }
+        this.medicalRecord = medicalRecord;
     }
 
     /**
@@ -65,16 +49,31 @@ public class Patient extends User {
     }
 
     /**
-     * Returns a string representation of the patient, including their details.
+     * Allows the patient to update their contact email.
      *
-     * @return A string containing the patient's ID, name, date of birth, gender, blood type,
-     *         contact information, contact number, and whether they are a new user.
+     * @param scanner Scanner for user input.
      */
-    @Override
-    public String toString() {
-        return "Patient ID: " + getId() + ", Name: " + getName() + ", Date of Birth: " + getDateOfBirth() +
-                ", Gender: " + getGender() + ", Blood Type: " + getBloodType() +
-                ", Contact Info: " + getContactInfo() + ", Contact Number: " + getContactNumber() +
-                ", New User: " + (isNewUser () ? "Yes" : "No");
+    public void updateContactEmail(Scanner scanner) {
+        System.out.print("Enter new contact email: ");
+        String newContactInfo = scanner.nextLine().trim();
+        setContactInfo(newContactInfo);
+        System.out.println("Contact email updated successfully.");
+    }
+
+    /**
+     * Allows the patient to update their contact number.
+     *
+     * @param scanner Scanner for user input.
+     */
+    public void updateContactNumber(Scanner scanner) {
+        System.out.print("Enter new contact number: ");
+        String newContactNumber = scanner.nextLine().trim();
+        try {
+            int contactNumber = Integer.parseInt(newContactNumber);
+            setContactNumber(contactNumber);
+            System.out.println("Contact number updated successfully.");
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid contact number. Please enter numeric values only.");
+        }
     }
 }
