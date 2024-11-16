@@ -45,7 +45,7 @@ public class PatientView {
     public void showMenu() {
         boolean exit = false;
         while (!exit) {
-            displayMenu();
+            displayPatientMenu();
             System.out.print("Select an option: ");
             if (!scanner.hasNextInt()) {
                 System.out.println("Invalid input. Please enter a number between 1 and 9.");
@@ -57,7 +57,7 @@ public class PatientView {
 
             switch (choice) {
                 case 1:
-                    viewMedicalRecord();
+                    patient.viewMedicalRecord();
                     break;
                 case 2:
                     viewPersonalInformation();
@@ -93,7 +93,7 @@ public class PatientView {
     /**
      * Displays the options available in the patient menu.
      */
-    private void displayMenu() {
+    private void displayPatientMenu() {
         System.out.println("\n=== Patient Menu ===");
         System.out.println("1. View Medical Record");
         System.out.println("2. View Personal Information");
@@ -106,16 +106,8 @@ public class PatientView {
         System.out.println("9. Logout");
     }
 
-    /**
-     * Displays the patient's medical record if available.
-     */
-    private void viewMedicalRecord() {
-        if (patient.getMedicalRecord() != null) {
-            patient.getMedicalRecord().displayMedicalRecord(patient); 
-        } else {
-            System.out.println("No medical record available for this patient.");
-        }
-    }
+
+    
 
     /**
      * Allows the patient to update their personal information, such as contact email and contact number.
