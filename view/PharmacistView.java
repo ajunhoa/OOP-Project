@@ -16,6 +16,10 @@ public class PharmacistView {
     }
 
     public void showMenu() {
+        int lowStockCount = medicineController.countLowStockMedicines();
+        if (lowStockCount > 0) {
+            System.out.println("There are " + lowStockCount + " medicine(s) that are low in stock!");
+        }
         boolean exit = false;
         while (!exit) {
             this.displayMenu();

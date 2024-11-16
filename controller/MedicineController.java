@@ -347,7 +347,31 @@ public class MedicineController {
         }
     }
 
+    public int countLowStockMedicines() {
+        int count = 0;
+        for (Medicine medicine : medicineMap.values()) {
+            if (medicine.getMedicineStatus().equalsIgnoreCase("Low")) {
+                count++;
+            }
+        }
+        return count;
+    }
 
-
+    public int countPendingReplenishmentRequests() {
+        int count = 0;
+        try (BufferedReader br = new BufferedReader(new FileReader("assets/replenish_request.csv"))) {
+            String line;
+            br.readLine(); // Skip header
+            while ((line = br.readLine()) != null) {
+                String[] values = line.split(",");
+                if (values.length >= 3 && values[2].equalsIgnoreCase("Pending")) {
+                    count++;
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Error reading replenish request file: " + e.getMessage());
+        }
+        return count;
+    }
 }
 

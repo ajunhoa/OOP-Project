@@ -22,20 +22,20 @@ public class Main {
         userMap.putAll(DataInitializer.loadStaffDetails(staffFilePath)); 
 
         Map<String, MedicalRecord> medicalRecordMap = DataInitializer.loadMedicalRecords(medicalFilePath);
-        DataInitializer.linkMedicalRecordsToPatients(userMap, medicalRecordMap);
+        // DataInitializer.linkMedicalRecordsToPatients(userMap, medicalRecordMap);
 
         MedicalRecordController medicalRecordController = new MedicalRecordController(medicalRecordMap, userMap, medicalFilePath, patientFilePath);
 
-        for (Map.Entry<String, User> entry : userMap.entrySet()) {
-            if (entry.getValue() instanceof Patient) {
-                Patient patient = (Patient) entry.getValue();
-                if (patient.getMedicalRecord() != null) {
-                    System.out.println("Patient: " + patient.getName() + " has a medical record linked.");
-                } else {
-                    System.out.println("Patient: " + patient.getName() + " has no medical record linked.");
-                }
-            }
-        }
+        // for (Map.Entry<String, User> entry : userMap.entrySet()) {
+        //     if (entry.getValue() instanceof Patient) {
+        //         Patient patient = (Patient) entry.getValue();
+        //         if (patient.getMedicalRecord() != null) {
+        //             System.out.println("Patient: " + patient.getName() + " has a medical record linked.");
+        //         } else {
+        //             System.out.println("Patient: " + patient.getName() + " has no medical record linked.");
+        //         }
+        //     }
+        // }
 
         try (Scanner scanner = new Scanner(System.in)) {
             System.out.println("Welcome to the Hospital Management System");

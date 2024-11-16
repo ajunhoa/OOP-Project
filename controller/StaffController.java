@@ -17,7 +17,7 @@ public class StaffController {
     private void loadStaffDetails() {
         try (BufferedReader br = new BufferedReader(new FileReader(staffFilePath))) {
             String line;
-            br.readLine(); // Skip header if present
+            br.readLine(); 
             while ((line = br.readLine()) != null) {
                 String[] values = line.split(",");
                 if (values.length >= 7 && values[2].equalsIgnoreCase("Doctor")) {

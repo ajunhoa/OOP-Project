@@ -26,6 +26,10 @@ public class DoctorView {
     }
 
     public void showMenu(String doctorID) {
+        int pendingAppointments = appointmentSlot.countPendingAppointments(doctorID);
+        if (pendingAppointments > 0) {
+            System.out.println("You have " + pendingAppointments + " pending appointment(s).");
+        }
         boolean exit = false;
         while (!exit) {
             this.displayMenu();

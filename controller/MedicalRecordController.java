@@ -24,8 +24,6 @@ public class MedicalRecordController {
         this.medicalRecordFilePath = medicalRecordFilePath;
         this.userFilePath = userFilePath;
     }
-
-    // Method to update patient's contact information       
     public void updateContactInfo(String patientId) {
         User user = users.get(patientId);
         if (user instanceof Patient) {
@@ -39,7 +37,6 @@ public class MedicalRecordController {
         }
     }
 
-    // Method to update patient's contact number
     public void updateContactNumber(String patientId) {
         User user = users.get(patientId);
         if (user instanceof Patient) {
@@ -58,7 +55,6 @@ public class MedicalRecordController {
         }
     }
 
-    // Method to update patient's diagnoses
     public void updateDiagnoses(String patientId) {
         MedicalRecord record = medicalRecords.get(patientId);
         if (record != null) {
@@ -72,7 +68,6 @@ public class MedicalRecordController {
         }
     }
 
-    // Method to update prescribed medicine
     public void updatePrescription(String patientId) {
         MedicalRecord record = medicalRecords.get(patientId);
         if (record != null) {

@@ -26,6 +26,10 @@ public class AdministratorView {
     }
 
     public void showMenu() {
+        int pendingReplenishmentRequests = medicineController.countPendingReplenishmentRequests();
+        if (pendingReplenishmentRequests > 0) {
+            System.out.println("There are " + pendingReplenishmentRequests + " pending replenishment request(s).");
+        }
         boolean exit = false;
         while (!exit) {
             this.displayMenu();

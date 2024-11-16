@@ -35,17 +35,17 @@ public class UserController {
         int newUserFlag = user.isNewUser() ? 1 : 0;
         boolean isUpdated = false;
     
-        System.out.println("Debug: Attempting to update user with ID: " + userId);
+        //System.out.println("Debug: Attempting to update user with ID: " + userId);
     
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] values = line.split(",");
     
-                System.out.println("Debug: Processing line: " + line);
+                //System.out.println("Debug: Processing line: " + line);
 
                 if (values.length >= 7 && values[0].trim().equalsIgnoreCase(userId)) {
-                    System.out.println("Debug: Found matching user ID: " + userId);
+                    //System.out.println("Debug: Found matching user ID: " + userId);
     
                     if (filePath.contains("staff")) {
                         values[5] = String.valueOf(newUserFlag);  
@@ -57,7 +57,7 @@ public class UserController {
     
                     line = String.join(",", values);
                     isUpdated = true;
-                    System.out.println("Debug: Updated line: " + line);
+                    //System.out.println("Debug: Updated line: " + line);
                 }
     
                 lines.add(line);
@@ -72,7 +72,7 @@ public class UserController {
                 bw.write(l);
                 bw.newLine();
             }
-            System.out.println("Debug: Successfully wrote to the CSV file.");
+            // System.out.println("Debug: Successfully wrote to the CSV file.");
             return isUpdated;
         } catch (IOException e) {
             System.out.println("Error writing to the file: " + e.getMessage());

@@ -17,7 +17,6 @@ public class AppointmentOutcomeRecord {
         this.appointmentSlot = new AppointmentSlot();
     }
 
-    // Method to add a new appointment outcome record
     public void addAppointmentOutcome(String appointmentID, String patientID, String doctorID, String dateOfAppointment, String typeOfServices, String medicinePrescribed, String consultationNotes, String status) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(outcomeFilePath, true))) {
 

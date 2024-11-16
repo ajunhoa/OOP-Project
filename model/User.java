@@ -60,8 +60,8 @@
         }   
 
         public boolean validatePassword(String inputPassword) {
-            System.out.println("Debug: Stored Password: [" + password + "]");
-            System.out.println("Debug: Input Password: [" + inputPassword.trim() + "]");
+            // System.out.println("Debug: Stored Password: [" + password + "]");
+            // System.out.println("Debug: Input Password: [" + inputPassword.trim() + "]");
             return password.equals(inputPassword.trim());
         }
 

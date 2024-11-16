@@ -1,6 +1,6 @@
 ﻿Staff ID,Name,Role,Gender,Age,newUser,password
 D001,John Smith,Doctor,Male,45,0,password
-D002,Emily Clarke,Doctor,Female,38,0,password1
+D002,Emily Clarke,Doctor,Female,38,0,password
 P001,Mark Lee,Pharmacist,Male,29,0,password
 A001,Sarah Lee,Administrator,Female,40,0,password
 P002,Neen,Pharmacist,female,11,1,password

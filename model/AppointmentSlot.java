@@ -351,5 +351,22 @@ public class AppointmentSlot {
         System.out.println("Error reading the appointment file: " + e.getMessage());
     }
 }
+
+public int countPendingAppointments(String doctorID) {
+    int count = 0;
+    try (BufferedReader br = new BufferedReader(new FileReader(appointment_filepath))) {
+        String line;
+        br.readLine();
+        while ((line = br.readLine()) != null) {
+            String[] values = line.split(",");
+            if (values.length >= 6 && values[1].equalsIgnoreCase(doctorID) && values[5].equalsIgnoreCase("Pending")) {
+                count++;
+            }
+        }
+    } catch (IOException e) {
+        System.out.println("Error reading the appointment file: " + e.getMessage());
+    }
+    return count;
+}
     
 }
