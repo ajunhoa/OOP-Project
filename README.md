@@ -18,12 +18,12 @@ The Hospital Management System is a Java-based application designed to manage va
 ## Installation
 1. Clone the repository:
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/ajunhoa/OOP-Project.git
 
 2. Navigate to the project directory:
 ```bash
 cd OOP-Project
-
+```
 3. Open the project in your preferred IDE (e.g., IntelliJ IDEA, Eclipse).
 
 ## Usage
@@ -32,7 +32,7 @@ cd OOP-Project
 3. Navigate through the menus based on your role to access various functionalities.
 
 ## Project Structure
-
+```
 OOP-Project/
 │
 ├── model/
@@ -64,11 +64,11 @@ OOP-Project/
 │   └── medicalrecords.csv
 │
 └── Main.java
+```
 
-
-License
+## License
 This project is licensed under the MIT License - see the LICENSE file for details.
 
-Acknowledgements
+## Acknowledgements
 Thanks to all contributors and libraries that helped in building this project.
 Special thanks to the educational resources and documentation from Oracle for Java.
