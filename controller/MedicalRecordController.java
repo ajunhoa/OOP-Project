@@ -27,10 +27,10 @@ public class MedicalRecordController {
     public void updateContactInfo(String patientId) {
         User user = users.get(patientId);
         if (user instanceof Patient) {
-            System.out.print("Enter new contact information: ");
+            System.out.print("Enter new contact Email: ");
             String newContactInfo = scanner.nextLine().trim();
             user.setContactInfo(newContactInfo); 
-            System.out.println("Contact information updated successfully.");
+            System.out.println("Email updated successfully.");
             saveUserRecordsToFile(); 
         } else {
             System.out.println("No user record found for Patient ID: " + patientId);

@@ -91,7 +91,7 @@ public class PatientView {
 
     private void updatePersonalInformation() {
         System.out.println("\n=== Update Personal Information ===");
-        System.out.println("1. Update Contact Information");
+        System.out.println("1. Update Contact Email");
         System.out.println("2. Update Contact Number");
         System.out.print("Select an option: ");
         int choice = scanner.nextInt();
