@@ -21,7 +21,7 @@ package model;
         public void setMedicalRecord(MedicalRecord medicalRecord) {
             this.medicalRecord = medicalRecord; 
             if (medicalRecord != null) {
-                System.out.println("Medical record set for patient: " + getName());
+                // System.out.println("Medical record set for patient: " + getName());
             } else {
                 System.out.println("No medical record found for patient: " + getName());
             }

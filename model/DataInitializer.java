@@ -118,10 +118,10 @@ public class DataInitializer {
                 MedicalRecord medicalRecord = medicalRecordMap.get(patient.getId());
     
                 if (medicalRecord != null) {
-                    System.out.println("Linking Medical Record to Patient ID: " + patient.getId());
+                    // System.out.println("Linking Medical Record to Patient ID: " + patient.getId());
                     patient.setMedicalRecord(medicalRecord); 
                 } else {
-                    System.out.println("No Medical Record found for Patient ID: " + patient.getId());
+                    // System.out.println("No Medical Record found for Patient ID: " + patient.getId());
                 }
             }
         }

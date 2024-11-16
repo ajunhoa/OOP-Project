@@ -22,7 +22,7 @@ public class Main {
         userMap.putAll(DataInitializer.loadStaffDetails(staffFilePath)); 
 
         Map<String, MedicalRecord> medicalRecordMap = DataInitializer.loadMedicalRecords(medicalFilePath);
-        // DataInitializer.linkMedicalRecordsToPatients(userMap, medicalRecordMap);
+        DataInitializer.linkMedicalRecordsToPatients(userMap, medicalRecordMap);
 
         MedicalRecordController medicalRecordController = new MedicalRecordController(medicalRecordMap, userMap, medicalFilePath, patientFilePath);
 
