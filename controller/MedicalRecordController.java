@@ -219,6 +219,12 @@ public class MedicalRecordController {
             System.out.println("No medical record found for Patient ID: " + patientId);
         }
     }
+    /**
+     * Validates if the provided patient ID exists in both users and medical records.
+     *
+     * @param patientId The ID of the patient to validate.
+     * @return true if the patient ID is valid; false otherwise.
+     */
     public boolean isPatientIdValid(String patientId) {
         // Check both users and medicalRecords to ensure a patient ID exists
         return users.containsKey(patientId) && users.get(patientId) instanceof Patient

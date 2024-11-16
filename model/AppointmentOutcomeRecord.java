@@ -104,6 +104,12 @@ public class AppointmentOutcomeRecord {
         System.out.println("Appointment ID: " + appointmentID + " marked as 'Completed' in appointment.csv.");
     }
     
+    /**
+     * Checks if the given value contains a comma and wraps it in quotes if it does.
+     *
+     * @param value The string value to check.
+     * @return The original value wrapped in quotes if it contains a comma, otherwise the original value.
+     */
     private String includeComma(String value) {
         if (value.contains(",")) {
             return "\"" + value.replace("\"", "\"\"") + "\""; // Escape any existing quotes
@@ -125,7 +131,7 @@ public class AppointmentOutcomeRecord {
             while ((line = br.readLine()) != null) {
                 String[] values = line.split(",");
                 if (values.length >= 6 && values[0].equalsIgnoreCase(appointmentID)) {
-                    return new String[]{values[2], values[ 3], values[5]};
+                    return new String[]{values[2], values[3], values[5]};
                 }
             }
         } catch (IOException e) {
@@ -246,7 +252,7 @@ public class AppointmentOutcomeRecord {
             }
             return isUpdated;
         } catch (IOException e) {
-            System .out.println("Error writing to the appointment outcome file: " + e.getMessage());
+            System.out.println("Error writing to the appointment outcome file: " + e.getMessage());
             return false;
         }
     }
