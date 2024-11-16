@@ -3,18 +3,33 @@ package view;
 import java.util.Scanner;
 import controller.MedicineController;
 import model.AppointmentOutcomeRecord;
+
+/**
+ * The PharmacistView class provides the user interface for the pharmacist
+ * in the hospital management system. It allows the pharmacist to manage 
+ * appointment outcome records, update prescription statuses, view medication 
+ * inventory, and submit replenishment requests.
+ */
 public class PharmacistView {
 
     private Scanner scanner;
     private AppointmentOutcomeRecord appointmentOutcomeRecord; 
     private MedicineController medicineController;
 
+    /**
+     * Constructs a PharmacistView instance with the specified Scanner.
+     *
+     * @param scanner The Scanner object used to read user input.
+     */
     public PharmacistView(Scanner scanner) {
         this.scanner = scanner;
         this.appointmentOutcomeRecord = new AppointmentOutcomeRecord(); 
         this.medicineController = new MedicineController(); 
     }
 
+    /**
+     * Displays the pharmacist menu and handles user input for various actions.
+     */
     public void showMenu() {
         int lowStockCount = medicineController.countLowStockMedicines();
         if (lowStockCount > 0) {
@@ -50,6 +65,9 @@ public class PharmacistView {
         }
     }
 
+    /**
+     * Displays the options available in the pharmacist menu.
+     */
     public void displayMenu() {
         System.out.println("\n=== Pharmacist Menu ===");
         System.out.println("1. View Appointment Outcome Record");
@@ -57,6 +75,5 @@ public class PharmacistView {
         System.out.println("3. View Medication Inventory");
         System.out.println("4. Submit Replenishment Request");
         System.out.println("5. Logout");
-
     }
 }

@@ -12,7 +12,25 @@ import view.DoctorView;
 import view.PatientView;
 import view.PharmacistView;    
 
+/**
+ * The Main class serves as the entry point for the Hospital Management System application.
+ * It initializes the system by loading patient and staff details from CSV files, linking medical
+ * records to patients, and presenting a user interface based on the user's role.
+ */
 public class Main {
+    /**
+     * The main method that runs the Hospital Management System.
+     * It performs the following tasks:
+     * <ul>
+     *     <li>Loads patient and staff details from CSV files.</li>
+     *     <li>Links medical records to patients.</li>
+     *     <li>Prompts the user for their User ID and Password.</li>
+     *     <li>Validates the user's credentials and determines their role.</li>
+     *     <li>Displays the appropriate menu based on the user's role (Doctor, Pharmacist, Administrator, or Patient).</li>
+     * </ul>
+     *
+     * @param args Command line arguments (not used).
+     */
     public static void main(String[] args) {
         String patientFilePath = "assets/updatedpatientlist.csv";
         String staffFilePath = "assets/updatedstafflist.csv";
@@ -25,17 +43,6 @@ public class Main {
         DataInitializer.linkMedicalRecordsToPatients(userMap, medicalRecordMap);
 
         MedicalRecordController medicalRecordController = new MedicalRecordController(medicalRecordMap, userMap, medicalFilePath, patientFilePath);
-
-        // for (Map.Entry<String, User> entry : userMap.entrySet()) {
-        //     if (entry.getValue() instanceof Patient) {
-        //         Patient patient = (Patient) entry.getValue();
-        //         if (patient.getMedicalRecord() != null) {
-        //             System.out.println("Patient: " + patient.getName() + " has a medical record linked.");
-        //         } else {
-        //             System.out.println("Patient: " + patient.getName() + " has no medical record linked.");
-        //         }
-        //     }
-        // }
 
         try (Scanner scanner = new Scanner(System.in)) {
             System.out.println("Welcome to the Hospital Management System");
@@ -69,6 +76,7 @@ public class Main {
                         AdministratorView administratorView = new AdministratorView(scanner);
                         administratorView.showMenu(); 
                         break;
+
                     case "Patient":
                         Patient patient = (Patient) user;
                         PatientView patientView = new PatientView(patient, scanner, medicalRecordController);

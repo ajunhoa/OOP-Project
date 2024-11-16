@@ -7,6 +7,12 @@ import model.AppointmentOutcomeRecord;
 import model.AppointmentSlot;
 import model.Staff;
 
+/**
+ * The AdministratorView class provides the user interface for the administrator
+ * of the hospital management system. It allows the administrator to manage 
+ * hospital staff, view appointment details, manage medication inventory, 
+ * and handle replenishment requests.
+ */
 public class AdministratorView {
     private Scanner scanner;
     private StaffController staffController;
@@ -14,16 +20,22 @@ public class AdministratorView {
     private AppointmentOutcomeRecord appointmentOutcomeRecord;
     private MedicineController medicineController;
 
-
+    /**
+     * Constructs an AdministratorView instance with the specified Scanner.
+     *
+     * @param scanner The Scanner object used to read user input.
+     */
     public AdministratorView(Scanner scanner) {
         this.scanner = scanner;
         this.staffController = new StaffController();
         this.appointmentSlot = new AppointmentSlot();
         this.appointmentOutcomeRecord = new AppointmentOutcomeRecord();
         this.medicineController = new MedicineController();
-
     }
 
+    /**
+     * Displays the administrator menu and handles user input for various actions.
+     */
     public void showMenu() {
         int pendingReplenishmentRequests = medicineController.countPendingReplenishmentRequests();
         if (pendingReplenishmentRequests > 0) {
@@ -61,6 +73,9 @@ public class AdministratorView {
         }
     }
 
+    /**
+     * Displays the administrator menu options.
+     */
     private void displayMenu() {
         System.out.println("\n=== Administrator Menu ===");
         System.out.println("1. View and Manage Hospital Staff");
@@ -70,6 +85,9 @@ public class AdministratorView {
         System.out.println("5. Logout");
     }
 
+    /**
+     * Manages hospital staff by providing options to add, update, remove, or display staff.
+     */
     private void manageHospitalStaff() {
         boolean managing = true;
         while (managing) {
@@ -105,6 +123,9 @@ public class AdministratorView {
         }
     }
 
+    /**
+     * Prompts the user to enter details for a new staff member and adds them to the system.
+     */
     private void addStaff() {
         System.out.print("Enter Staff ID: ");
         String id = scanner.nextLine().toUpperCase();
@@ -124,10 +145,13 @@ public class AdministratorView {
         if (staffController.addStaff(newStaff)) {
             System.out.println("Staff added successfully.");
         } else {
-            System.out.println("Failed to add staff.");
+            System.out.println("Failed to add staff .");
         }
     }
 
+    /**
+     * Prompts the user to enter new details for an existing staff member and updates their information.
+     */
     private void updateStaff() {
         System.out.print("Enter Staff ID to update: ");
         String id = scanner.nextLine();
@@ -151,6 +175,9 @@ public class AdministratorView {
         }
     }
 
+    /**
+     * Prompts the user to enter a staff ID and removes the corresponding staff member from the system.
+     */
     private void removeStaff() {
         System.out.print("Enter Staff ID to remove: ");
         String id = scanner.nextLine();
@@ -161,6 +188,9 @@ public class AdministratorView {
         }
     }
 
+    /**
+     * Prompts the user to enter filters for displaying staff and calls the controller to display the filtered staff list.
+     */
     private void displayStaff() {
         String role = null;
         String gender = null;
@@ -211,6 +241,10 @@ public class AdministratorView {
         // Call the controller to display staff with the provided filters
         staffController.displayStaff(role, gender, age);
     }
+
+    /**
+     * Manages the medicine inventory by providing options to add, delete, update stock, or go back to the main menu.
+     */
     public void manageMedicineInventory() {
         boolean backToMain = false;
         while (!backToMain) {
@@ -242,5 +276,4 @@ public class AdministratorView {
             }
         }
     }
-
 }

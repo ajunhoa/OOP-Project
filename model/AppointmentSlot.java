@@ -11,19 +11,36 @@ import java.util.Scanner;
 
 import controller.StaffController;
 
+/**
+ * The AppointmentSlot class manages appointment scheduling within the hospital management system.
+ * It provides functionalities to add appointments, view personal schedules, manage appointment requests,
+ * and update appointment statuses.
+ */
 public class AppointmentSlot {
     
+    /** The file path for storing appointment details. */
     private static final String appointment_filepath = "assets/appointment.csv";
+    
+    /** Scanner for reading user input. */
     private Scanner scanner;
+
+    /**
+     * Constructs an AppointmentSlot instance and initializes the scanner.
+     */
     public AppointmentSlot() {
         this.scanner = new Scanner(System.in);
     }
 
+    /**
+     * Generates the next available appointment ID based on existing appointment IDs in the file.
+     *
+     * @return The next appointment ID in the format "APPT{number}".
+     */
     private String getNextAppointmentID() {
         int maxId = 0; 
         try (BufferedReader br = new BufferedReader(new FileReader(appointment_filepath))) {
             String line;
-            br.readLine(); 
+            br.readLine(); // Skip header
             while ((line = br.readLine()) != null) {
                 String[] values = line.split(",");
                 if (values.length > 0) {
@@ -43,6 +60,11 @@ public class AppointmentSlot {
         return "APPT" + (maxId + 1); 
     }
 
+    /**
+     * Adds a new appointment for the specified doctor.
+     *
+     * @param doctorID The ID of the doctor for whom the appointment is being added.
+     */
     public void addAppointment(String doctorID) {
         String appointmentID = getNextAppointmentID();
         String patientID = ""; 
@@ -59,6 +81,16 @@ public class AppointmentSlot {
         updateCSV(appointmentID, doctorID, patientID, date, time, status);
     }
 
+    /**
+     * Updates the appointment CSV file with the new appointment details.
+     *
+     * @param appointmentID The ID of the appointment.
+     * @param doctorID The ID of the doctor.
+     * @param patientID The ID of the patient.
+     * @param date The date of the appointment.
+     * @param time The time of the appointment.
+     * @param status The status of the appointment.
+     */
     private void updateCSV(String appointmentID, String doctorID, String patientID, String date, String time, String status) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(appointment_filepath, true))) {
             writer.write(appointmentID + "," + doctorID + "," + patientID + "," + date + "," + time + "," + status);
@@ -69,15 +101,24 @@ public class AppointmentSlot {
         }
     }
 
+    /**
+     * Sets the availability for a specific doctor by adding an appointment.
+     *
+     * @param doctorID The ID of the doctor to set availability for.
+     */
     public void setAvailability(String doctorID) {
         addAppointment(doctorID); 
     }
 
+    /**
+     * Views the personal schedule for a specific doctor.
+     *
+     * @param doctorID The ID of the doctor whose schedule is to be viewed.
+     */
     public void viewPersonalSchedule(String doctorID) {
-
         try (BufferedReader br = new BufferedReader(new FileReader(appointment_filepath))) {
             String line;
-            br.readLine(); 
+            br.readLine(); // Skip header
             System.out.println("Upcoming Appointments for Doctor ID: " + doctorID);
     
             boolean hasAppointments = false; 
@@ -116,11 +157,15 @@ public class AppointmentSlot {
         }
     }
 
+    /**
+     * Views upcoming appointments for a specific doctor that are confirmed.
+     *
+     * @param doctorID The ID of the doctor whose upcoming appointments are to be viewed.
+     */
     public void viewUpcomingAppointment(String doctorID) { 
-    
         try (BufferedReader br = new BufferedReader(new FileReader(appointment_filepath))) {
             String line;
-            br.readLine(); 
+            br.readLine(); // Skip header
             System.out.println("Upcoming Appointments for Doctor ID: " + doctorID);
     
             boolean hasAppointments = false; 
@@ -158,6 +203,11 @@ public class AppointmentSlot {
         }
     }
 
+    /**
+     * Manages appointment requests for a specific doctor, allowing them to accept or decline appointments.
+     *
+     * @param doctorID The ID of the doctor managing appointment requests.
+     */
     public void manageAppointmentRequests(String doctorID) {
         List<String[]> pendingAppointments = new ArrayList<>();
     
@@ -205,6 +255,12 @@ public class AppointmentSlot {
         }
     }
 
+    /**
+     * Updates the status of a specific appointment identified by its ID.
+     *
+     * @param appointmentID The ID of the appointment to update.
+     * @param newStatus The new status to set for the appointment.
+     */
     public void updateAppointmentStatus(String appointmentID, String newStatus) {
         List<String> lines = new ArrayList<>();
 
@@ -234,10 +290,13 @@ public class AppointmentSlot {
         }
     }
 
+    /**
+     * Views all appointments stored in the appointment file.
+     */
     public void viewAllAppointments() {
         try (BufferedReader br = new BufferedReader(new FileReader(appointment_filepath))) {
             String line;
-            br.readLine(); 
+            br.readLine(); // Skip header
             System.out.println("All Appointments:");
     
             boolean hasAppointments = false; 
@@ -275,10 +334,13 @@ public class AppointmentSlot {
         }
     }
 
+    /**
+     * Views available appointment slots for doctors.
+     */
     public void viewAvailableAppointmentSlots() {
         try (BufferedReader br = new BufferedReader(new FileReader(appointment_filepath))) {
             String line;
-            br.readLine();
+            br.readLine(); // Skip header
             System.out.println("Available Appointment Slots:");
     
             boolean hasAvailableSlots = false; 
@@ -296,7 +358,6 @@ public class AppointmentSlot {
                     String status = values[5];
     
                     if (status.equalsIgnoreCase("Available") || status.equalsIgnoreCase("Cancelled")) {
-
                         String doctorName = staffController.getDoctorNameByID(doctorID); 
     
                         System.out.println("Appointment ID: " + appointmentID +
@@ -315,58 +376,69 @@ public class AppointmentSlot {
             System.out.println("Error reading the appointment file: " + e.getMessage());
         }
     }
-    
+
+    /**
+     * Views scheduled appointments for a specific patient.
+     *
+     * @param patientID The ID of the patient whose scheduled appointments are to be viewed.
+     */
     public void viewScheduledAppointments(String patientID) {
-    List<String[]> scheduledAppointments = new ArrayList<>();
+        List<String[]> scheduledAppointments = new ArrayList<>();
 
-    try (BufferedReader br = new BufferedReader(new FileReader(appointment_filepath))) {
-        String line;
-        br.readLine(); // Skip header
-        System.out.println("Scheduled Appointments for Patient ID: " + patientID);
-        
-        int displayCount = 1; 
-        StaffController staffController = new StaffController(); 
+        try (BufferedReader br = new BufferedReader(new FileReader(appointment_filepath))) {
+            String line;
+            br.readLine(); // Skip header
+            System.out.println("Scheduled Appointments for Patient ID: " 
+            + patientID);
+            
+            int displayCount = 1; 
+            StaffController staffController = new StaffController(); 
 
-        while ((line = br.readLine()) != null) {
-            String[] values = line.split(",");
-            if (values.length >= 6 && values[2].equalsIgnoreCase(patientID) && 
-                (values[5].equalsIgnoreCase("Pending") || values[5].equalsIgnoreCase("Confirmed"))) {
-                scheduledAppointments.add(values);
-                String doctorName = staffController.getDoctorNameByID(values[1]); 
-                System.out.println(displayCount + 
-                                   ": Appointment ID: " + values[0] +
-                                   ", Doctor Name: " + doctorName + 
-                                   ", Date: " + values[3] +
-                                   ", Time: " + values[4] +
-                                   ", Status: " + values[5]);
-                displayCount++;
+            while ((line = br.readLine()) != null) {
+                String[] values = line.split(",");
+                if (values.length >= 6 && values[2].equalsIgnoreCase(patientID) && 
+                    (values[5].equalsIgnoreCase("Pending") || values[5].equalsIgnoreCase("Confirmed"))) {
+                    scheduledAppointments.add(values);
+                    String doctorName = staffController.getDoctorNameByID(values[1]); 
+                    System.out.println(displayCount + 
+                                       ": Appointment ID: " + values[0] +
+                                       ", Doctor Name: " + doctorName + 
+                                       ", Date: " + values[3] +
+                                       ", Time: " + values[4] +
+                                       ", Status: " + values[5]);
+                    displayCount++;
+                }
             }
-        }
 
-        if (scheduledAppointments.isEmpty()) {
-            System.out.println("No scheduled appointments found for Patient ID: " + patientID);
-        }
-
-    } catch (IOException e) {
-        System.out.println("Error reading the appointment file: " + e.getMessage());
-    }
-}
-
-public int countPendingAppointments(String doctorID) {
-    int count = 0;
-    try (BufferedReader br = new BufferedReader(new FileReader(appointment_filepath))) {
-        String line;
-        br.readLine();
-        while ((line = br.readLine()) != null) {
-            String[] values = line.split(",");
-            if (values.length >= 6 && values[1].equalsIgnoreCase(doctorID) && values[5].equalsIgnoreCase("Pending")) {
-                count++;
+            if (scheduledAppointments.isEmpty()) {
+                System.out.println("No scheduled appointments found for Patient ID: " + patientID);
             }
+
+        } catch (IOException e) {
+            System.out.println("Error reading the appointment file: " + e.getMessage());
         }
-    } catch (IOException e) {
-        System.out.println("Error reading the appointment file: " + e.getMessage());
     }
-    return count;
-}
-    
+
+    /**
+     * Counts the number of pending appointments for a specific doctor.
+     *
+     * @param doctorID The ID of the doctor whose pending appointments are to be counted.
+     * @return The number of pending appointments for the specified doctor.
+     */
+    public int countPendingAppointments(String doctorID) {
+        int count = 0;
+        try (BufferedReader br = new BufferedReader(new FileReader(appointment_filepath))) {
+            String line;
+            br.readLine(); // Skip header
+            while ((line = br.readLine()) != null) {
+                String[] values = line.split(",");
+                if (values.length >= 6 && values[1].equalsIgnoreCase(doctorID) && values[5].equalsIgnoreCase("Pending")) {
+                    count++;
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Error reading the appointment file: " + e.getMessage());
+        }
+        return count;
+    }
 }

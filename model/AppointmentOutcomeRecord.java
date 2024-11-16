@@ -6,21 +6,53 @@ import java.util.List;
 import java.util.Scanner;
 import controller.StaffController;
 
+/**
+ * The AppointmentOutcomeRecord class manages the recording and retrieval of appointment outcomes
+ * within the hospital management system. It provides functionalities to add, view, and update 
+ * appointment outcomes, along with managing the status of appointments.
+ */
 public class AppointmentOutcomeRecord {
+    
+    /** The file path for storing appointment outcome records. */
     private static final String outcomeFilePath = "assets/appointment_outcome.csv";
+    
+    /** The file path for storing appointment details. */
     private static final String appointmentFilePath = "assets/appointment.csv"; 
+    
+    /** Scanner for reading user input. */
     private Scanner scanner;
+    
+    /** Instance of AppointmentSlot to manage appointment slots. */
     private AppointmentSlot appointmentSlot; 
 
+    /**
+     * Constructs an AppointmentOutcomeRecord instance and initializes the scanner and appointment slot.
+     */
     public AppointmentOutcomeRecord() {
         this.scanner = new Scanner(System.in);
         this.appointmentSlot = new AppointmentSlot();
     }
 
-    public void addAppointmentOutcome(String appointmentID, String patientID, String doctorID, String dateOfAppointment, String typeOfServices, String medicinePrescribed, String consultationNotes, String status) {
+    /**
+     * Adds a new appointment outcome to the outcome file.
+     *
+     * @param appointmentID The ID of the appointment.
+     * @param patientID The ID of the patient.
+     * @param doctorID The ID of the doctor.
+     * @param dateOfAppointment The date of the appointment.
+     * @param typeOfServices The type of services provided during the appointment.
+     * @param medicinePrescribed The medicine prescribed during the appointment.
+     * @param consultationNotes Notes from the consultation.
+     * @param status The status of the appointment outcome.
+     */
+    public void addAppointmentOutcome(String appointmentID, String patientID, String doctorID, 
+                                       String dateOfAppointment, String typeOfServices, 
+                                       String medicinePrescribed, String consultationNotes, 
+                                       String status) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(outcomeFilePath, true))) {
-
-            writer.write(appointmentID + "," + patientID + "," + doctorID + "," + dateOfAppointment + "," + typeOfServices + "," + medicinePrescribed + "," + consultationNotes + "," + status);
+            writer.write(appointmentID + "," + patientID + "," + doctorID + "," + dateOfAppointment + 
+                         "," + typeOfServices + "," + medicinePrescribed + "," + consultationNotes + 
+                         "," + status);
             writer.newLine();
             System.out.println("Appointment outcome recorded successfully.");
         } catch (IOException e) {
@@ -28,6 +60,11 @@ public class AppointmentOutcomeRecord {
         }
     }
 
+    /**
+     * Records the outcome of a specific appointment identified by its ID.
+     *
+     * @param doctorID The ID of the doctor recording the outcome.
+     */
     public void recordAppointmentOutcome(String doctorID) {
         System.out.print("Enter Appointment ID: ");
         String appointmentID = scanner.nextLine();
@@ -54,14 +91,21 @@ public class AppointmentOutcomeRecord {
         System.out.print("Enter Consultation Notes: ");
         String consultationNotes = scanner.nextLine();
 
-        
         String status = "Pending";
-        addAppointmentOutcome(appointmentID.toUpperCase(), patientID.toUpperCase(), doctorID.toUpperCase(), dateOfAppointment, typeOfServices, medicinePrescribed, consultationNotes, status);
+        addAppointmentOutcome(appointmentID.toUpperCase(), patientID.toUpperCase(), doctorID.toUpperCase(), 
+                              dateOfAppointment, typeOfServices, medicinePrescribed, consultationNotes, status);
 
         appointmentSlot.updateAppointmentStatus(appointmentID, "Completed");
         System.out.println("Appointment ID: " + appointmentID + " marked as 'Completed' in appointment.csv.");
     }
 
+    /**
+     * Retrieves the details of an appointment based on its ID.
+     *
+     * @param appointmentID The ID of the appointment to retrieve details for.
+     * @return An array containing the patient ID, date of appointment, and appointment status,
+     *         or null if the appointment is not found.
+     */
     private String[] getAppointmentDetails(String appointmentID) {
         try (BufferedReader br = new BufferedReader(new FileReader(appointmentFilePath))) {
             String line;
@@ -69,7 +113,7 @@ public class AppointmentOutcomeRecord {
             while ((line = br.readLine()) != null) {
                 String[] values = line.split(",");
                 if (values.length >= 6 && values[0].equalsIgnoreCase(appointmentID)) {
-                    return new String[]{values[2], values[3], values[5]};
+                    return new String[]{values[2], values[ 3], values[5]};
                 }
             }
         } catch (IOException e) {
@@ -78,6 +122,9 @@ public class AppointmentOutcomeRecord {
         return null;
     }
 
+    /**
+     * Displays all appointment outcome records.
+     */
     public void viewAppointmentOutcomeRecord() {
         try (BufferedReader br = new BufferedReader(new FileReader(outcomeFilePath))) {
             String line;
@@ -104,6 +151,9 @@ public class AppointmentOutcomeRecord {
         }
     }
 
+    /**
+     * Updates the status of medicines associated with pending appointment outcomes.
+     */
     public void updateMedicineStatus() {
         List<String[]> pendingAppointments = new ArrayList<>();
     
@@ -150,104 +200,116 @@ public class AppointmentOutcomeRecord {
         }
     }
 
+    /**
+     * Updates the status of a specific appointment identified by its ID.
+     *
+     * @param appointmentID The ID of the appointment to update.
+     * @param newStatus The new status to set for the appointment.
+     * @return true if the update was successful, false otherwise.
+     */
+    private boolean updateAppointmentStatus(String appointmentID, String newStatus) {
+        List<String> lines = new ArrayList<>();
+        boolean isUpdated = false;
 
-private boolean updateAppointmentStatus(String appointmentID, String newStatus) {
-    List<String> lines = new ArrayList<>();
-    boolean isUpdated = false;
-
-    try (BufferedReader br = new BufferedReader(new FileReader(outcomeFilePath))) {
-        String line;
-        while ((line = br.readLine()) != null) {
-            String[] values = line.split(",");
-            if (values.length >= 8 && values[0].equalsIgnoreCase(appointmentID)) {
-                values[7] = newStatus; 
-                line = String.join(",", values);
-                isUpdated = true; 
+        try (BufferedReader br = new BufferedReader(new FileReader(outcomeFilePath))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] values = line.split(",");
+                if (values.length >= 8 && values[0].equalsIgnoreCase(appointmentID)) {
+                    values[7] = newStatus; 
+                    line = String.join(",", values);
+                    isUpdated = true; 
+                }
+                lines.add(line);
             }
-            lines.add(line);
+        } catch (IOException e) {
+            System.out.println("Error reading the appointment outcome file: " + e.getMessage());
+            return false;
         }
-    } catch (IOException e) {
-        System.out.println("Error reading the appointment outcome file: " + e.getMessage());
-        return false;
-    }
 
-    try (BufferedWriter writer = new BufferedWriter(new FileWriter(outcomeFilePath))) {
-        for (String l : lines) {
-            writer.write(l);
-            writer.newLine();
-        }
-        return isUpdated;
-    } catch (IOException e) {
-        System.out.println("Error writing to the appointment outcome file: " + e.getMessage());
-        return false;
-    }
-}
-
-public void viewCompletedOutcomeRecord() {
-    try (BufferedReader br = new BufferedReader(new FileReader(outcomeFilePath))) {
-        String line;
-        br.readLine(); // Skip header if present
-        System.out.println("Completed Appointment Outcome Records:");
-
-        boolean hasCompletedRecords = false; 
-        int lineCount = 0;
-
-        while ((line = br.readLine()) != null) {
-            lineCount++;
-            String[] values = line.split(",");
-
-            if (values.length >= 8 && values[7].equalsIgnoreCase("Completed")) { 
-                System.out.println("Appointment ID: " + values[0] +
-                                   ", Patient ID: " + values[1] +
-                                   ", Doctor ID: " + values[2] +
-                                   ", Date of Appointment: " + values[3] +
-                                   ", Type of Services: " + values[4] +
-                                   ", Medicine Prescribed: " + values[5] +
-                                   ", Consultation Notes: " + values[6] +
-                                   ", Status: " + values[7]);
-                hasCompletedRecords = true;
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(outcomeFilePath))) {
+            for (String l : lines) {
+                writer.write(l);
+                writer.newLine();
             }
+            return isUpdated;
+        } catch (IOException e) {
+            System .out.println("Error writing to the appointment outcome file: " + e.getMessage());
+            return false;
         }
-
-        if (!hasCompletedRecords) {
-            System.out.println("No completed appointment outcome records found.");
-        }
-    } catch (IOException e) {
-        System.out.println("Error reading the appointment outcome file: " + e.getMessage());
     }
-}
 
-public void viewPastAppointmentOutcomeRecords(String patientID) {
-    try (BufferedReader br = new BufferedReader(new FileReader(outcomeFilePath))) {
-        String line;
-        br.readLine(); 
-        System.out.println("Past Appointment Outcome Records for Patient ID: " + patientID);
+    /**
+     * Displays all completed appointment outcome records.
+     */
+    public void viewCompletedOutcomeRecord() {
+        try (BufferedReader br = new BufferedReader(new FileReader(outcomeFilePath))) {
+            String line;
+            br.readLine(); // Skip header if present
+            System.out.println("Completed Appointment Outcome Records:");
 
-        boolean hasRecords = false; 
-        StaffController staffController = new StaffController(); 
+            boolean hasCompletedRecords = false; 
+            int lineCount = 0;
 
-        while ((line = br.readLine()) != null) {
-            String[] values = line.split(",");
-            if (values.length >= 8 && values[1].equalsIgnoreCase(patientID)) {
-                String doctorName = staffController.getDoctorNameByID(values[2]);
-                System.out.println("Appointment ID: " + values[0] +
-                                   ", Doctor Name: " + doctorName + 
-                                   ", Date of Appointment: " + values[3] +
-                                   ", Type of Services: " + values[4] +
-                                   ", Medicine Prescribed: " + values[5] +
-                                   ", Consultation Notes: " + values[6]);
-                hasRecords = true; 
+            while ((line = br.readLine()) != null) {
+                lineCount++;
+                String[] values = line.split(",");
+
+                if (values.length >= 8 && values[7].equalsIgnoreCase("Completed")) { 
+                    System.out.println("Appointment ID: " + values[0] +
+                                       ", Patient ID: " + values[1] +
+                                       ", Doctor ID: " + values[2] +
+                                       ", Date of Appointment: " + values[3] +
+                                       ", Type of Services: " + values[4] +
+                                       ", Medicine Prescribed: " + values[5] +
+                                       ", Consultation Notes: " + values[6] +
+                                       ", Status: " + values[7]);
+                    hasCompletedRecords = true;
+                }
             }
-        }
 
-        if (!hasRecords) {
-            System.out.println("No past appointment outcome records found for Patient ID: " + patientID);
+            if (!hasCompletedRecords) {
+                System.out.println("No completed appointment outcome records found.");
+            }
+        } catch (IOException e) {
+            System.out.println("Error reading the appointment outcome file: " + e.getMessage());
         }
-
-    } catch (IOException e) {
-        System.out.println("Error reading the appointment outcome file: " + e.getMessage());
     }
-}
 
+    /**
+     * Displays past appointment outcome records for a specific patient.
+     *
+     * @param patientID The ID of the patient whose past appointment outcomes are to be displayed.
+     */
+    public void viewPastAppointmentOutcomeRecords(String patientID) {
+        try (BufferedReader br = new BufferedReader(new FileReader(outcomeFilePath))) {
+            String line;
+            br.readLine(); 
+            System.out.println("Past Appointment Outcome Records for Patient ID: " + patientID);
 
+            boolean hasRecords = false; 
+            StaffController staffController = new StaffController(); 
+
+            while ((line = br.readLine()) != null) {
+                String[] values = line.split(",");
+                if (values.length >= 8 && values[1].equalsIgnoreCase(patientID)) {
+                    String doctorName = staffController.getDoctorNameByID(values[2]);
+                    System.out.println("Appointment ID: " + values[0] +
+                                       ", Doctor Name: " + doctorName + 
+                                       ", Date of Appointment: " + values[3] +
+                                       ", Type of Services: " + values[4] +
+                                       ", Medicine Prescribed: " + values[5] +
+                                       ", Consultation Notes: " + values[6]);
+                    hasRecords = true; 
+                }
+            }
+
+            if (!hasRecords) {
+                System.out.println("No past appointment outcome records found for Patient ID: " + patientID);
+            }
+
+        } catch (IOException e) {
+            System.out.println("Error reading the appointment outcome file: " + e.getMessage());
+        }
+    }
 }

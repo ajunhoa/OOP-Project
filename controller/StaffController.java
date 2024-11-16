@@ -1,23 +1,38 @@
 package controller;
+
 import model.Staff;
 import java.io.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * The StaffController class manages the staff records in the hospital management system.
+ * It provides functionalities to load staff details, add, update, remove, and filter staff,
+ * as well as displaying staff information.
+ */
 public class StaffController {
 
+    /** The file path for the staff records CSV file. */
     private final String staffFilePath = "assets/updatedstafflist.csv";
+    
+    /** A map that stores doctor IDs and their corresponding names. */
     private Map<String, String> doctorMap;
 
+    /**
+     * Constructs a StaffController and initializes the doctor map by loading staff details.
+     */
     public StaffController() {
         doctorMap = new HashMap<>();
         loadStaffDetails();
     }
 
+    /**
+     * Loads staff details from the specified CSV file and populates the doctorMap.
+     */
     private void loadStaffDetails() {
         try (BufferedReader br = new BufferedReader(new FileReader(staffFilePath))) {
             String line;
-            br.readLine(); 
+            br.readLine(); // Skip header line
             while ((line = br.readLine()) != null) {
                 String[] values = line.split(",");
                 if (values.length >= 7 && values[2].equalsIgnoreCase("Doctor")) {
@@ -31,10 +46,22 @@ public class StaffController {
         }
     }
 
+    /**
+     * Retrieves the name of the doctor associated with the specified doctor ID.
+     *
+     * @param doctorID The ID of the doctor whose name is to be retrieved.
+     * @return The name of the doctor, or "Unknown Doctor" if not found.
+     */
     public String getDoctorNameByID(String doctorID) {
         return doctorMap.getOrDefault(doctorID, "Unknown Doctor");
     }
     
+    /**
+     * Adds a new staff member to the records.
+     *
+     * @param newStaff The Staff object representing the new staff member.
+     * @return true if the staff member was added successfully, false otherwise.
+     */
     public boolean addStaff(Staff newStaff) {
         if (isStaffIdExists(newStaff.getId())) {
             System.out.println("Staff ID already exists. Please use a different ID.");
@@ -57,14 +84,26 @@ public class StaffController {
         }
     }
    
+    /**
+     * Validates if the given role is either "Doctor" or "Pharmacist".
+     *
+     * @param role The role to validate.
+     * @return true if the role is valid, false otherwise.
+     */
     private boolean isValidRole(String role) {
         return role.equalsIgnoreCase("Doctor") || role.equalsIgnoreCase("Pharmacist");
     }
     
+    /**
+     * Checks if a staff ID already exists in the records.
+     *
+     * @param staffId The staff ID to check.
+     * @return true if the staff ID exists, false otherwise.
+     */
     private boolean isStaffIdExists(String staffId) {
         try (BufferedReader br = new BufferedReader(new FileReader(staffFilePath))) {
             String line;
-            br.readLine();
+            br.readLine(); // Skip header line
             while ((line = br.readLine()) != null) {
                 String[] values = line.split(",");
                 if (values.length >= 1 && values[0].trim().equalsIgnoreCase(staffId)) {
@@ -77,6 +116,12 @@ public class StaffController {
         return false;
     }
 
+    /**
+     * Updates the information of an existing staff member.
+     *
+     * @param updatedStaff The Staff object containing the updated information.
+     * @return true if the staff member was updated successfully, false otherwise.
+     */
     public boolean updateStaff(Staff updatedStaff) {
         List<String> lines = new ArrayList<>();
         boolean isUpdated = false;
@@ -98,7 +143,7 @@ public class StaffController {
                         return false; 
                     }
                     line = updatedStaff.getId() + "," + updatedStaff.getName() + "," + updatedStaff.getRole() + "," +
-                           updatedStaff.getGender() + "," + updatedStaff.getAge() + "," + (updatedStaff.isNewUser ()? 1 : 0) + "," +
+                           updatedStaff.getGender() + "," + updatedStaff.getAge() + "," + (updatedStaff.isNewUser () ? 1 : 0) + "," +
                            updatedStaff.getPassword();
                     isUpdated = true;
                 }
@@ -120,6 +165,12 @@ public class StaffController {
         }
     }
 
+    /**
+     * Removes a staff member from the records.
+     *
+     * @param staffId The ID of the staff member to remove.
+     * @return true if the staff member was removed successfully, false otherwise.
+     */
     public boolean removeStaff(String staffId) {
         List<String> lines = new ArrayList<>();
         boolean isRemoved = false;
@@ -156,13 +207,20 @@ public class StaffController {
         }
     }
 
-
+    /**
+     * Filters staff members based on the specified criteria.
+     *
+     * @param role The role to filter by (can be null).
+     * @param gender The gender to filter by (can be null).
+     * @param age The age to filter by (can be null).
+     * @return A list of staff members that match the specified criteria.
+     */
     public List<Staff> filterStaff(String role, String gender, Integer age) {
         List<Staff> staffList = new ArrayList<>();
     
         try (BufferedReader br = new BufferedReader(new FileReader(staffFilePath))) {
             String line;
-            br.readLine();
+            br.readLine(); // Skip header line
             while ((line = br.readLine()) != null) {
                 String[] values = line.split(",");
                 if (values.length >= 7) {
@@ -187,6 +245,13 @@ public class StaffController {
         return staffList;
     }
 
+    /**
+     * Displays the staff members based on the specified filtering criteria.
+     *
+     * @param role The role to filter by (can be null).
+     * @param gender The gender to filter by (can be null).
+     * @param age The age to filter by (can be null).
+     */
     public void displayStaff(String role, String gender, Integer age) {
         List<Staff> staffList = filterStaff(role, gender, age); 
     

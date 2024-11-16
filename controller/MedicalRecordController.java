@@ -1,3 +1,4 @@
+
 package controller;
 
 import model.MedicalRecord;
@@ -9,14 +10,38 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Scanner;
-
+/**
+ * The MedicalRecordController class manages the medical records and user information
+ * for patients in the hospital management system. It provides functionalities to update
+ * patient contact information, diagnoses, prescriptions, and treatments, as well as
+ * saving the updated records to files.
+ */
 public class MedicalRecordController {
+    
+    /** A map that stores medical records, keyed by patient ID. */
     private Map<String, MedicalRecord> medicalRecords;
+    
+    /** A map that stores user information, keyed by user ID. */
     private Map<String, User> users; 
+    
+    /** A Scanner object for reading user input. */
     private Scanner scanner;
+    
+    /** The file path for saving medical records. */
     private String medicalRecordFilePath; 
+    
+    /** The file path for saving user records. */
     private String userFilePath; 
 
+    /**
+     * Constructs a MedicalRecordController with the specified medical records, users,
+     * and file paths for medical records and user records.
+     *
+     * @param medicalRecords A map of medical records keyed by patient ID.
+     * @param users A map of user information keyed by user ID.
+     * @param medicalRecordFilePath The file path for saving medical records.
+     * @param userFilePath The file path for saving user records.
+     */
     public MedicalRecordController(Map<String, MedicalRecord> medicalRecords, Map<String, User> users, String medicalRecordFilePath, String userFilePath) {
         this.medicalRecords = medicalRecords;
         this.users = users;
@@ -24,6 +49,12 @@ public class MedicalRecordController {
         this.medicalRecordFilePath = medicalRecordFilePath;
         this.userFilePath = userFilePath;
     }
+
+    /**
+     * Updates the contact email of the patient identified by the specified patient ID.
+     *
+     * @param patientId The ID of the patient whose contact email is to be updated.
+     */
     public void updateContactInfo(String patientId) {
         User user = users.get(patientId);
         if (user instanceof Patient) {
@@ -37,6 +68,11 @@ public class MedicalRecordController {
         }
     }
 
+    /**
+     * Updates the contact number of the patient identified by the specified patient ID.
+     *
+     * @param patientId The ID of the patient whose contact number is to be updated.
+     */
     public void updateContactNumber(String patientId) {
         User user = users.get(patientId);
         if (user instanceof Patient) {
@@ -55,6 +91,11 @@ public class MedicalRecordController {
         }
     }
 
+    /**
+     * Updates the diagnoses of the medical record for the patient identified by the specified patient ID.
+     *
+     * @param patientId The ID of the patient whose diagnoses are to be updated.
+     */
     public void updateDiagnoses(String patientId) {
         MedicalRecord record = medicalRecords.get(patientId);
         if (record != null) {
@@ -68,6 +109,11 @@ public class MedicalRecordController {
         }
     }
 
+    /**
+     * Updates the prescription of the medical record for the patient identified by the specified patient ID.
+     *
+     * @param patientId The ID of the patient whose prescription is to be updated.
+     */
     public void updatePrescription(String patientId) {
         MedicalRecord record = medicalRecords.get(patientId);
         if (record != null) {
@@ -80,6 +126,11 @@ public class MedicalRecordController {
         }
     }
 
+    /**
+     * Updates the treatment of the medical record for the patient identified by the specified patient ID.
+     *
+     * @param patientId The ID of the patient whose treatment is to be updated.
+     */
     public void updateTreatment(String patientId) {
         MedicalRecord record = medicalRecords.get(patientId);
         if (record != null) {
@@ -93,6 +144,9 @@ public class MedicalRecordController {
         }
     }
 
+    /**
+     * Saves the current medical records to the specified file.
+     */
     public void saveMedicalRecordsToFile() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(medicalRecordFilePath))) {
             writer.write("Patient ID,Past Diagnoses,Treatment");
@@ -111,12 +165,15 @@ public class MedicalRecordController {
         }
     }
     
+    /**
+     * Saves the current user records to the specified file.
+     */
     public void saveUserRecordsToFile() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(userFilePath))) {
             writer.write("Patient ID,Name,Date of Birth,Gender,Blood Type,Contact Info,New User,Password,Contact Number");
             writer.newLine();
 
-            for (User user : users.values()) {
+            for (User  user : users.values()) {
                 if (user instanceof Patient) { 
                     String line = user.getId() + "," +
                                   user.getName() + "," +
@@ -124,7 +181,7 @@ public class MedicalRecordController {
                                   user.getGender() + "," +
                                   user.getBloodType() + "," +
                                   user.getContactInfo() + "," +
-                                  (user.isNewUser() ? "1" : "0") + "," +
+                                  (user.isNewUser () ? "1" : "0") + "," +
                                   user.getPassword() + "," +
                                   user.getContactNumber();
                     writer.write(line);
@@ -136,6 +193,12 @@ public class MedicalRecordController {
             System.out.println("Error writing to the patient list file: " + e.getMessage());
         }
     }
+
+    /**
+     * Displays the medical record for the patient identified by the specified patient ID.
+     *
+     * @param patientId The ID of the patient whose medical record is to be viewed.
+     */
     public void viewMedicalRecord(String patientId) {
         MedicalRecord record = medicalRecords.get(patientId);
         if (record != null) {
@@ -157,5 +220,4 @@ public class MedicalRecordController {
             System.out.println("No medical record found for Patient ID: " + patientId);
         }
     }
-    
 }

@@ -7,6 +7,14 @@ import model.AppointmentSlot;
 import controller.AppointmentSlotController;
 import model.AppointmentOutcomeRecord;
 
+/**
+ * The PatientView class is responsible for handling the patient's view of the Hospital Management System.
+ * It provides a menu for patients to interact with their medical records, appointments, and personal information.
+ * 
+ * Author: Jun hoa
+ * Version: 1.0
+ * Since: 16/11/2024
+ */
 public class PatientView {
     private Patient patient;
     private Scanner scanner;
@@ -15,6 +23,13 @@ public class PatientView {
     private AppointmentSlotController appointmentSlotController;
     private AppointmentOutcomeRecord appointmentOutcomeRecord;
 
+    /**
+     * Constructs a PatientView instance with the specified patient, scanner, and medical record controller.
+     *
+     * @param patient The Patient object representing the logged-in patient.
+     * @param scanner The Scanner object used to read user input.
+     * @param medicalRecordController The MedicalRecordController object used to manage medical records.
+     */
     public PatientView(Patient patient, Scanner scanner, MedicalRecordController medicalRecordController) {
         this.patient = patient;
         this.scanner = scanner;
@@ -24,6 +39,9 @@ public class PatientView {
         this.appointmentOutcomeRecord = new AppointmentOutcomeRecord();
     }
 
+    /**
+     * Displays the patient menu and handles user input for various patient-related actions.
+     */
     public void showMenu() {
         boolean exit = false;
         while (!exit) {
@@ -67,6 +85,9 @@ public class PatientView {
         }
     }
 
+    /**
+     * Displays the options available in the patient menu.
+     */
     private void displayPatientMenu() {
         System.out.println("\n=== Patient Menu ===");
         System.out.println("1. View Medical Record");
@@ -80,6 +101,9 @@ public class PatientView {
         System.out.println("9. Logout");
     }
 
+    /**
+     * Displays the patient's medical record if available.
+     */
     private void viewMedicalRecord() {
         if (patient.getMedicalRecord() != null) {
             patient.getMedicalRecord().displayMedicalRecord(patient); 
@@ -87,8 +111,10 @@ public class PatientView {
             System.out.println("No medical record available for this patient.");
         }
     }
-    
 
+    /**
+     * Allows the patient to update their personal information, such as contact email and contact number.
+     */
     private void updatePersonalInformation() {
         System.out.println("\n=== Update Personal Information ===");
         System.out.println("1. Update Contact Email");
@@ -108,6 +134,4 @@ public class PatientView {
                 System.out.println("Invalid choice. Returning to main menu.");
         }
     }
-    
-    
 }

@@ -10,6 +10,11 @@ import model.AppointmentOutcomeRecord;
 import model.AppointmentSlot;
 import model.Doctor;
 
+/**
+ * The DoctorView class provides the user interface for the doctor
+ * in the hospital management system. It allows the doctor to manage 
+ * patient records, view appointments, and update medical information.
+ */
 public class DoctorView {
     private Doctor doctor;
     private Scanner scanner;
@@ -19,12 +24,23 @@ public class DoctorView {
 
     private static final String appointmentFilePath = "assets/appointment.csv"; // Path to the CSV file
 
+    /**
+     * Constructs a DoctorView instance with the specified doctor and medical record controller.
+     *
+     * @param doctor The Doctor object representing the logged-in doctor.
+     * @param medicalRecordController The MedicalRecordController object used to manage medical records.
+     */
     public DoctorView(Doctor doctor, MedicalRecordController medicalRecordController) {
         this.doctor = doctor;
         this.scanner = new Scanner(System.in);
         this.medicalRecordController = medicalRecordController;
     }
 
+    /**
+     * Displays the doctor's menu and handles user input for various actions.
+     *
+     * @param doctorID The ID of the doctor for whom the menu is being displayed.
+     */
     public void showMenu(String doctorID) {
         int pendingAppointments = appointmentSlot.countPendingAppointments(doctorID);
         if (pendingAppointments > 0) {
@@ -95,6 +111,9 @@ public class DoctorView {
         }
     }
 
+    /**
+     * Displays the options available in the doctor's menu.
+     */
     public void displayMenu() {
         System.out.println("\n=== Doctor Menu ===");
         System.out.println("1. View Patient Medical Records");
@@ -107,12 +126,17 @@ public class DoctorView {
         System.out.println("8. Logout");
     }
 
+    /**
+     * Displays the patients under the care of the specified doctor.
+     *
+     * @param doctorID The ID of the doctor whose patients are to be displayed.
+     */
     private void viewPatientsUnderDoctor(String doctorID) {
         HashSet<String> patientIDs = new HashSet<>();
 
         try (BufferedReader br = new BufferedReader(new FileReader(appointmentFilePath))) {
             String line;
-            br.readLine(); 
+            br.readLine(); // Skip header line
 
             while ((line = br.readLine()) != null) {
                 String[] values = line.split(",");

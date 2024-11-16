@@ -1,3 +1,4 @@
+
 package controller;
 
 import model.Medicine;
@@ -12,20 +13,33 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
-
+/**
+ * The MedicineController class manages the inventory of medicines in the hospital management system.
+ * It provides functionalities to load medicines from a file, view inventory, add, delete, update stock,
+ * submit replenishment requests, and manage replenishment requests.
+ */
 public class MedicineController {
+    /** The file path for the medicine inventory CSV file. */
     private final String medicineFilePath = "assets/medicine.csv";
+    
+    /** A map that stores medicines, keyed by medicine name. */
     private Map<String, Medicine> medicineMap; 
 
+    /**
+     * Constructs a MedicineController and initializes the medicine inventory.
+     */
     public MedicineController() {
         medicineMap = new HashMap<>();
         loadMedicines(); 
     }
 
+    /**
+     * Loads medicines from the CSV file into the medicineMap.
+     */
     private void loadMedicines() {
         try (BufferedReader br = new BufferedReader(new FileReader(medicineFilePath))) {
             String line;
-            br.readLine();
+            br.readLine(); // Skip header line
 
             while ((line = br.readLine()) != null) {
                 String[] values = line.split(",");
@@ -46,6 +60,9 @@ public class MedicineController {
         }
     }
 
+    /**
+     * Displays the current inventory of medicines.
+     */
     public void viewInventory() {
         System.out.println("\n=== Medicine Inventory ===");
         if (medicineMap.isEmpty()) {
@@ -60,6 +77,11 @@ public class MedicineController {
         }
     }
 
+    /**
+     * Adds a new medicine to the inventory.
+     *
+     * @param scanner A Scanner object for reading user input.
+     */
     public void addMedicine(Scanner scanner) {
         viewInventory(); 
         System.out.println("\n=== Add New Medicine ===");
@@ -95,6 +117,11 @@ public class MedicineController {
         System.out.println("Medicine added successfully.");
     }
 
+    /**
+     * Deletes a medicine from the inventory.
+     *
+     * @param scanner A Scanner object for reading user input.
+     */
     public void deleteMedicine(Scanner scanner) {
         viewInventory();
         System.out.println("\n=== Delete Medicine ===");
@@ -113,8 +140,13 @@ public class MedicineController {
         System.out.println("Medicine deleted successfully.");
     }
 
+    /**
+     * Updates the stock of a medicine in the inventory.
+     *
+     * @param scanner A Scanner object for reading user input.
+     */
     public void updateStock(Scanner scanner) {
-        viewInventory();
+ viewInventory();
         System.out.println("\n=== Update Medicine Stock ===");
         System.out.print("Enter Medicine Name: ");
         String medicineName = scanner.nextLine().trim();
@@ -155,6 +187,9 @@ public class MedicineController {
         System.out.println("Stock updated successfully.");
     }
 
+    /**
+     * Saves the current medicine inventory to the CSV file.
+     */
     private void saveMedicines() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(medicineFilePath))) {
             writer.write("Medicine Name,Current Stock,Low Stock Alert,Status\n");
@@ -169,6 +204,11 @@ public class MedicineController {
         }
     }
 
+    /**
+     * Submits a replenishment request for medicines that are low in stock.
+     *
+     * @param scanner A Scanner object for reading user input.
+     */
     public void submitReplenishmentRequest(Scanner scanner) {
         List<Medicine> lowStockMedicines = new ArrayList<>();
 
@@ -214,6 +254,13 @@ public class MedicineController {
         System.out.println("Replenishment request submitted successfully for " + selectedMedicine.getMedicineName());
     }
 
+    /**
+     * Saves a replenishment request to the replenish request file.
+     *
+     * @param medicineName The name of the medicine being requested for replenishment.
+     * @param quantityRequested The quantity requested for replenishment.
+     * @param status The status of the replenishment request.
+     */
     private void saveReplenishmentRequest(String medicineName, int quantityRequested, String status) {
         String replenishRequestFilePath = "assets/replenish_request.csv";
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(replenishRequestFilePath, true))) {
@@ -224,12 +271,17 @@ public class MedicineController {
         }
     }
 
-    public void manageReplenishmentRequests(Scanner scanner) {
+    /**
+     * Manages replenishment requests by allowing approval or rejection of pending requests.
+     *
+     * @param scanner A Scanner object for reading user input.
+     */
+ public void manageReplenishmentRequests(Scanner scanner) {
         List<String[]> pendingRequests = new ArrayList<>();
     
         try (BufferedReader br = new BufferedReader(new FileReader("assets/replenish_request.csv"))) {
             String line;
-            br.readLine();
+            br.readLine(); // Skip header
             while ((line = br.readLine()) != null) {
                 String[] values = line.split(",");
                 if (values.length >= 3 && values[2].equalsIgnoreCase("Pending")) {
@@ -278,6 +330,11 @@ public class MedicineController {
         }
     }
     
+    /**
+     * Approves a replenishment request and updates the medicine stock accordingly.
+     *
+     * @param request The replenishment request to be approved.
+     */
     private void approveRequest(String[] request) {
         String medicineName = request[0];
         int quantityRequested = Integer.parseInt(request[1]);
@@ -297,6 +354,11 @@ public class MedicineController {
         System.out.println("Replenishment request for " + medicineName + " has been approved.");
     }
     
+    /**
+     * Rejects a replenishment request and updates the status accordingly.
+     *
+     * @param request The replenishment request to be rejected.
+     */
     private void rejectRequest(String[] request) {
         String medicineName = request[0];
     
@@ -312,6 +374,12 @@ public class MedicineController {
         System.out.println("Replenishment request for " + medicineName + " has been rejected.");
     }
     
+    /**
+     * Updates the status of a replenishment request in the request file.
+     *
+     * @param medicineName The name of the medicine associated with the request.
+     * @param newStatus The new status to set for the request.
+     */
     private void updateReplenishmentRequestStatus(String medicineName, String newStatus) {
         List<String> lines = new ArrayList<>();
         boolean isUpdated = false;
@@ -347,6 +415,11 @@ public class MedicineController {
         }
     }
 
+    /**
+     * Counts the number of medicines that are low in stock.
+     *
+     * @return The count of low stock medicines.
+     */
     public int countLowStockMedicines() {
         int count = 0;
         for (Medicine medicine : medicineMap.values()) {
@@ -357,6 +430,11 @@ public class MedicineController {
         return count;
     }
 
+    /**
+     * Counts the number of pending replenishment requests.
+     *
+     * @return The count of pending replenishment requests.
+     */
     public int countPendingReplenishmentRequests() {
         int count = 0;
         try (BufferedReader br = new BufferedReader(new FileReader("assets/replenish_request.csv"))) {
@@ -374,4 +452,3 @@ public class MedicineController {
         return count;
     }
 }
-
