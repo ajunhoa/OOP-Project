@@ -83,25 +83,15 @@ public class AppointmentSlot {
             return; // Exit the method if the date format is invalid
         }
     
-        // Validate time input directly
         System.out.print("Enter Time (HH:MM AM/PM): ");
         time = scanner.nextLine().trim();
-        if (!time.matches("^(0[1-9]|1[0-2]):[0-5][0-9] (AM|PM)$")) {
+        time = standardizeTime(time);
+        if (time.isEmpty()) {
             System.out.println("Invalid time format. Please enter time as HH:MM AM/PM.");
             return; // Exit the method if the time format is invalid
         }
 
-        // Additional range checks
-        String[] parts = time.split("[: ]"); // Split by colon and space
-        int hour = Integer.parseInt(parts[0]);
-        int minute = Integer.parseInt(parts[1]);
-        String meridian = parts[2];
-
-        if (hour < 1 || hour > 12 || minute < 0 || minute > 59 || 
-            (!meridian.equals("AM") && !meridian.equals("PM"))) {
-            System.out.println("Invalid time format. Please enter time as HH:MM AM/PM.");
-            return; // Exit the method if additional range checks fail
-        }
+        
         if (isAppointmentConflict(doctorID, date, time)) {
             System.out.println("Cannot schedule appointment. There is already an appointment for this doctor on " + date + " at " + time + ".");
             return; 
@@ -137,27 +127,38 @@ public class AppointmentSlot {
         try {
             // Split the input into time and period (AM/PM)
             String[] parts = time.split(" ");
-            String timePart = parts[0]; // This should be "HH:MM"
-            String period = parts.length > 1 ? parts[1].toUpperCase() : ""; // This should be "AM" or "PM"
-    
-            // Handle cases where the hour is entered without leading zero
-            String[] timeComponents = timePart.split(":");
-            int hour = Integer.parseInt(timeComponents[0]);
-            String minute = timeComponents.length > 1 ? timeComponents[1] : "00"; // Default to "00" if no minutes are provided
-    
-            // Format the hour to 12-hour format with leading zero if necessary
-            if (hour < 1 || hour > 12) {
-                return ""; // If hour is out of range, return an empty string
+            if (parts.length != 2) { // Ensure both time and period are provided
+                return ""; // Invalid format
             }
     
-            // Ensure the minute is two digits
-            minute = String.format("%02d", Integer.parseInt(minute));
+            String timePart = parts[0]; // This should be "HH:MM"
+            String period = parts[1].toUpperCase(); // This should be "AM" or "PM"
+    
+            if (!period.equals("AM") && !period.equals("PM")) { // Check for valid period
+                return ""; // Invalid period
+            }
+    
+            String[] timeComponents = timePart.split(":");
+            if (timeComponents.length != 2) { // Ensure both hour and minute are provided
+                return ""; // Invalid time format
+            }
+    
+            int hour = Integer.parseInt(timeComponents[0]);
+            int minute = Integer.parseInt(timeComponents[1]);
+    
+            // Check valid hour and minute ranges
+            if (hour < 1 || hour > 12 || minute < 0 || minute > 59) {
+                return ""; // Invalid hour or minute
+            }
     
             // Return the standardized time
-            return hour + ":" + minute + " " + period;
+            return String.format("%02d:%02d %s", hour, minute, period);
         } catch (Exception e) {
             return ""; // Return an empty string if there are parsing errors
         }
+    
+    
+    
     }
 
     
