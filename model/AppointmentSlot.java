@@ -1,19 +1,17 @@
 package model;
 
+import controller.StaffController;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
-
-
-import controller.StaffController;
+import java.util.List;
+import java.util.Scanner;
 
 /**
  * The AppointmentSlot class manages appointment scheduling within the hospital management system.
@@ -85,15 +83,25 @@ public class AppointmentSlot {
             return; // Exit the method if the date format is invalid
         }
     
+        // Validate time input directly
         System.out.print("Enter Time (HH:MM AM/PM): ");
         time = scanner.nextLine().trim();
-    
-        time = standardizeTime(time);
-        if (time.isEmpty()) {
+        if (!time.matches("^(0[1-9]|1[0-2]):[0-5][0-9] (AM|PM)$")) {
             System.out.println("Invalid time format. Please enter time as HH:MM AM/PM.");
-            return; 
+            return; // Exit the method if the time format is invalid
         }
-    
+
+        // Additional range checks
+        String[] parts = time.split("[: ]"); // Split by colon and space
+        int hour = Integer.parseInt(parts[0]);
+        int minute = Integer.parseInt(parts[1]);
+        String meridian = parts[2];
+
+        if (hour < 1 || hour > 12 || minute < 0 || minute > 59 || 
+            (!meridian.equals("AM") && !meridian.equals("PM"))) {
+            System.out.println("Invalid time format. Please enter time as HH:MM AM/PM.");
+            return; // Exit the method if additional range checks fail
+        }
         if (isAppointmentConflict(doctorID, date, time)) {
             System.out.println("Cannot schedule appointment. There is already an appointment for this doctor on " + date + " at " + time + ".");
             return; 
