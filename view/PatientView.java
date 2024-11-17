@@ -112,14 +112,32 @@ public class PatientView {
     /**
      * Allows the patient to update their personal information, such as contact email and contact number.
      */
-    private void viewPersonalInformation() {
+    public void viewPersonalInformation() {
         System.out.println("\n=== View Personal Information ===");
         System.out.println("1. Update Contact Email");
         System.out.println("2. Update Contact Number");
-        System.out.print("Select an option: ");
-        int choice = scanner.nextInt();
-        scanner.nextLine();
-
+        
+        int choice = -1;
+    
+        // Input validation for the menu choice
+        while (choice == -1) {
+            System.out.print("Select an option: ");
+            if (scanner.hasNextInt()) {
+                choice = scanner.nextInt();
+                scanner.nextLine(); // Clear the buffer
+    
+                // Validate if choice is within range
+                if (choice < 1 || choice > 2) {
+                    System.out.println("Invalid choice. Please select a valid option.");
+                    choice = -1; // Reset choice for re-prompt
+                }
+            } else {
+                System.out.println("Invalid input. Please enter a number.");
+                scanner.next(); // Consume the invalid input
+            }
+        }
+    
+        // Handle valid choices
         switch (choice) {
             case 1:
                 medicalRecordController.updateContactInfo(patient.getId());
@@ -128,7 +146,8 @@ public class PatientView {
                 medicalRecordController.updateContactNumber(patient.getId());
                 break;
             default:
-                System.out.println("Invalid choice. Returning to main menu.");
+                System.out.println("Invalid choice. Returning to main menu."); // This should not occur after validation
         }
     }
+    
 }

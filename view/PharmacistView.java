@@ -1,7 +1,7 @@
 package view;
 
-import java.util.Scanner;
 import controller.MedicineController;
+import java.util.Scanner;
 import model.AppointmentOutcomeRecord;
 
 /**
@@ -36,12 +36,24 @@ public class PharmacistView {
             System.out.println("There are " + lowStockCount + " medicine(s) that are low in stock!");
         }
         boolean exit = false;
+    
         while (!exit) {
             this.displayMenu();
-            System.out.print("Select an option: ");
-            int choice = scanner.nextInt(); 
-            scanner.nextLine();
-
+    
+            // Input validation for menu choice
+            int choice = -1;
+            while (choice == -1) {
+                System.out.print("Select an option: ");
+                if (scanner.hasNextInt()) {
+                    choice = scanner.nextInt();
+                    scanner.nextLine(); // Consume newline
+                } else {
+                    System.out.println("Invalid input. Please enter a number between 1 and 5.");
+                    scanner.next(); // Consume invalid input
+                }
+            }
+    
+            // Handle menu options
             switch (choice) {
                 case 1:
                     appointmentOutcomeRecord.viewAppointmentOutcomeRecord();
@@ -64,7 +76,7 @@ public class PharmacistView {
             }
         }
     }
-
+    
     /**
      * Displays the options available in the pharmacist menu.
      */

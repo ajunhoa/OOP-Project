@@ -5,7 +5,6 @@ import controller.StaffController;
 import java.util.Scanner;
 import model.AppointmentOutcomeRecord;
 import model.AppointmentSlot;
-import model.Staff;
 
 /**
  * The AdministratorView class provides the user interface for the administrator
@@ -31,7 +30,7 @@ public class AdministratorView {
         this.appointmentSlot = new AppointmentSlot();
         this.appointmentOutcomeRecord = new AppointmentOutcomeRecord();
         this.medicineController = new MedicineController();
-    }
+    }   
 
     /**
      * Displays the administrator menu and handles user input for various actions.
@@ -42,12 +41,22 @@ public class AdministratorView {
             System.out.println("There are " + pendingReplenishmentRequests + " pending replenishment request(s).");
         }
         boolean exit = false;
-        while (!exit) {
-            this.displayMenu();
-            System.out.print("Select an option: ");
-            int choice = scanner.nextInt();
-            scanner.nextLine();
 
+    while (!exit) {
+        this.displayMenu();
+
+        // Input validation for menu choice
+        int choice = -1;
+        while (choice == -1) {
+            System.out.print("Select an option: ");
+            if (scanner.hasNextInt()) {
+                choice = scanner.nextInt();
+                scanner.nextLine(); // Consume newline
+            } else {
+                System.out.println("Invalid input. Please enter a number between 1 and 5.");
+                scanner.next(); // Consume invalid input
+            }
+        }
             switch (choice) {
                 case 1:
                     manageHospitalStaff();
@@ -148,16 +157,28 @@ public class AdministratorView {
      */
     public void manageMedicineInventory() {
         boolean backToMain = false;
+    
         while (!backToMain) {
             System.out.println("\n=== Manage Medicine Inventory ===");
             System.out.println("1. Add New Medicine");
             System.out.println("2. Delete Medicine");
             System.out.println("3. Update Stock");
             System.out.println("4. Back to Administrator Menu");
-            System.out.print("Select an option: ");
-            int choice = scanner.nextInt();
-            scanner.nextLine(); // Consume newline
     
+            // Input validation for menu choice
+            int choice = -1;
+            while (choice == -1) {
+                System.out.print("Select an option: ");
+                if (scanner.hasNextInt()) {
+                    choice = scanner.nextInt();
+                    scanner.nextLine(); // Consume newline
+                } else {
+                    System.out.println("Invalid input. Please enter a number between 1 and 4.");
+                    scanner.next(); // Consume invalid input
+                }
+            }
+    
+            // Handle menu options
             switch (choice) {
                 case 1:
                     medicineController.addMedicine(scanner);
@@ -177,4 +198,5 @@ public class AdministratorView {
             }
         }
     }
+    
 }

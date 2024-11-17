@@ -47,12 +47,24 @@ public class DoctorView {
             System.out.println("You have " + pendingAppointments + " pending appointment(s).");
         }
         boolean exit = false;
+    
         while (!exit) {
             this.displayMenu();
-            System.out.print("Select an option: ");
-            int choice = scanner.nextInt();
-            scanner.nextLine();
-
+    
+            // Input validation for menu choice
+            int choice = -1;
+            while (choice == -1) {
+                System.out.print("Select an option: ");
+                if (scanner.hasNextInt()) {
+                    choice = scanner.nextInt();
+                    scanner.nextLine(); // Consume newline
+                } else {
+                    System.out.println("Invalid input. Please enter a number between 1 and 8.");
+                    scanner.next(); // Consume invalid input
+                }
+            }
+    
+            // Handle menu choices
             switch (choice) {
                 case 1:
                     viewPatientsUnderDoctor(doctorID);
@@ -64,17 +76,27 @@ public class DoctorView {
                         System.out.println("Invalid Patient ID. Please ensure the ID is correct and try again.");
                         break;
                     }
-
+    
                     boolean backToMenu = false;
                     while (!backToMenu) {
                         System.out.println("\n=== Update Options ===");
                         System.out.println("1. Update Diagnoses");
                         System.out.println("2. Update Treatment");
                         System.out.println("3. Back to Main Menu");
-                        System.out.print("Select an option: ");
-                        int updateChoice = scanner.nextInt();
-                        scanner.nextLine();
-
+    
+                        // Input validation for update options
+                        int updateChoice = -1;
+                        while (updateChoice == -1) {
+                            System.out.print("Select an option: ");
+                            if (scanner.hasNextInt()) {
+                                updateChoice = scanner.nextInt();
+                                scanner.nextLine(); // Consume newline
+                            } else {
+                                System.out.println("Invalid input. Please enter a number between 1 and 3.");
+                                scanner.next(); // Consume invalid input
+                            }
+                        }
+    
                         switch (updateChoice) {
                             case 1:
                                 medicalRecordController.updateDiagnoses(patientIdToUpdate);
@@ -114,6 +136,8 @@ public class DoctorView {
             }
         }
     }
+     
+    
 
     /**
      * Displays the options available in the doctor's menu.

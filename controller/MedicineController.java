@@ -92,13 +92,36 @@ public class MedicineController {
             return;
         }
     
-        System.out.print("Enter Current Stock: ");
-        int currentStock = scanner.nextInt();
-        scanner.nextLine(); 
-    
-        System.out.print("Enter Low Stock Alert: ");
-        int lowStockAlert = scanner.nextInt();
-        scanner.nextLine(); 
+        int currentStock = -1;
+        while (currentStock < 0) {
+            System.out.print("Enter Current Stock (non-negative integer): ");
+            if (scanner.hasNextInt()) {
+                currentStock = scanner.nextInt();
+                if (currentStock < 0) {
+                    System.out.println("Invalid input. Stock cannot be negative.");
+                }
+            } else {
+                System.out.println("Invalid input. Please enter a valid integer.");
+                scanner.next(); // Consume invalid input
+            }
+        }
+        scanner.nextLine(); // Consume newline
+
+        // Validate input for low stock alert
+        int lowStockAlert = -1;
+        while (lowStockAlert < 0) {
+            System.out.print("Enter Low Stock Alert (non-negative integer): ");
+            if (scanner.hasNextInt()) {
+                lowStockAlert = scanner.nextInt();
+                if (lowStockAlert < 0) {
+                    System.out.println("Invalid input. Alert level cannot be negative.");
+                }
+            } else {
+                System.out.println("Invalid input. Please enter a valid integer.");
+                scanner.next(); // Consume invalid input
+            }
+        }
+    scanner.nextLine(); // Consume newline
     
         String status;
         if (currentStock < lowStockAlert) {
@@ -145,11 +168,12 @@ public class MedicineController {
      * @param scanner A Scanner object for reading user input.
      */
     public void updateStock(Scanner scanner) {
- viewInventory();
+        viewInventory();
         System.out.println("\n=== Update Medicine Stock ===");
         System.out.print("Enter Medicine Name: ");
         String medicineName = scanner.nextLine().trim();
     
+        // Find the medicine in the inventory
         Medicine medicine = medicineMap.values().stream()
             .filter(m -> m.getMedicineName().equalsIgnoreCase(medicineName))
             .findFirst()
@@ -161,30 +185,62 @@ public class MedicineController {
         }
     
         System.out.println("Current Stock: " + medicine.getCurrentStock());
-        System.out.print("Enter new stock level (or -1 to skip): ");
-        int newStock = scanner.nextInt();
-        scanner.nextLine(); 
+    
+        // Input validation for new stock level
+        int newStock = -2; // -2 to differentiate from -1 (skip)
+        while (newStock == -2) {
+            System.out.print("Enter new stock level (or -1 to skip): ");
+            if (scanner.hasNextInt()) {
+                newStock = scanner.nextInt();
+                if (newStock < -1) {
+                    System.out.println("Invalid input. Please enter -1 to skip or a non-negative integer.");
+                    newStock = -2; // Reset for re-prompt
+                }
+            } else {
+                System.out.println("Invalid input. Please enter a valid integer.");
+                scanner.next(); // Consume invalid input
+            }
+        }
+        scanner.nextLine(); // Consume newline
+    
         if (newStock != -1) {
             medicine.setCurrentStock(newStock);
         }
     
-        System.out.print("Enter new low stock alert level (or -1 to skip): ");
-        int newLowStockAlert = scanner.nextInt();
-        scanner.nextLine(); 
+        // Input validation for new low stock alert level
+        int newLowStockAlert = -2; // -2 to differentiate from -1 (skip)
+        while (newLowStockAlert == -2) {
+            System.out.print("Enter new low stock alert level (or -1 to skip): ");
+            if (scanner.hasNextInt()) {
+                newLowStockAlert = scanner.nextInt();
+                if (newLowStockAlert < -1) {
+                    System.out.println("Invalid input. Please enter -1 to skip or a non-negative integer.");
+                    newLowStockAlert = -2; // Reset for re-prompt
+                }
+            } else {
+                System.out.println("Invalid input. Please enter a valid integer.");
+                scanner.next(); // Consume invalid input
+            }
+        }
+        scanner.nextLine(); // Consume newline
+    
         if (newLowStockAlert != -1) {
             medicine.setLowStockAlert(newLowStockAlert);
         }
     
+        // Update the medicine status
         if (medicine.getCurrentStock() < medicine.getLowStockAlert()) {
-            medicine.setMedicineStatus("Low"); 
+            medicine.setMedicineStatus("Low");
         } else {
             medicine.setMedicineStatus("Available");
         }
     
+        // Save changes to file
         saveMedicines();
     
         System.out.println("Stock updated successfully.");
     }
+    
 
     /**
      * Saves the current medicine inventory to the CSV file.
@@ -327,13 +383,20 @@ public class MedicineController {
                                ", Status: " + request[2]);
         }
     
-        System.out.print("Select the number of the request to approve/reject: ");
-        int choice = scanner.nextInt();
-        scanner.nextLine();
-    
-        if (choice < 1 || choice > pendingRequests.size()) {
-            System.out.println("Invalid choice.");
-            return;
+        int choice = -1;
+        while (choice == -1) {
+            System.out.print("Select the number of the request to approve/reject: ");
+            if (scanner.hasNextInt()) {
+                choice = scanner.nextInt();
+                scanner.nextLine(); // Consume newline
+                if (choice < 1 || choice > pendingRequests.size()) {
+                    System.out.println("Invalid choice. Please select a valid request number.");
+                    choice = -1; // Reset choice for re-prompt
+                }
+            } else {
+                System.out.println("Invalid input. Please enter a valid number.");
+                scanner.next(); // Consume invalid input
+            }
         }
     
         String[] selectedRequest = pendingRequests.get(choice - 1);
