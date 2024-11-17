@@ -1,4 +1,4 @@
 Patient ID,Name,Date of Birth,Gender,Blood Type,Contact Info,New User,Password,Contact Number
-P1003,Charlie White,8/7/1990,Male,O-,testing@gmail.com,0,password,12345678
-P1001,Alice Brown,14/5/1980,Female,A+,test@gmail.com,0,password,91234567
-P1002,Bob Stone,22/11/1975,Male,B+,testing@gmail.com,1,password,12345678
+P1001,Alice Brown,14/5/1980,Female,A+,alice@hotmail.com,1,password,91234567
+P1002,Bob Stone,22/11/1975,Male,B+,testing@gmail.com,0,bobby,89001234
+P1003,Charlie White,8/7/1990,Male,O-,testing@gmail.com,1,password,97128890
