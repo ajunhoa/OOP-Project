@@ -5,69 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b2c45203-dd4a-489a-a631-6622b59c260b" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Javadocs/Main.html" beforeDir="false" afterPath="$PROJECT_DIR$/Javadocs/Main.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Javadocs/allclasses-index.html" beforeDir="false" afterPath="$PROJECT_DIR$/Javadocs/allclasses-index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Javadocs/allpackages-index.html" beforeDir="false" afterPath="$PROJECT_DIR$/Javadocs/allpackages-index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Javadocs/constant-values.html" beforeDir="false" afterPath="$PROJECT_DIR$/Javadocs/constant-values.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Javadocs/controller/AppointmentSlotController.html" beforeDir="false" afterPath="$PROJECT_DIR$/Javadocs/controller/AppointmentSlotController.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Javadocs/controller/MedicalRecordController.html" beforeDir="false" afterPath="$PROJECT_DIR$/Javadocs/controller/MedicalRecordController.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Javadocs/controller/MedicineController.html" beforeDir="false" afterPath="$PROJECT_DIR$/Javadocs/controller/MedicineController.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Javadocs/controller/StaffController.html" beforeDir="false" afterPath="$PROJECT_DIR$/Javadocs/controller/StaffController.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Javadocs/controller/UserController.html" beforeDir="false" afterPath="$PROJECT_DIR$/Javadocs/controller/UserController.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Javadocs/controller/package-summary.html" beforeDir="false" afterPath="$PROJECT_DIR$/Javadocs/controller/package-summary.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Javadocs/controller/package-tree.html" beforeDir="false" afterPath="$PROJECT_DIR$/Javadocs/controller/package-tree.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Javadocs/help-doc.html" beforeDir="false" afterPath="$PROJECT_DIR$/Javadocs/help-doc.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Javadocs/index-files/index-1.html" beforeDir="false" afterPath="$PROJECT_DIR$/Javadocs/index-files/index-1.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Javadocs/index-files/index-10.html" beforeDir="false" afterPath="$PROJECT_DIR$/Javadocs/index-files/index-10.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Javadocs/index-files/index-11.html" beforeDir="false" afterPath="$PROJECT_DIR$/Javadocs/index-files/index-11.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Javadocs/index-files/index-12.html" beforeDir="false" afterPath="$PROJECT_DIR$/Javadocs/index-files/index-12.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Javadocs/index-files/index-13.html" beforeDir="false" afterPath="$PROJECT_DIR$/Javadocs/index-files/index-13.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Javadocs/index-files/index-14.html" beforeDir="false" afterPath="$PROJECT_DIR$/Javadocs/index-files/index-14.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Javadocs/index-files/index-15.html" beforeDir="false" afterPath="$PROJECT_DIR$/Javadocs/index-files/index-15.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Javadocs/index-files/index-16.html" beforeDir="false" afterPath="$PROJECT_DIR$/Javadocs/index-files/index-16.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Javadocs/index-files/index-17.html" beforeDir="false" afterPath="$PROJECT_DIR$/Javadocs/index-files/index-17.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Javadocs/index-files/index-2.html" beforeDir="false" afterPath="$PROJECT_DIR$/Javadocs/index-files/index-2.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Javadocs/index-files/index-3.html" beforeDir="false" afterPath="$PROJECT_DIR$/Javadocs/index-files/index-3.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Javadocs/index-files/index-4.html" beforeDir="false" afterPath="$PROJECT_DIR$/Javadocs/index-files/index-4.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Javadocs/index-files/index-5.html" beforeDir="false" afterPath="$PROJECT_DIR$/Javadocs/index-files/index-5.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Javadocs/index-files/index-6.html" beforeDir="false" afterPath="$PROJECT_DIR$/Javadocs/index-files/index-6.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Javadocs/index-files/index-7.html" beforeDir="false" afterPath="$PROJECT_DIR$/Javadocs/index-files/index-7.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Javadocs/index-files/index-8.html" beforeDir="false" afterPath="$PROJECT_DIR$/Javadocs/index-files/index-8.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Javadocs/index-files/index-9.html" beforeDir="false" afterPath="$PROJECT_DIR$/Javadocs/index-files/index-9.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Javadocs/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/Javadocs/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Javadocs/legal/LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/Javadocs/legal/LICENSE" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Javadocs/legal/dejavufonts.md" beforeDir="false" afterPath="$PROJECT_DIR$/Javadocs/legal/dejavufonts.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Javadocs/legal/jquery.md" beforeDir="false" afterPath="$PROJECT_DIR$/Javadocs/legal/jquery.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Javadocs/legal/jqueryUI.md" beforeDir="false" afterPath="$PROJECT_DIR$/Javadocs/legal/jqueryUI.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Javadocs/member-search-index.js" beforeDir="false" afterPath="$PROJECT_DIR$/Javadocs/member-search-index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Javadocs/model/AppointmentOutcomeRecord.html" beforeDir="false" afterPath="$PROJECT_DIR$/Javadocs/model/AppointmentOutcomeRecord.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Javadocs/model/AppointmentSlot.html" beforeDir="false" afterPath="$PROJECT_DIR$/Javadocs/model/AppointmentSlot.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Javadocs/model/DataInitializer.html" beforeDir="false" afterPath="$PROJECT_DIR$/Javadocs/model/DataInitializer.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Javadocs/model/Doctor.html" beforeDir="false" afterPath="$PROJECT_DIR$/Javadocs/model/Doctor.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Javadocs/model/MedicalRecord.html" beforeDir="false" afterPath="$PROJECT_DIR$/Javadocs/model/MedicalRecord.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Javadocs/model/Medicine.html" beforeDir="false" afterPath="$PROJECT_DIR$/Javadocs/model/Medicine.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Javadocs/model/Patient.html" beforeDir="false" afterPath="$PROJECT_DIR$/Javadocs/model/Patient.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Javadocs/model/Staff.html" beforeDir="false" afterPath="$PROJECT_DIR$/Javadocs/model/Staff.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Javadocs/model/User.html" beforeDir="false" afterPath="$PROJECT_DIR$/Javadocs/model/User.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Javadocs/model/package-summary.html" beforeDir="false" afterPath="$PROJECT_DIR$/Javadocs/model/package-summary.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Javadocs/model/package-tree.html" beforeDir="false" afterPath="$PROJECT_DIR$/Javadocs/model/package-tree.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Javadocs/overview-summary.html" beforeDir="false" afterPath="$PROJECT_DIR$/Javadocs/overview-summary.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Javadocs/overview-tree.html" beforeDir="false" afterPath="$PROJECT_DIR$/Javadocs/overview-tree.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Javadocs/package-summary.html" beforeDir="false" afterPath="$PROJECT_DIR$/Javadocs/package-summary.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Javadocs/package-tree.html" beforeDir="false" afterPath="$PROJECT_DIR$/Javadocs/package-tree.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Javadocs/resource-files/jquery-ui.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/Javadocs/resource-files/jquery-ui.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Javadocs/script-files/jquery-3.7.1.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/Javadocs/script-files/jquery-3.7.1.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Javadocs/script-files/jquery-ui.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/Javadocs/script-files/jquery-ui.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Javadocs/search.html" beforeDir="false" afterPath="$PROJECT_DIR$/Javadocs/search.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Javadocs/view/AdministratorView.html" beforeDir="false" afterPath="$PROJECT_DIR$/Javadocs/view/AdministratorView.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Javadocs/view/DoctorView.html" beforeDir="false" afterPath="$PROJECT_DIR$/Javadocs/view/DoctorView.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Javadocs/view/PatientView.html" beforeDir="false" afterPath="$PROJECT_DIR$/Javadocs/view/PatientView.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Javadocs/view/PharmacistView.html" beforeDir="false" afterPath="$PROJECT_DIR$/Javadocs/view/PharmacistView.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Javadocs/view/package-summary.html" beforeDir="false" afterPath="$PROJECT_DIR$/Javadocs/view/package-summary.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Javadocs/view/package-tree.html" beforeDir="false" afterPath="$PROJECT_DIR$/Javadocs/view/package-tree.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/Staff.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/Staff.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SC2002 Report (SCS7-grp3).docx" beforeDir="false" afterPath="$PROJECT_DIR$/SC2002 Report (SCS7-grp3).docx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UML/UML-UML (based on code).drawio.png" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -85,27 +25,27 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.Main.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Uni/SC2002/Project",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Uni/SC2002/Project&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration default="true" type="ccruntests" factoryName="Run Study Tests">
       <module name="Project" />
