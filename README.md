@@ -68,9 +68,6 @@ OOP-Project/
 └── Main.java
 ```
 
-## License
-This project is licensed under the MIT License - see the LICENSE file for details.
-
 ## Acknowledgements
 Thanks to all contributors and libraries that helped in building this project.
 Special thanks to the educational resources and documentation from Oracle for Java.
